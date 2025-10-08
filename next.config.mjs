@@ -1,13 +1,5 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+git add next.config.mjs
+git commit -m "Fix nextConfig duplication for Vercel build"
+git push origin main
 
-export default nextConfig;
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-};
-
-export default nextConfig;
 
