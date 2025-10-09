@@ -1,3 +1,7 @@
+// at top of app/page.js
+import dynamic from "next/dynamic";
+const WhatsAppFloat = dynamic(() => import("./components/WhatsAppFloat"), { ssr: false });
+// then render <WhatsAppFloat /> at end of <main>
 "use client";
 
 import Image from "next/image";
@@ -243,5 +247,80 @@ function Card({ title, desc }) {
       <h3 className="text-xl font-semibold">{title}</h3>
       <p className="mt-2 text-zinc-700">{desc}</p>
     </div>
+  );
+}
+import Image from "next/image";
+import Link from "next/link";
+
+export default function Home() {
+  return (
+    <main>
+      {/* Hero */}
+      <section className="px-6 sm:px-8 lg:px-12 pt-6 pb-10 border-b border-zinc-200 bg-white">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-zinc-100 px-3 py-1 text-sm">
+              <span className="h-2 w-2 rounded-full bg-green-600" />
+              MNRE compliant • Tier-1 modules • Transparent ROI
+            </div>
+            <h1 className="mb-4">
+              Powering <span className="text-[#F16921]">India</span> with <span className="text-[#147B3E]">Clean Solar</span>
+            </h1>
+            <p className="text-zinc-700 text-lg leading-7 mb-6">
+              Design • Supply • Installation • O&amp;M for Residential, Commercial &amp; Industrial projects.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/#calculator" className="rounded-xl bg-[#147B3E] px-5 py-3 text-white font-semibold hover:opacity-90">
+                Estimate Your kW
+              </Link>
+              <a
+                href="https://wa.me/918977310017?text=Hi%20Bharath,%20I%27d%20like%20a%20solar%20quote."
+                target="_blank" rel="noopener noreferrer"
+                className="rounded-xl border border-zinc-300 px-5 py-3 font-semibold hover:bg-zinc-50"
+              >
+                WhatsApp Us
+              </a>
+            </div>
+          </div>
+
+          <div className="relative rounded-2xl overflow-hidden border border-zinc-200 shadow-sm">
+            <Image
+              src="/hero.jpg" alt="Solar installation"
+              width={1200} height={800} priority
+              className="h-[300px] w-full object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Anchor sections below (use your existing content) */}
+      <section id="calculator" className="px-6 sm:px-8 lg:px-12 py-10">
+        <h2 className="mb-3">Solar kW Calculator</h2>
+        <p className="text-zinc-700 mb-6">Rule of thumb: <b>1 kW ≈ 5 units/day</b> (~150 units/month).</p>
+        {/* keep your calculator UI here */}
+      </section>
+
+      <section id="services" className="px-6 sm:px-8 lg:px-12 py-10">
+        <h2 className="mb-3">Our Services</h2>
+        {/* your services cards */}
+      </section>
+
+      <section id="why" className="px-6 sm:px-8 lg:px-12 py-10">
+        <h2 className="mb-3">Why Choose Us</h2>
+        {/* your why-us content */}
+      </section>
+
+      <section id="contact" className="px-6 sm:px-8 lg:px-12 py-10 border-t border-zinc-200">
+        <h2 className="mb-3">Contact</h2>
+        <p className="text-zinc-700 mb-4">Dodlapati Bharath Reddy — <a className="underline" href="mailto:dbr@bharathsolarepc.com">dbr@bharathsolarepc.com</a> • +91 89773 10017</p>
+        <a
+          href="https://wa.me/918977310017?text=Hi%20Bharath,%20I%27d%20like%20a%20solar%20quote."
+          target="_blank" rel="noopener noreferrer"
+          className="inline-block rounded-xl bg-[#147B3E] px-5 py-3 text-white font-semibold hover:opacity-90"
+        >
+          WhatsApp for a Free Site Visit
+        </a>
+      </section>
+    </main>
   );
 }

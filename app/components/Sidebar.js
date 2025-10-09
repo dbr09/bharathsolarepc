@@ -6,55 +6,53 @@ import { useState } from "react";
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
 
-  const NavLinks = () => (
-    <nav className="mt-4 space-y-1 text-base text-black">
-      <Section title="Home" href="/" onClick={() => setOpen(false)} />
-      <Section title="Calculator" href="/#calculator" onClick={() => setOpen(false)} />
-      <Section title="Services" href="/#services" onClick={() => setOpen(false)} />
-      <Section title="Why Us" href="/#why" onClick={() => setOpen(false)} />
-      <Section title="Contact" href="/#contact" onClick={() => setOpen(false)} />
-      <Divider />
-      <Section title="Our Projects" href="/projects" onClick={() => setOpen(false)} />
-      <Section title="Types of Panels" href="/panels" onClick={() => setOpen(false)} />
-      <Section title="DCR vs Non-DCR" href="/dcr" onClick={() => setOpen(false)} />
-      <Section title="Systems (On/Off/Hybrid)" href="/systems" onClick={() => setOpen(false)} />
-      <Section title="Subsidy" href="/subsidy" onClick={() => setOpen(false)} />
-      <Divider />
-      <a
-        className="block rounded-lg px-3 py-2 bg-[#147B3E] text-white font-semibold text-center"
-        href="https://wa.me/918977310017?text=Hi%20Bharath,%20I%27d%20like%20a%20solar%20quote."
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        WhatsApp Us
-      </a>
+  const NavLinks = ({ onClick }) => (
+    <nav className="mt-5 space-y-1 text-[15px]">
+      <Item href="/" label="Home" onClick={onClick} />
+      <Item href="/#calculator" label="Calculator" onClick={onClick} />
+      <Item href="/#services" label="Services" onClick={onClick} />
+      <Item href="/#why" label="Why Us" onClick={onClick} />
+      <Item href="/projects" label="Our Projects" onClick={onClick} />
+      <Item href="/panels" label="Types of Panels" onClick={onClick} />
+      <Item href="/dcr" label="DCR vs Non-DCR" onClick={onClick} />
+      <Item href="/systems" label="Systems (On/Off/Hybrid)" onClick={onClick} />
+      <Item href="/subsidy" label="Subsidy" onClick={onClick} />
+      <div className="pt-3">
+        <a
+          href="https://wa.me/918977310017?text=Hi%20Bharath,%20I%27d%20like%20a%20solar%20quote."
+          target="_blank" rel="noopener noreferrer"
+          className="block w-full rounded-xl bg-[#147B3E] px-4 py-2.5 text-center font-semibold text-white hover:opacity-90"
+        >
+          WhatsApp Us
+        </a>
+      </div>
     </nav>
   );
 
   return (
     <>
-      {/* Desktop / tablet sidebar (visible from md and up) */}
-      <aside
-        className="hidden md:flex fixed inset-y-0 left-0 w-64 overflow-y-auto
-                   z-40 border-r border-zinc-200 bg-white px-4 py-6 text-black shadow-sm"
-      >
+      {/* Desktop / tablet */}
+      <aside className="hidden md:flex fixed inset-y-0 left-0 z-40 w-64 border-r border-zinc-200 bg-white px-5 py-6">
         <div className="w-full">
           <Brand />
           <NavLinks />
+          <div className="mt-6 text-xs text-zinc-500">
+            Dodlapati Bharath Reddy<br />
+            <a href="mailto:dbr@bharathsolarepc.com" className="underline">dbr@bharathsolarepc.com</a><br />
+            +91 89773 10017
+          </div>
         </div>
       </aside>
 
-      {/* Mobile top bar with menu button */}
+      {/* Mobile top bar */}
       <div className="md:hidden sticky top-0 z-50 bg-white border-b border-zinc-200">
         <div className="px-4 py-3 flex items-center justify-between">
           <Brand small />
           <button
-            className="rounded-lg border px-3 py-1.5 text-black"
+            className="rounded-lg border px-3 py-1.5"
             onClick={() => setOpen(true)}
             aria-label="Open menu"
-          >
-            ☰ Menu
-          </button>
+          >☰ Menu</button>
         </div>
       </div>
 
@@ -67,7 +65,7 @@ export default function Sidebar() {
               <Brand />
               <button className="rounded-lg border px-3 py-1.5" onClick={() => setOpen(false)}>✕</button>
             </div>
-            <NavLinks />
+            <NavLinks onClick={() => setOpen(false)} />
           </aside>
         </div>
       )}
@@ -78,28 +76,23 @@ export default function Sidebar() {
 function Brand({ small = false }) {
   return (
     <div className="flex items-center gap-3">
-      {/* optional emblem */}
-      <div className={`h-8 w-8 rounded-full bg-zinc-100 border ${small ? "hidden" : ""}`} />
-      <div className="leading-tight font-extrabold text-black">
+      <div className={`h-9 w-9 rounded-full bg-zinc-100 border ${small ? "hidden" : ""}`} />
+      <div className="leading-tight font-extrabold text-[18px]">
         <div>BHARATH</div>
-        <div>SOLAR EPC</div>
+        <div className="text-zinc-600">SOLAR EPC</div>
       </div>
     </div>
   );
 }
 
-function Section({ title, href, onClick }) {
+function Item({ href, label, onClick }) {
   return (
     <Link
       href={href}
       onClick={onClick}
-      className="block rounded-lg px-3 py-2 hover:bg-zinc-100 text-black"
+      className="block rounded-lg px-3 py-2 hover:bg-zinc-100"
     >
-      {title}
+      {label}
     </Link>
   );
-}
-
-function Divider() {
-  return <div className="my-3 border-t border-zinc-200" />;
 }
