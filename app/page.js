@@ -1,12 +1,8 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "./components/layout/SiteChrome";
 import { ProjectsHighlightsSection } from "./components/marketing/sections";
-
-const WhatsAppFloat = dynamic(() => import("./components/WhatsAppFloat"), { ssr: false });
+import WhatsAppFloat from "./components/WhatsAppFloat";
 
 const heroStats = [
   { label: "Rooftop Systems Delivered", value: "300+" },
@@ -61,7 +57,7 @@ const sectionCards = [
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+    <main className="relative min-h-screen overflow-hidden bg-white text-slate-900">
       <BackgroundDecorations />
       <SiteHeader />
       <Hero />
@@ -77,71 +73,73 @@ export default function Home() {
 function Hero() {
   return (
     <section className="relative overflow-hidden pb-20 pt-16 sm:pt-20">
-      <div className="absolute inset-x-6 bottom-0 top-32 rounded-3xl border border-white/5 bg-white/5 blur-3xl" aria-hidden />
+      <div className="absolute inset-x-6 bottom-0 top-32 rounded-3xl border border-slate-200/60 bg-slate-100 blur-3xl" aria-hidden />
       <div className="mx-auto grid max-w-6xl items-center gap-16 px-6 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-white/70">
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-slate-500">
             MNRE empanelled • Tier-1 components • EPC & O&M
           </div>
-          <h1 className="mt-6 text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
-            Power your business and home with <span className="text-[#F16921]">bankable</span> solar assets
+          <h1
+            className="mt-6 bg-gradient-to-r from-[#FF671F] via-white to-[#046A38] bg-clip-text text-4xl font-extrabold leading-tight text-transparent drop-shadow-[0_1px_1px_rgba(15,23,42,0.25)] sm:text-5xl lg:text-6xl"
+          >
+            Empowering India with clean solar energy
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-white/75">
+          <p className="mt-5 max-w-xl text-lg text-slate-600">
             We design, build and maintain high-performance solar PV plants across Telangana, Andhra Pradesh and pan-India.
             Explore the section that matters to you and get to the right answers faster.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href="/calculator"
-              className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 shadow-lg shadow-white/20 transition hover:bg-slate-100"
+              className="rounded-full bg-[#147B3E] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/30 transition hover:bg-[#126736]"
             >
               Estimate your savings
             </Link>
             <Link
               href="/solutions"
-              className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/60"
+              className="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
             >
               Explore solar solutions
             </Link>
           </div>
           <dl className="mt-10 grid gap-6 sm:grid-cols-3">
             {heroStats.map((stat) => (
-              <div key={stat.label} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <dd className="text-2xl font-bold text-white">{stat.value}</dd>
-                <dt className="text-sm text-white/60">{stat.label}</dt>
+              <div key={stat.label} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <dd className="text-2xl font-bold text-slate-900">{stat.value}</dd>
+                <dt className="text-sm text-slate-500">{stat.label}</dt>
               </div>
             ))}
           </dl>
         </div>
 
         <div className="relative">
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-8 shadow-2xl">
-            <div className="flex items-center justify-between text-sm font-semibold text-white/70">
+          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-slate-100 p-8 shadow-2xl shadow-slate-200/60">
+            <div className="flex items-center justify-between text-sm font-semibold text-slate-600">
               <span className="flex items-center gap-2">
                 <SparkIcon className="h-4 w-4" /> Real-time monitoring
               </span>
-              <span className="rounded-full bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.3em]">24/7</span>
+              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-500">24/7</span>
             </div>
-            <div className="mt-6 grid gap-4 text-white">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-sm text-white/60">This week</p>
+            <div className="mt-6 grid gap-4 text-slate-900">
+              <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <p className="text-sm text-slate-500">This week</p>
                 <p className="mt-1 text-3xl font-bold">4.8 MWh generated</p>
-                <p className="text-sm text-emerald-300">+12% vs. weather-adjusted forecast</p>
+                <p className="text-sm text-emerald-600">+12% vs. weather-adjusted forecast</p>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-sm text-white/60">Carbon avoided</p>
+              <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <p className="text-sm text-slate-500">Carbon avoided</p>
                 <p className="mt-1 text-3xl font-bold">3.9 tCO₂e</p>
-                <p className="text-sm text-white/60">Equivalent to planting 176 mature trees</p>
+                <p className="text-sm text-slate-600">Equivalent to planting 176 mature trees</p>
               </div>
             </div>
-            <div className="mt-6 rounded-2xl border border-white/10 bg-[#147B3E]/80 p-4 text-sm text-white">
+            <div className="mt-6 rounded-2xl border border-[#147B3E]/20 bg-[#147B3E]/10 p-4 text-sm text-[#0F5132]">
               <p className="font-semibold">Dedicated performance desk</p>
-              <p className="text-white/80">
+              <p className="opacity-80">
                 Get alerts before your DISCOM bill does. Our engineers review dashboards daily and dispatch crews before yield drops.
               </p>
             </div>
-            <div className="absolute -right-6 -top-6 hidden h-24 w-24 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-lg sm:block">
-              <Image src="/globe.svg" alt="Solar network" fill className="p-6 opacity-80" />
+            <div className="absolute -right-6 -top-6 hidden h-24 w-24 rounded-2xl border border-slate-200 bg-white backdrop-blur-lg sm:block">
+              <Image src="/globe.svg" alt="Solar network" fill className="p-6 opacity-70" />
             </div>
           </div>
         </div>
@@ -156,8 +154,8 @@ function SectionDirectory() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Quick access</p>
-          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Navigate to the details you need</h2>
-          <p className="mt-3 text-white/70">
+          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Navigate to the details you need</h2>
+          <p className="mt-3 text-slate-600">
             Each section of the site focuses on a single outcome—solutions, pricing, process, success stories, payments or contacting our experts.
           </p>
         </div>
@@ -166,16 +164,16 @@ function SectionDirectory() {
             <Link
               key={card.title}
               href={card.href}
-              className="group flex h-full flex-col justify-between rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-white/40 hover:bg-white/10"
+              className="group flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md"
             >
               <div>
                 <span className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl ${card.accent}`}>
                   <card.icon className="h-5 w-5" />
                 </span>
-                <h3 className="mt-5 text-xl font-semibold text-white">{card.title}</h3>
-                <p className="mt-3 text-sm text-white/70">{card.description}</p>
+                <h3 className="mt-5 text-xl font-semibold text-slate-900">{card.title}</h3>
+                <p className="mt-3 text-sm text-slate-600">{card.description}</p>
               </div>
-              <span className="mt-6 inline-flex items-center text-sm font-semibold text-white/80 group-hover:text-white">
+              <span className="mt-6 inline-flex items-center text-sm font-semibold text-slate-700 group-hover:text-slate-900">
                 Go to section <ArrowIcon className="ml-2 h-4 w-4" />
               </span>
             </Link>
@@ -190,15 +188,15 @@ function PaymentsTeaser() {
   return (
     <section className="py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-8 md:p-10">
+        <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-slate-100 p-8 md:p-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-3xl">
               <p className="text-xs uppercase tracking-[0.3em] text-[#F16921]">Razorpay integration</p>
-              <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Digital payments go live next week</h2>
-              <p className="mt-3 text-white/70">
+              <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Digital payments go live next week</h2>
+              <p className="mt-3 text-slate-600">
                 We are configuring a Razorpay-powered checkout so you can lock in designs, pay mobilisation advances and manage O&M renewals without paperwork or manual reconciliations.
               </p>
-              <ul className="mt-4 space-y-2 text-sm text-white/70">
+              <ul className="mt-4 space-y-2 text-sm text-slate-600">
                 <li className="flex items-start gap-2">
                   <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Secure payment links for proposals and milestone invoices.
                 </li>
@@ -210,16 +208,16 @@ function PaymentsTeaser() {
                 </li>
               </ul>
             </div>
-            <div className="flex shrink-0 flex-col items-start gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 text-white">
-              <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-500/20 text-violet-200">
+            <div className="flex shrink-0 flex-col items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 text-slate-700 shadow-sm">
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-100 text-violet-600">
                 <CreditCardIcon className="h-5 w-5" />
               </span>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-slate-600">
                 Want early access for your project? Share your billing workflow and we’ll include you in the pilot run.
               </p>
               <Link
                 href="/payments"
-                className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-lg shadow-white/20 transition hover:bg-slate-100"
+                className="inline-flex items-center gap-2 rounded-full bg-[#147B3E] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/30 transition hover:bg-[#126736]"
               >
                 View payment plans
                 <ArrowIcon className="h-4 w-4" />
