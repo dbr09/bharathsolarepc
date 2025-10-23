@@ -5,15 +5,12 @@ import Link from "next/link";
 import { useState } from "react";
 
 export const navLinks = [
-  { label: "Overview", href: "/" },
+  { label: "Home", href: "/" },
   { label: "Solutions", href: "/solutions" },
   { label: "Calculator", href: "/calculator" },
   { label: "Process", href: "/process" },
   { label: "Projects", href: "/projects" },
-  { label: "Testimonials", href: "/testimonials" },
-  { label: "Payments", href: "/payments" },
   { label: "Contact", href: "/contact" },
-  { label: "Subsidy", href: "/subsidy" },
 ];
 
 export function BackgroundDecorations() {
@@ -30,83 +27,97 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-3">
-          <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-900/30 ring-1 ring-white/60">
-            <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
-          </span>
-          <div className="hidden sm:block">
-            <p className="text-sm uppercase tracking-[0.24em] text-white/60">Bharath Solar EPC</p>
-            <p className="text-lg font-semibold text-white">Energy that pays for itself</p>
-          </div>
-        </Link>
-
-        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-          {navLinks.map((item) => (
-            <Link key={item.label} href={item.href} className="text-white/70 hover:text-white">
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="hidden items-center gap-3 md:flex">
-          <a
-            href="tel:+918977310017"
-            className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white/80 transition hover:border-white/40 hover:text-white"
-          >
-            +91 89773 10017
-          </a>
-          <Link
-            href="/contact"
-            className="rounded-full bg-[#147B3E] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/40 transition hover:bg-[#126736]"
-          >
-            Talk to an expert
+    <header className="sticky top-0 z-40 px-3 pb-3 pt-4 sm:px-6">
+      <div className="mx-auto max-w-6xl">
+        <div className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-slate-950/85 px-4 py-3 shadow-[0_20px_60px_rgba(15,23,42,0.6)] backdrop-blur md:px-6">
+          <Link href="/" className="flex items-center gap-3">
+            <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-900/30 ring-1 ring-white/60">
+              <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
+            </span>
+            <div className="hidden sm:flex flex-col leading-tight">
+              <span className="text-sm font-semibold text-white">Bharath Solar EPC</span>
+              <span className="text-xs text-white/70">Solar made simple</span>
+            </div>
           </Link>
-        </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((prev) => !prev)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 text-white md:hidden"
-          aria-label="Toggle navigation"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
-            {open ? (
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M6 18L18 6" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-      </div>
-
-      {open && (
-        <div className="border-t border-white/10 bg-slate-950/95 md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-6">
+          <nav className="hidden items-center gap-1.5 text-sm font-semibold md:flex">
             {navLinks.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-base font-medium text-white/80 hover:text-white"
-                onClick={() => setOpen(false)}
+                className="rounded-full px-3 py-1.5 text-white/70 transition hover:bg-white/10 hover:text-white"
               >
                 {item.label}
               </Link>
             ))}
-            <a href="tel:+918977310017" className="text-base font-semibold text-white" onClick={() => setOpen(false)}>
+          </nav>
+
+          <div className="hidden items-center gap-2 md:flex">
+            <a
+              href="tel:+918977310017"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-sm font-semibold text-white/75 transition hover:border-white/40 hover:text-white"
+            >
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-white">
+                ☎
+              </span>
               +91 89773 10017
             </a>
             <Link
               href="/contact"
-              className="inline-flex w-full justify-center rounded-full bg-[#147B3E] px-4 py-2 text-sm font-semibold text-white"
-              onClick={() => setOpen(false)}
+              className="inline-flex items-center gap-2 rounded-full bg-[#F16921] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#F16921]/40 transition hover:bg-[#d45613]"
             >
-              Talk to an expert
+              Plan my system
             </Link>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setOpen((prev) => !prev)}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 text-white md:hidden"
+            aria-label="Toggle navigation"
+            aria-expanded={open}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+              {open ? (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M6 18L18 6" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
-      )}
+
+        {open && (
+          <div className="mt-3 rounded-2xl border border-white/10 bg-slate-950/95 px-4 py-4 md:hidden">
+            <div className="flex flex-col gap-4">
+              {navLinks.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="rounded-full bg-white/5 px-4 py-2 text-base font-semibold text-white/80 transition hover:bg-white/10 hover:text-white"
+                  onClick={() => setOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <a
+                href="tel:+918977310017"
+                className="rounded-full bg-white/5 px-4 py-2 text-base font-semibold text-white/90"
+                onClick={() => setOpen(false)}
+              >
+                Call +91 89773 10017
+              </a>
+              <Link
+                href="/contact"
+                className="inline-flex w-full justify-center rounded-full bg-[#F16921] px-4 py-2 text-sm font-semibold text-white shadow-md shadow-[#F16921]/40"
+                onClick={() => setOpen(false)}
+              >
+                Plan my system
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
     </header>
   );
 }
