@@ -12,7 +12,7 @@ const WhatsAppFloat = dynamic(() => import("../components/WhatsAppFloat"), { ssr
 
 export default function ContactPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+    <main className="relative min-h-screen overflow-hidden bg-white text-slate-900">
       <BackgroundDecorations />
       <SiteHeader />
       <PageIntro
