@@ -1,14 +1,12 @@
-import dynamic from "next/dynamic";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
 import PageIntro from "../components/layout/PageIntro";
 import { CalculatorSection } from "../components/marketing/sections";
+import WhatsAppFloat from "../components/WhatsAppFloat";
 
 export const metadata = {
   title: "Solar Calculator — Bharath Solar EPC",
   description: "Estimate solar plant sizing, CAPEX, savings and CO₂ offsets for your site in minutes.",
 };
-
-const WhatsAppFloat = dynamic(() => import("../components/WhatsAppFloat"), { ssr: false });
 
 export default function CalculatorPage() {
   return (
