@@ -1,13 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "./components/layout/SiteChrome";
 import { ProjectsHighlightsSection } from "./components/marketing/sections";
-
-const WhatsAppFloat = dynamic(() => import("./components/WhatsAppFloat"), { ssr: false });
+import WhatsAppFloat from "./components/WhatsAppFloat";
 
 const heroStats = [
   { label: "Happy rooftops", value: 300, suffix: "+", decimals: 0 },

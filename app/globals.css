@@ -2,6 +2,7 @@
 
 :root {
   color-scheme: light;
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
 }
 
 body {
