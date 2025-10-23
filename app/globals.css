@@ -21,3 +21,83 @@ section {
   background: rgba(20, 123, 62, 0.35);
   color: white;
 }
+
+@keyframes floatOrb {
+  0%,
+  100% {
+    transform: translateY(-6px);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes gridPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-24px);
+  }
+}
+
+@keyframes fadeInSoft {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-float-slow {
+  animation: floatOrb 8s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: floatOrb 5.5s ease-in-out infinite;
+}
+
+.marquee-track {
+  animation: marquee 32s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track--reverse {
+  animation-duration: 36s;
+  animation-direction: reverse;
+}
+
+.animate-grid-pulse {
+  animation: gridPulse 16s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeInSoft 0.8s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow,
+  .animate-float-fast,
+  .marquee-track,
+  .marquee-track--reverse,
+  .animate-grid-pulse,
+  .animate-fade-in {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
