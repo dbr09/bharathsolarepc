@@ -1,13 +1,15 @@
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
 import PageIntro from "../components/layout/PageIntro";
 import { ContactSection } from "../components/marketing/sections";
-import WhatsAppFloat from "../components/WhatsAppFloat";
 
 export const metadata = {
   title: "Digital Payments — Bharath Solar EPC",
   description: "Preview the Razorpay payment experience launching next week for Bharath Solar EPC clients.",
 };
+
+const WhatsAppFloat = dynamic(() => import("../components/WhatsAppFloat"), { ssr: false });
 
 const paymentHighlights = [
   {
@@ -59,7 +61,7 @@ const supportBlocks = [
 
 export default function PaymentsPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-white text-slate-900">
+    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       <BackgroundDecorations />
       <SiteHeader />
       <PageIntro
@@ -82,38 +84,38 @@ function PaymentOverview() {
   return (
     <section className="py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/70 md:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid gap-8 rounded-3xl border border-white/10 bg-white/5 p-8 md:grid-cols-[1.1fr_0.9fr]">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-[#F16921]">What to expect</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Built for finance teams and project owners</h2>
-            <p className="mt-4 text-slate-600">
+            <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Built for finance teams and project owners</h2>
+            <p className="mt-4 text-white/70">
               Every payment request includes scope summaries, GST breakdowns and links to supporting documents. Your clients get the transparency they need, and you get real-time dashboards for settlements.
             </p>
             <div className="mt-6 grid gap-4">
               {paymentHighlights.map((item) => (
-                <div key={item.title} className="flex gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-                  <span className="mt-1 inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#147B3E]/15 text-[#147B3E]">
+                <div key={item.title} className="flex gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/80">
+                  <span className="mt-1 inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#147B3E]/20 text-[#147B3E]">
                     <CheckIcon className="h-4 w-4" />
                   </span>
                   <div>
-                    <p className="font-semibold text-slate-900">{item.title}</p>
-                    <p className="mt-1 text-slate-600">{item.description}</p>
+                    <p className="font-semibold text-white">{item.title}</p>
+                    <p className="mt-1 text-white/70">{item.description}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <div className="flex flex-col justify-between gap-6 rounded-3xl border border-slate-200 bg-gradient-to-br from-violet-50 via-white to-white p-6 text-slate-900">
+          <div className="flex flex-col justify-between gap-6 rounded-3xl border border-white/10 bg-gradient-to-br from-violet-500/20 via-transparent to-transparent p-6 text-white">
             <div>
-              <p className="text-sm font-semibold text-slate-600">Live ETA</p>
+              <p className="text-sm font-semibold text-white/80">Live ETA</p>
               <p className="mt-2 text-4xl font-bold">Week of {getNextWeekLabel()}</p>
-              <p className="mt-3 text-sm text-slate-600">
+              <p className="mt-3 text-sm text-white/70">
                 We are running compliance checks and sandbox flows now. Share your invoicing workflow to be part of the pilot batch.
               </p>
             </div>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-full bg-[#147B3E] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/40 transition hover:bg-[#126736]"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-lg shadow-white/20 transition hover:bg-slate-100"
             >
               Join the pilot
               <ArrowIcon className="h-4 w-4" />
@@ -129,17 +131,17 @@ function IntegrationTimeline() {
   return (
     <section className="py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-6">
-        <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">Launch timeline</h2>
-        <p className="mt-3 text-slate-600">Here’s how we roll out Razorpay across every engagement over the next few days.</p>
+        <h2 className="text-3xl font-bold text-white sm:text-4xl">Launch timeline</h2>
+        <p className="mt-3 text-white/70">Here’s how we roll out Razorpay across every engagement over the next few days.</p>
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {integrationTimeline.map((item) => (
-            <div key={item.phase} className="flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div key={item.phase} className="flex h-full flex-col justify-between rounded-3xl border border-white/10 bg-white/5 p-6">
               <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-slate-500">{item.window}</p>
-                <h3 className="mt-3 text-xl font-semibold text-slate-900">{item.phase}</h3>
-                <p className="mt-3 text-sm text-slate-600">{item.detail}</p>
+                <p className="text-xs uppercase tracking-[0.3em] text-white/60">{item.window}</p>
+                <h3 className="mt-3 text-xl font-semibold text-white">{item.phase}</h3>
+                <p className="mt-3 text-sm text-white/70">{item.detail}</p>
               </div>
-              <span className="mt-6 inline-flex items-center text-sm font-semibold text-slate-600">
+              <span className="mt-6 inline-flex items-center text-sm font-semibold text-white/70">
                 Razorpay sandbox → production
               </span>
             </div>
@@ -156,14 +158,14 @@ function SupportHighlights() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Beyond collections</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Finance, compliance and customer support ready</h2>
-          <p className="mt-3 text-slate-600">Each digital payment step is backed by documentation workflows so your auditors, procurement teams and customers stay aligned.</p>
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Finance, compliance and customer support ready</h2>
+          <p className="mt-3 text-white/70">Each digital payment step is backed by documentation workflows so your auditors, procurement teams and customers stay aligned.</p>
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {supportBlocks.map((block) => (
-            <div key={block.title} className="rounded-3xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm">
+            <div key={block.title} className="rounded-3xl border border-white/10 bg-white/5 p-6 text-white">
               <h3 className="text-lg font-semibold">{block.title}</h3>
-              <p className="mt-3 text-sm text-slate-600">{block.description}</p>
+              <p className="mt-3 text-sm text-white/70">{block.description}</p>
             </div>
           ))}
         </div>
@@ -176,18 +178,18 @@ function ContactCta() {
   return (
     <section className="py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="rounded-3xl border border-slate-200 bg-white p-8 text-slate-800 shadow-xl md:flex md:items-center md:justify-between md:gap-10">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-8 text-white md:flex md:items-center md:justify-between md:gap-10">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Need a payment walkthrough?</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900">Schedule a Razorpay demo for your finance team</h2>
-            <p className="mt-3 text-slate-600">
+            <h2 className="mt-4 text-3xl font-bold text-white">Schedule a Razorpay demo for your finance team</h2>
+            <p className="mt-3 text-white/70">
               We’ll showcase the payment links, receipts, reconciliations and reporting so you know exactly what launches next week.
             </p>
           </div>
           <div className="mt-6 flex gap-4 md:mt-0">
             <Link
               href="tel:+918977310017"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-900"
+              className="inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 text-sm font-semibold text-white hover:border-white/60"
             >
               Call us
               <PhoneIcon className="h-4 w-4" />
