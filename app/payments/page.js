@@ -1,15 +1,13 @@
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
 import PageIntro from "../components/layout/PageIntro";
 import { ContactSection } from "../components/marketing/sections";
+import WhatsAppFloat from "../components/WhatsAppFloat";
 
 export const metadata = {
   title: "Digital Payments — Bharath Solar EPC",
   description: "Preview the Razorpay payment experience launching next week for Bharath Solar EPC clients.",
 };
-
-const WhatsAppFloat = dynamic(() => import("../components/WhatsAppFloat"), { ssr: false });
 
 const paymentHighlights = [
   {
