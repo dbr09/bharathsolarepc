@@ -5,15 +5,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 export const navLinks = [
-  { label: "Overview", href: "/" },
-  { label: "Solutions", href: "/solutions" },
-  { label: "Calculator", href: "/calculator" },
-  { label: "Process", href: "/process" },
-  { label: "Projects", href: "/projects" },
-  { label: "Testimonials", href: "/testimonials" },
-  { label: "Payments", href: "/payments" },
-  { label: "Contact", href: "/contact" },
-  { label: "Subsidy", href: "/subsidy" },
+  { label: "Home", href: "/" },
+  { label: "Solar Plans", href: "/solutions" },
+  { label: "Savings Tool", href: "/calculator" },
+  { label: "Our Work", href: "/projects" },
+  { label: "Support", href: "/contact" },
 ];
 
 export function BackgroundDecorations() {
@@ -30,38 +26,43 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <header className="sticky top-0 z-40 border-b border-white/5 bg-slate-950/75 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
         <Link href="/" className="flex items-center gap-3">
-          <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-900/30 ring-1 ring-white/60">
-            <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
+          <span className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-lg shadow-slate-900/30 ring-1 ring-white/60">
+            <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1.5" sizes="44px" priority />
           </span>
           <div className="hidden sm:block">
-            <p className="text-sm uppercase tracking-[0.24em] text-white/60">Bharath Solar EPC</p>
-            <p className="text-lg font-semibold text-white">Energy that pays for itself</p>
+            <p className="text-sm font-semibold text-white">Bharath Solar</p>
+            <p className="text-xs text-white/60">Bright power made simple</p>
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+        <nav className="hidden items-center gap-2 md:flex">
           {navLinks.map((item) => (
-            <Link key={item.label} href={item.href} className="text-white/70 hover:text-white">
+            <Link
+              key={item.label}
+              href={item.href}
+              className="rounded-full px-4 py-2 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white"
+            >
               {item.label}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-2 md:flex">
           <a
             href="tel:+918977310017"
-            className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white/80 transition hover:border-white/40 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-sm font-semibold text-white/80 transition hover:bg-white/10 hover:text-white"
           >
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#147B3E]/30 text-xs text-[#147B3E]">📞</span>
             +91 89773 10017
           </a>
           <Link
             href="/contact"
-            className="rounded-full bg-[#147B3E] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/40 transition hover:bg-[#126736]"
+            className="inline-flex items-center gap-2 rounded-full bg-[#147B3E] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/40 transition hover:bg-[#126736]"
           >
-            Talk to an expert
+            Let&apos;s talk
           </Link>
         </div>
 
@@ -82,19 +83,24 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-white/10 bg-slate-950/95 md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-6">
+        <div className="border-t border-white/5 bg-slate-950/95 md:hidden">
+          <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-6">
             {navLinks.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-base font-medium text-white/80 hover:text-white"
+                className="rounded-full bg-white/5 px-4 py-2 text-base font-semibold text-white/80 transition hover:bg-white/10 hover:text-white"
                 onClick={() => setOpen(false)}
               >
                 {item.label}
               </Link>
             ))}
-            <a href="tel:+918977310017" className="text-base font-semibold text-white" onClick={() => setOpen(false)}>
+            <a
+              href="tel:+918977310017"
+              className="inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-base font-semibold text-white"
+              onClick={() => setOpen(false)}
+            >
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#147B3E]/30 text-sm text-[#147B3E]">📞</span>
               +91 89773 10017
             </a>
             <Link
@@ -102,7 +108,7 @@ export function SiteHeader() {
               className="inline-flex w-full justify-center rounded-full bg-[#147B3E] px-4 py-2 text-sm font-semibold text-white"
               onClick={() => setOpen(false)}
             >
-              Talk to an expert
+              Let&apos;s talk
             </Link>
           </div>
         </div>
