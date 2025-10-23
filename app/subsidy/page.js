@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const metadata = { title: "Subsidy — Bharath Solar EPC" };
 
 export default function Subsidy() {
@@ -43,9 +45,9 @@ export default function Subsidy() {
           >
             WhatsApp Us
           </a>
-          <a href="/#contact" className="px-6 py-3 rounded-xl border border-zinc-300 hover:border-[#147B3E]">
+          <Link href="/#contact" className="px-6 py-3 rounded-xl border border-zinc-300 hover:border-[#147B3E]">
             Get Free Quote
-          </a>
+          </Link>
         </div>
       </div>
     </main>

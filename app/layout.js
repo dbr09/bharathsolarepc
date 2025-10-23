@@ -1,21 +1,17 @@
 import "./globals.css";
-import Sidebar from "./components/Sidebar";
+import { Inter } from "next/font/google";
 
 export const metadata = {
   title: "Bharath Solar EPC",
-  description: "Solar EPC solutions in Telangana — Residential, Commercial & Industrial.",
+  description: "Design, build and maintain high-performance solar plants across Telangana and India.",
 };
+
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-white text-black antialiased">
-        <Sidebar />
-        <div className="md:ml-64 min-h-screen">
-          {children}
-        </div>
-      </body>
+      <body className={`${inter.className} bg-slate-950 text-slate-100 antialiased`}>{children}</body>
     </html>
   );
 }
-
