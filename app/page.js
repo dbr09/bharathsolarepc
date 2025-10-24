@@ -1,5 +1,8 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "./components/layout/SiteChrome";
 import { ProjectsHighlightsSection } from "./components/marketing/sections";
 import WhatsAppFloat from "./components/WhatsAppFloat";
@@ -10,58 +13,146 @@ const heroStats = [
   { label: "Average Client Payback", value: "3.2 yrs" },
 ];
 
+const heroBadges = ["Tier-1 modules", "Smart O&M", "Finance-ready"];
+
 const sectionCards = [
   {
     title: "Solar solutions",
     description: "Segment-wise EPC coverage with a design-first approach for rooftops and campuses.",
     href: "/solutions",
     icon: SunIcon,
-    accent: "bg-[#F16921]/15 text-[#F16921]",
+    accent: "bg-[#F16921]/25 text-[#F16921]",
+    glow: "from-[#F16921]/20 via-transparent to-transparent",
   },
   {
     title: "Savings calculator",
     description: "Find the ideal plant size, investment and payback for your property in minutes.",
     href: "/calculator",
     icon: CalculatorIcon,
-    accent: "bg-[#147B3E]/15 text-[#147B3E]",
+    accent: "bg-[#22C55E]/20 text-emerald-300",
+    glow: "from-emerald-400/20 via-transparent to-transparent",
   },
   {
     title: "Delivery process",
     description: "Review our five-stage execution model with quality gates and weekly checkpoints.",
     href: "/process",
     icon: ProcessIcon,
-    accent: "bg-blue-500/15 text-blue-300",
+    accent: "bg-sky-500/20 text-sky-300",
+    glow: "from-sky-400/20 via-transparent to-transparent",
   },
   {
     title: "Client success",
     description: "Hospitals, factories and homes that trust our engineering and O&M programmes.",
     href: "/testimonials",
     icon: QuoteIcon,
-    accent: "bg-amber-500/15 text-amber-300",
+    accent: "bg-amber-400/20 text-amber-200",
+    glow: "from-amber-400/25 via-transparent to-transparent",
   },
   {
     title: "Payments & finance",
     description: "See how Razorpay will simplify advance, milestone and O&M collections for you.",
     href: "/payments",
     icon: CreditCardIcon,
-    accent: "bg-violet-500/15 text-violet-300",
+    accent: "bg-violet-500/20 text-violet-200",
+    glow: "from-violet-400/25 via-transparent to-transparent",
   },
   {
     title: "Talk to our team",
     description: "Share your bill, roof details or RFP to receive a customised EPC proposal.",
     href: "/contact",
     icon: EnvelopeIcon,
-    accent: "bg-emerald-500/15 text-emerald-300",
+    accent: "bg-emerald-500/20 text-emerald-200",
+    glow: "from-emerald-400/20 via-transparent to-transparent",
+  },
+];
+
+const marqueeItems = [
+  {
+    title: "Hospitals & pharma",
+    description: "Sterile rooftops with HVAC resilience and EMI compliance.",
+  },
+  {
+    title: "Manufacturing",
+    description: "High-span sheds, lightweight structures and DG sync upgrades.",
+  },
+  {
+    title: "Institutions",
+    description: "Auditorium shading, net-metering approvals and smart kiosks.",
+  },
+  {
+    title: "Premium residences",
+    description: "Design-led pergolas, battery-ready wiring and EV-ready circuits.",
+  },
+];
+
+const caseStudyMilestones = [
+  {
+    label: "Feasibility",
+    detail: "Digital twin of the campus, load profiling and ROI narrative in 4 days.",
+    status: "complete",
+  },
+  {
+    label: "Engineering",
+    detail: "PE-stamped designs, wind tunnel validation and tier-1 BOM within 10 days.",
+    status: "complete",
+  },
+  {
+    label: "Execution",
+    detail: "Zero-shutdown installation with night-time crane operations and QA sign-offs.",
+    status: "active",
+  },
+  {
+    label: "Handover",
+    detail: "Performance dashboards, O&M playbooks and DISCOM coordination done for you.",
+    status: "upcoming",
   },
 ];
 
 export default function Home() {
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    let frame = 0;
+
+    const updateProgress = () => {
+      const maxScrollable = document.body.scrollHeight - window.innerHeight;
+      const next = maxScrollable > 0 ? Math.min(window.scrollY / maxScrollable, 1) : 0;
+      setScrollProgress(next);
+      frame = 0;
+    };
+
+    const handleScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateProgress);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    updateProgress();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  const accentPosition = `${50 + scrollProgress * 35}% ${35 + scrollProgress * 20}%`;
+
   return (
-    <main className="relative min-h-screen overflow-hidden bg-white text-slate-900">
+    <main className="relative min-h-screen overflow-hidden bg-transparent text-slate-100">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 transition-opacity duration-700"
+        style={{
+          background: `radial-gradient(circle at ${accentPosition}, rgba(16, 185, 129, 0.18), transparent 60%)`,
+          opacity: 0.4 + scrollProgress * 0.4,
+        }}
+      />
       <BackgroundDecorations />
       <SiteHeader />
-      <Hero />
-      <SectionDirectory />
+      <Hero scrollProgress={scrollProgress} />
+      <PartnerMarquee />
+      <SectionDirectory scrollProgress={scrollProgress} />
+      <CaseStudySpotlight />
       <PaymentsTeaser />
       <ProjectsHighlightsSection />
       <SiteFooter />
@@ -70,76 +161,276 @@ export default function Home() {
   );
 }
 
-function Hero() {
+function Hero({ scrollProgress }) {
+  const sectionRef = useRef(null);
+  const frameRef = useRef(0);
+  const [cursor, setCursor] = useState({ x: 0.5, y: 0.5 });
+
+  useEffect(() => () => frameRef.current && window.cancelAnimationFrame(frameRef.current), []);
+
+  const updateCursor = (x, y) => {
+    setCursor({ x: Math.min(Math.max(x, 0), 1), y: Math.min(Math.max(y, 0), 1) });
+  };
+
+  const handlePointerMove = (event) => {
+    const rect = sectionRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const nextX = (event.clientX - rect.left) / rect.width;
+    const nextY = (event.clientY - rect.top) / rect.height;
+
+    if (frameRef.current) window.cancelAnimationFrame(frameRef.current);
+    frameRef.current = window.requestAnimationFrame(() => updateCursor(nextX, nextY));
+  };
+
+  const handlePointerLeave = () => {
+    if (frameRef.current) window.cancelAnimationFrame(frameRef.current);
+    frameRef.current = window.requestAnimationFrame(() => updateCursor(0.5, 0.5));
+  };
+
+  const tiltX = (cursor.y - 0.5) * -10;
+  const tiltY = (cursor.x - 0.5) * 12;
+  const floatingShiftX = (cursor.x - 0.5) * 40;
+  const floatingShiftY = (cursor.y - 0.5) * 30 - scrollProgress * 40;
+
   return (
-    <section className="relative overflow-hidden pb-20 pt-16 sm:pt-20">
-      <div className="absolute inset-x-6 bottom-0 top-32 rounded-3xl border border-slate-200/60 bg-slate-100 blur-3xl" aria-hidden />
+    <section
+      ref={sectionRef}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      className="relative overflow-hidden pb-24 pt-24 sm:pt-28"
+    >
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div
+          className="absolute left-1/2 top-[-18%] h-[720px] w-[720px] -translate-x-1/2 rounded-full bg-emerald-500/20 blur-3xl transition-transform duration-700"
+          style={{ transform: `translate3d(${floatingShiftX}px, ${floatingShiftY}px, 0)` }}
+        />
+        <div
+          className="absolute left-[8%] top-[28%] h-80 w-80 rounded-full bg-sky-500/20 blur-3xl transition-transform duration-700"
+          style={{ transform: `translate3d(${floatingShiftX * 0.4}px, ${floatingShiftY * -0.2}px, 0)` }}
+        />
+        <div
+          className="absolute right-[10%] top-[12%] h-56 w-56 rounded-full bg-amber-400/30 blur-[120px]"
+          style={{ transform: `translate3d(${floatingShiftX * -0.2}px, ${floatingShiftY * 0.4}px, 0)` }}
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(15,23,42,0.6)_0%,rgba(2,6,23,0.2)_50%,transparent_85%)]" />
+        <div className="absolute inset-x-10 top-1/2 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-60" />
+        <div className="absolute inset-x-0 bottom-8 h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent" />
+      </div>
       <div className="mx-auto grid max-w-6xl items-center gap-16 px-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-slate-500">
+        <div className="space-y-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-1.5 text-xs font-semibold uppercase tracking-[0.4em] text-slate-200 shadow-[0_25px_45px_-28px_rgba(16,185,129,0.6)]">
             MNRE empanelled • Tier-1 components • EPC & O&M
           </div>
-          <h1
-            className="mt-6 bg-gradient-to-r from-[#FF671F] via-white to-[#046A38] bg-clip-text text-4xl font-extrabold leading-tight text-transparent drop-shadow-[0_1px_1px_rgba(15,23,42,0.25)] sm:text-5xl lg:text-6xl"
-          >
-            Empowering India with clean solar energy
+          <h1 className="max-w-2xl text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+            <span className="bg-gradient-to-r from-emerald-300 via-white to-amber-200 bg-clip-text text-transparent">
+              Empowering India with clean solar energy
+            </span>
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-slate-600">
+          <p className="max-w-xl text-lg leading-relaxed text-slate-200/90">
             We design, build and maintain high-performance solar PV plants across Telangana, Andhra Pradesh and pan-India.
-            Explore the section that matters to you and get to the right answers faster.
+            Slide through the experience, explore the section that matters to you and feel the momentum of a future-ready EPC partner.
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-3">
+            {heroBadges.map((badge) => (
+              <span key={badge} className="tag-pill inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" /> {badge}
+              </span>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-4">
             <Link
               href="/calculator"
-              className="rounded-full bg-[#147B3E] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/30 transition hover:bg-[#126736]"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-7 py-3 text-sm font-semibold text-slate-950 shadow-[0_25px_50px_-20px_rgba(16,185,129,0.7)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
-              Estimate your savings
+              <span className="relative z-10">Estimate your savings</span>
+              <ArrowIcon className="relative z-10 h-4 w-4" />
+              <span className="absolute inset-0 translate-x-[-120%] bg-white/30 transition duration-500 group-hover:translate-x-[120%]" />
             </Link>
             <Link
               href="/solutions"
-              className="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/6 px-7 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               Explore solar solutions
             </Link>
           </div>
-          <dl className="mt-10 grid gap-6 sm:grid-cols-3">
+          <dl className="grid gap-6 sm:grid-cols-3">
             {heroStats.map((stat) => (
-              <div key={stat.label} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                <dd className="text-2xl font-bold text-slate-900">{stat.value}</dd>
-                <dt className="text-sm text-slate-500">{stat.label}</dt>
+              <div
+                key={stat.label}
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/6 p-5 shadow-[0_24px_70px_-40px_rgba(148,163,184,0.7)] backdrop-blur"
+              >
+                <div
+                  className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  style={{ background: "linear-gradient(135deg, rgba(56,189,248,0.25), rgba(16,185,129,0.25))" }}
+                />
+                <div className="relative flex items-start justify-between">
+                  <dd className="text-2xl font-semibold text-white">{stat.value}</dd>
+                  <span className="mt-1 inline-flex h-2 w-6 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400 opacity-70" />
+                </div>
+                <dt className="relative mt-2 text-sm text-slate-300/80">{stat.label}</dt>
               </div>
             ))}
           </dl>
         </div>
 
-        <div className="relative">
-          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-slate-100 p-8 shadow-2xl shadow-slate-200/60">
-            <div className="flex items-center justify-between text-sm font-semibold text-slate-600">
+        <div className="relative flex items-center justify-center">
+          <div
+            className="relative w-full max-w-xl overflow-hidden rounded-[32px] border border-white/10 bg-black/45 p-8 shadow-[0_55px_130px_-55px_rgba(16,185,129,0.7)] backdrop-blur-xl"
+            style={{ transform: `perspective(1200px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)` }}
+          >
+            <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-white/10" aria-hidden />
+            <div className="pointer-events-none absolute inset-[18px] rounded-[24px] border border-white/10 opacity-40" aria-hidden />
+            <div className="relative flex items-center justify-between text-sm font-semibold text-emerald-200/90">
               <span className="flex items-center gap-2">
                 <SparkIcon className="h-4 w-4" /> Real-time monitoring
               </span>
-              <span className="rounded-full bg-slate-100 px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-500">24/7</span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs uppercase tracking-[0.3em] text-emerald-100">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" aria-hidden /> Live
+              </span>
             </div>
-            <div className="mt-6 grid gap-4 text-slate-900">
-              <div className="rounded-2xl border border-slate-200 bg-white p-4">
-                <p className="text-sm text-slate-500">This week</p>
-                <p className="mt-1 text-3xl font-bold">4.8 MWh generated</p>
-                <p className="text-sm text-emerald-600">+12% vs. weather-adjusted forecast</p>
+            <div className="relative mt-6 space-y-5 text-slate-100">
+              <div className="rounded-2xl border border-white/10 bg-white/6 p-5">
+                <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Today&apos;s generation</p>
+                <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
+                  <div>
+                    <p className="text-4xl font-semibold leading-none">4.8 MWh</p>
+                    <p className="mt-2 text-sm text-emerald-200">+12% vs plan</p>
+                  </div>
+                  <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-slate-200/80">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Irradiance</span>
+                      <span className="text-sm font-semibold text-slate-100">92% optimal</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Availability</span>
+                      <span className="text-sm font-semibold text-slate-100">100%</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-white p-4">
-                <p className="text-sm text-slate-500">Carbon avoided</p>
-                <p className="mt-1 text-3xl font-bold">3.9 tCO₂e</p>
-                <p className="text-sm text-slate-600">Equivalent to planting 176 mature trees</p>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="rounded-2xl border border-white/10 bg-white/6 p-5">
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Health score</p>
+                  <p className="mt-3 text-3xl font-semibold">98%</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-200/80">All inverters are online and dispatch ready.</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/6 p-5">
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Carbon avoided</p>
+                  <p className="mt-3 text-3xl font-semibold">3.9 tCO₂e</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-200/80">Equal to planting 176 mature trees this week.</p>
+                </div>
               </div>
+              <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-5 text-sm text-emerald-100">
+                <p className="font-semibold">Performance desk on watch</p>
+                <p className="mt-1 opacity-80">
+                  Engineers review every anomaly, push insights to WhatsApp, and dispatch crews before yield dips.
+                </p>
+              </div>
+              <ul className="grid gap-3 text-xs text-slate-300">
+                {["Voltage harmony across strings", "No ticket breaches in the last 30 days", "Last on-site audit: 6 days ago"].map((item) => (
+                  <li key={item} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3">
+                    <span className="inline-flex h-2 w-2 rounded-full bg-emerald-300" aria-hidden />
+                    <span className="text-sm text-slate-200">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="mt-6 rounded-2xl border border-[#147B3E]/20 bg-[#147B3E]/10 p-4 text-sm text-[#0F5132]">
-              <p className="font-semibold">Dedicated performance desk</p>
-              <p className="opacity-80">
-                Get alerts before your DISCOM bill does. Our engineers review dashboards daily and dispatch crews before yield drops.
-              </p>
+            <div
+              className="pointer-events-none absolute -right-12 -top-12 hidden h-32 w-32 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl sm:block"
+              style={{ transform: `translate3d(${floatingShiftX * 0.25}px, ${floatingShiftY * 0.25}px, 0)` }}
+            >
+              <Image src="/globe.svg" alt="Solar network" fill className="p-6 opacity-80" />
             </div>
-            <div className="absolute -right-6 -top-6 hidden h-24 w-24 rounded-2xl border border-slate-200 bg-white backdrop-blur-lg sm:block">
-              <Image src="/globe.svg" alt="Solar network" fill className="p-6 opacity-70" />
+            <div className="pointer-events-none absolute -left-10 bottom-12 hidden h-24 w-24 rounded-full bg-emerald-400/20 blur-3xl sm:block" aria-hidden />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SectionDirectory({ scrollProgress }) {
+  return (
+    <section className="py-20 md:py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="max-w-3xl">
+          <p className="text-sm uppercase tracking-[0.3em] text-emerald-300/80">Quick access</p>
+          <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">Navigate to the details you need</h2>
+          <p className="mt-3 text-slate-300">
+            Each section of the site focuses on a single outcome—solutions, pricing, process, success stories, payments or contacting our experts. Glide through the cards to dive into what matters to you.
+          </p>
+        </div>
+        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {sectionCards.map((card, index) => {
+            const wave = Math.sin(scrollProgress * Math.PI * 2 + index * 0.6) * 12;
+            return (
+              <Link
+                key={card.title}
+                href={card.href}
+                style={{ transform: `translate3d(0, ${wave}px, 0)` }}
+                className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_-40px_rgba(15,118,110,0.75)] transition duration-500 hover:-translate-y-2 hover:border-white/30 hover:shadow-[0_45px_120px_-40px_rgba(15,118,110,0.9)]"
+              >
+                <div className={`absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 bg-gradient-to-br ${card.glow}`} />
+                <div className="relative">
+                  <span className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 ${card.accent}`}>
+                    <card.icon className="h-5 w-5" />
+                  </span>
+                  <h3 className="mt-5 text-xl font-semibold text-white">{card.title}</h3>
+                  <p className="mt-3 text-sm text-slate-300">{card.description}</p>
+                </div>
+                <span className="relative mt-6 inline-flex items-center text-sm font-semibold text-slate-200 group-hover:text-white">
+                  Go to section <ArrowIcon className="ml-2 h-4 w-4" />
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PartnerMarquee() {
+  const duplicated = [...marqueeItems, ...marqueeItems];
+
+  return (
+    <section className="py-16 md:py-20">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-white/5 p-8 shadow-[0_45px_120px_-50px_rgba(56,189,248,0.55)] md:p-12">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.2),_transparent_65%)] opacity-80" aria-hidden />
+          <div className="pointer-events-none absolute inset-0 border border-white/10" aria-hidden />
+          <div className="relative flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-2xl space-y-3">
+              <p className="text-xs uppercase tracking-[0.35em] text-sky-300/80">Trusted by teams that demand uptime</p>
+              <h2 className="text-3xl font-semibold text-white sm:text-4xl">Industrial-grade design with lifestyle-grade finish</h2>
+              <p className="text-slate-300">From smart hospitals and precision factories to premium homes, our experiential EPC blends performance engineering with immersive storytelling.</p>
+            </div>
+            <Link
+              href="/projects"
+              className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-100 transition hover:border-white/30 hover:bg-white/10"
+            >
+              Explore projects
+              <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" />
+            </Link>
+          </div>
+          <div className="relative mt-10 overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/40">
+            <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-slate-950/90 to-transparent" aria-hidden />
+            <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-slate-950/90 to-transparent" aria-hidden />
+            <div className="marquee-track gap-8 px-6 py-5">
+              {duplicated.map((item, index) => (
+                <div key={`${item.title}-${index}`} className="flex min-w-[220px] flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-4">
+                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-300/80">{item.title}</span>
+                  <span className="text-sm text-slate-200">{item.description}</span>
+                </div>
+              ))}
+            </div>
+            <div className="marquee-track gap-8 px-6 py-5" data-direction="reverse">
+              {duplicated.map((item, index) => (
+                <div key={`reverse-${item.title}-${index}`} className="flex min-w-[220px] flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-4">
+                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300/90">{item.title}</span>
+                  <span className="text-sm text-slate-400">{item.description}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -148,36 +439,88 @@ function Hero() {
   );
 }
 
-function SectionDirectory() {
+function CaseStudySpotlight() {
+  const statusStyles = {
+    complete: "border-emerald-400/40 bg-emerald-400/10 text-emerald-100",
+    active: "border-sky-400/40 bg-sky-400/10 text-sky-100",
+    upcoming: "border-white/10 bg-white/5 text-slate-200",
+  };
+
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="max-w-3xl">
-          <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Quick access</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Navigate to the details you need</h2>
-          <p className="mt-3 text-slate-600">
-            Each section of the site focuses on a single outcome—solutions, pricing, process, success stories, payments or contacting our experts.
-          </p>
-        </div>
-        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {sectionCards.map((card) => (
-            <Link
-              key={card.title}
-              href={card.href}
-              className="group flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md"
-            >
-              <div>
-                <span className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl ${card.accent}`}>
-                  <card.icon className="h-5 w-5" />
-                </span>
-                <h3 className="mt-5 text-xl font-semibold text-slate-900">{card.title}</h3>
-                <p className="mt-3 text-sm text-slate-600">{card.description}</p>
+    <section className="py-20 md:py-24">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-gradient-to-br from-white/10 via-slate-900/30 to-slate-950/60 p-10 shadow-[0_55px_140px_-60px_rgba(16,185,129,0.75)]">
+          <div className="pointer-events-none absolute inset-0 border border-white/10" aria-hidden />
+          <div className="pointer-events-none absolute inset-6 rounded-[28px] border border-white/5 opacity-40" aria-hidden />
+          <div className="pointer-events-none absolute -right-12 top-10 h-64 w-64 rounded-full bg-emerald-400/20 blur-3xl" aria-hidden />
+          <div className="relative space-y-6">
+            <p className="text-xs uppercase tracking-[0.35em] text-emerald-300/80">Spotlight case study</p>
+            <h2 className="text-3xl font-semibold text-white sm:text-4xl">Pharma campus powering critical loads round the clock</h2>
+            <p className="max-w-2xl text-slate-200">
+              A 650 kWp rooftop and carport system for a Hyderabad-based pharmaceutical major integrates rapid shutdown, sterile zone routing and predictive maintenance for zero disruptions.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Capacity</p>
+                <p className="mt-2 text-2xl font-semibold text-white">650 kWp rooftop</p>
+                <p className="text-sm text-emerald-300">+18% yield vs baseline</p>
               </div>
-              <span className="mt-6 inline-flex items-center text-sm font-semibold text-slate-700 group-hover:text-slate-900">
-                Go to section <ArrowIcon className="ml-2 h-4 w-4" />
-              </span>
-            </Link>
-          ))}
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Carbon savings</p>
+                <p className="mt-2 text-2xl font-semibold text-white">812 tCO₂e</p>
+                <p className="text-sm text-slate-300">Equivalent to 37,000 trees</p>
+              </div>
+            </div>
+            <div className="relative mt-6 overflow-hidden rounded-[28px] border border-white/10 bg-white/5 p-6">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-200">
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
+                  <SparkIcon className="h-4 w-4" /> Digital twin validated
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
+                  <SparkIcon className="h-4 w-4" /> GMP compliant routing
+                </span>
+              </div>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm text-slate-200">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Payback</p>
+                  <p className="mt-1 text-xl font-semibold text-white">3.1 years</p>
+                  <p className="text-xs text-emerald-300">Locked financing with SBI</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm text-slate-200">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Availability</p>
+                  <p className="mt-1 text-xl font-semibold text-white">99.4%</p>
+                  <p className="text-xs text-slate-300">24/7 command centre monitoring</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="relative flex flex-col gap-6 rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_45px_120px_-50px_rgba(14,116,144,0.55)]">
+          <div className="absolute inset-y-10 left-6 w-px bg-gradient-to-b from-emerald-400/60 via-sky-400/40 to-transparent" aria-hidden />
+          <p className="text-xs uppercase tracking-[0.35em] text-slate-300">Quality gates</p>
+          <div className="flex flex-col gap-5">
+            {caseStudyMilestones.map((milestone) => (
+              <div key={milestone.label} className={`relative rounded-2xl border p-5 transition ${statusStyles[milestone.status]}`}>
+                <div className="absolute left-[-22px] top-5 h-3 w-3 rounded-full border border-white/20 bg-white/40 shadow-[0_0_0_4px_rgba(30,41,59,0.85)]" />
+                <p className="text-sm font-semibold uppercase tracking-[0.3em]">{milestone.label}</p>
+                <p className="mt-2 text-sm leading-relaxed">{milestone.detail}</p>
+                {milestone.status === "active" ? (
+                  <span className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white">
+                    In progress
+                  </span>
+                ) : null}
+                {milestone.status === "upcoming" ? (
+                  <span className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
+                    Next
+                  </span>
+                ) : null}
+              </div>
+            ))}
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-5 text-sm text-slate-200">
+            <p className="font-semibold text-white">“Commissioned in 41 days with zero downtime”</p>
+            <p className="mt-2 text-sm text-slate-300">Facilities Head, Medlife Pharmaceuticals</p>
+          </div>
         </div>
       </div>
     </section>
@@ -185,43 +528,55 @@ function SectionDirectory() {
 }
 
 function PaymentsTeaser() {
+  const [hovered, setHovered] = useState(false);
+
   return (
-    <section className="py-16 md:py-20">
+    <section className="py-20 md:py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-slate-100 p-8 md:p-10">
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <div className="max-w-3xl">
-              <p className="text-xs uppercase tracking-[0.3em] text-[#F16921]">Razorpay integration</p>
-              <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Digital payments go live next week</h2>
-              <p className="mt-3 text-slate-600">
+        <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_50px_120px_-40px_rgba(56,189,248,0.45)] transition duration-500 hover:border-white/20 md:p-12">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.25),_transparent_60%)] opacity-80" />
+          <div className="relative flex flex-col gap-10 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-3xl space-y-4">
+              <p className="text-xs uppercase tracking-[0.3em] text-sky-300/80">Razorpay integration</p>
+              <h2 className="text-3xl font-semibold text-white sm:text-4xl">Digital payments go live next week</h2>
+              <p className="text-slate-200">
                 We are configuring a Razorpay-powered checkout so you can lock in designs, pay mobilisation advances and manage O&M renewals without paperwork or manual reconciliations.
               </p>
-              <ul className="mt-4 space-y-2 text-sm text-slate-600">
+              <ul className="space-y-2 text-sm text-slate-300">
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Secure payment links for proposals and milestone invoices.
+                  <CheckIcon className="mt-1 h-4 w-4 text-emerald-300" /> Secure payment links for proposals and milestone invoices.
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Auto-generated receipts with GST-compliant billing references.
+                  <CheckIcon className="mt-1 h-4 w-4 text-emerald-300" /> Auto-generated receipts with GST-compliant billing references.
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Support for UPI, credit/debit cards and net banking from day one.
+                  <CheckIcon className="mt-1 h-4 w-4 text-emerald-300" /> Support for UPI, credit/debit cards and net banking from day one.
                 </li>
               </ul>
             </div>
-            <div className="flex shrink-0 flex-col items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 text-slate-700 shadow-sm">
-              <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-100 text-violet-600">
+            <div
+              className="relative flex shrink-0 flex-col items-start gap-4 overflow-hidden rounded-[28px] border border-white/10 bg-white/5 p-6 text-slate-100 shadow-[0_30px_80px_-45px_rgba(56,189,248,0.55)] transition duration-500 hover:border-white/20"
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
+            >
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500/20 text-sky-200">
                 <CreditCardIcon className="h-5 w-5" />
               </span>
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-slate-200">
                 Want early access for your project? Share your billing workflow and we’ll include you in the pilot run.
               </p>
               <Link
                 href="/payments"
-                className="inline-flex items-center gap-2 rounded-full bg-[#147B3E] px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/30 transition hover:bg-[#126736]"
+                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-sky-400 via-emerald-400 to-amber-300 px-4 py-2 text-sm font-semibold text-slate-900 shadow-[0_20px_60px_-30px_rgba(56,189,248,0.65)] transition hover:scale-105"
               >
-                View payment plans
-                <ArrowIcon className="h-4 w-4" />
+                <span className="relative z-10">View payment plans</span>
+                <ArrowIcon className="relative z-10 h-4 w-4" />
+                <span className="absolute inset-0 translate-x-[-120%] bg-white/30 transition duration-500 group-hover:translate-x-[120%]" />
               </Link>
+              <div
+                className="pointer-events-none absolute inset-0 opacity-0 transition duration-500"
+                style={{ opacity: hovered ? 1 : 0, background: "linear-gradient(135deg, rgba(56,189,248,0.2), rgba(16,185,129,0.25))" }}
+              />
             </div>
           </div>
         </div>

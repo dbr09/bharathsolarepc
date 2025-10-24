@@ -1,3 +1,4 @@
+import DynamicPageShell from "../components/layout/DynamicPageShell";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
 import PageIntro from "../components/layout/PageIntro";
 import { SolutionsSection, ValueHighlightsSection } from "../components/marketing/sections";
@@ -10,7 +11,7 @@ export const metadata = {
 
 export default function SolutionsPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-white text-slate-900">
+    <DynamicPageShell accent="cyan">
       <BackgroundDecorations />
       <SiteHeader />
       <PageIntro
@@ -22,6 +23,6 @@ export default function SolutionsPage() {
       <SolutionsSection />
       <SiteFooter />
       <WhatsAppFloat />
-    </main>
+    </DynamicPageShell>
   );
 }
