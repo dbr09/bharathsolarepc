@@ -105,7 +105,7 @@ export function SiteHeader() {
               <PhoneIcon className="h-4 w-4 text-emerald-300" />
               <a
                 href="tel:+918977310017"
-                className="font-semibold text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className="font-semibold text-slate-100 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
                 +91 89773 10017
               </a>
@@ -162,7 +162,7 @@ export function SiteHeader() {
             })}
             <a
               href="tel:+918977310017"
-              className="inline-flex items-center gap-3 rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-base font-semibold text-white"
+              className="inline-flex items-center gap-3 whitespace-nowrap rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-base font-semibold text-white"
               onClick={() => setOpen(false)}
             >
               <PhoneIcon className="h-4 w-4" /> +91 89773 10017
