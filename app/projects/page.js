@@ -30,14 +30,14 @@ const DATA = [
 
 export default function Projects() {
   return (
-    <main className="mx-auto max-w-7xl px-6 py-14 bg-white text-black text-lg">
-      <h1 className="text-4xl font-extrabold">Our Projects</h1>
-      <p className="mt-3 text-zinc-700">Selected references. Photos available on request.</p>
+    <main className="mx-auto max-w-7xl px-6 py-14 bg-slate-950 text-slate-100 text-lg">
+      <h1 className="text-4xl font-extrabold text-white">Our Projects</h1>
+      <p className="mt-3 text-zinc-300">Selected references. Photos available on request.</p>
 
-      <div className="mt-8 overflow-x-auto rounded-2xl border border-zinc-200">
-        <table className="min-w-full text-base">
-          <thead className="bg-zinc-50">
-            <tr className="text-left">
+      <div className="mt-8 overflow-x-auto rounded-2xl border border-zinc-700 bg-slate-900/60 shadow-lg shadow-slate-950/40">
+        <table className="min-w-full text-base text-slate-200">
+          <thead className="bg-slate-900/80">
+            <tr className="text-left text-slate-200">
               <th className="p-4 font-semibold">#</th>
               <th className="p-4 font-semibold">Name of Customer</th>
               <th className="p-4 font-semibold">Solar Plant Details</th>
@@ -46,7 +46,7 @@ export default function Projects() {
           </thead>
           <tbody>
             {DATA.map((r, i) => (
-              <tr key={i} className="border-t odd:bg-white even:bg-zinc-50">
+              <tr key={i} className="border-t border-slate-800 odd:bg-slate-900/80 even:bg-slate-900/60">
                 <td className="p-4">{i + 1}</td>
                 <td className="p-4">{r.name}</td>
                 <td className="p-4">{r.size}</td>
@@ -57,7 +57,7 @@ export default function Projects() {
         </table>
       </div>
 
-      <p className="mt-6 text-zinc-800 font-medium">
+      <p className="mt-6 text-zinc-200 font-medium">
         In collaboration with <span className="font-bold">SUVAHIK</span>.
       </p>
     </main>

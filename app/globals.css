@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
   font-family: var(--font-sans, "Inter", "Helvetica Neue", Arial, sans-serif);
   line-height: 1.6;
+  background-color: rgb(2 6 23);
+  color: rgb(226 232 240);
 }
 
 a {
