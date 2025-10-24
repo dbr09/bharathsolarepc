@@ -128,10 +128,10 @@ export function ValueHighlightsSection() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Why Bharath Solar EPC</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
             Everything you need to own and run dependable solar assets
           </h2>
-          <p className="mt-3 text-slate-600">
+          <p className="mt-3 text-slate-300">
             From feasibility to lifetime performance, our multi-disciplinary team covers electrical, structural and financial diligence so you always know what to expect.
           </p>
         </div>
@@ -139,14 +139,14 @@ export function ValueHighlightsSection() {
           {valueProps.map((item) => (
             <div
               key={item.title}
-              className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:bg-slate-50"
+              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
             >
               <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#147B3E]/15 text-[#147B3E]">
                 <item.icon className="h-5 w-5" />
               </span>
-              <h3 className="text-xl font-semibold text-slate-900">{item.title}</h3>
-              <p className="mt-3 text-sm text-slate-600">{item.description}</p>
-              <span className="mt-6 inline-flex items-center text-sm font-semibold text-slate-700">
+              <h3 className="text-xl font-semibold text-white">{item.title}</h3>
+              <p className="mt-3 text-sm text-slate-300">{item.description}</p>
+              <span className="mt-6 inline-flex items-center text-sm font-semibold text-slate-200">
                 Learn more
                 <ArrowIcon className="ml-2 h-4 w-4" />
               </span>
@@ -165,11 +165,11 @@ export function CalculatorSection() {
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Plan your plant</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Solar sizing calculator</h2>
-            <p className="mt-3 text-slate-600">
+            <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Solar sizing calculator</h2>
+            <p className="mt-3 text-slate-300">
               1 kW of rooftop solar in Telangana generates about <strong>150 units</strong> per month. Enter your electricity usage and tariff to estimate system size, space requirement and payback.
             </p>
-            <ul className="mt-6 space-y-3 text-sm text-slate-600">
+            <ul className="mt-6 space-y-3 text-sm text-slate-300">
               <li className="flex items-start gap-3">
                 <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Tailored proposals include module layout, structure details and financial model.
               </li>
@@ -221,28 +221,28 @@ function Calculator() {
   }, [tariff, unitsMonth]);
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/70">
+    <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_-40px_rgba(16,185,129,0.55)]">
       <form className="space-y-4">
         <div>
-          <label htmlFor="units" className="text-sm font-semibold text-slate-700">
+          <label htmlFor="units" className="text-sm font-semibold text-slate-200">
             Monthly electricity usage (units)
           </label>
           <input
             id="units"
             value={unitsMonth}
             onChange={(event) => setUnitsMonth(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+            className="mt-2 w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
           />
         </div>
         <div>
-          <label htmlFor="tariff" className="text-sm font-semibold text-slate-700">
+          <label htmlFor="tariff" className="text-sm font-semibold text-slate-200">
             Average tariff (₹/unit)
           </label>
           <input
             id="tariff"
             value={tariff}
             onChange={(event) => setTariff(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+            className="mt-2 w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
           />
         </div>
       </form>
@@ -263,8 +263,8 @@ function Calculator() {
 function ResultRow({ label, value }) {
   return (
     <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-center">
-      <span className="text-slate-500">{label}</span>
-      <span className="font-semibold text-slate-900">{value}</span>
+      <span className="text-slate-400">{label}</span>
+      <span className="font-semibold text-white">{value}</span>
     </div>
   );
 }
@@ -275,27 +275,27 @@ export function SolutionsSection() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Solutions</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Tailored EPC engagements for every segment</h2>
-          <p className="mt-3 text-slate-600">
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Tailored EPC engagements for every segment</h2>
+          <p className="mt-3 text-slate-300">
             Choose the engagement that fits your load profile, roof architecture and financial goals. Every project receives design, supply, installation and long-term support under one roof.
           </p>
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {solutions.map((solution) => (
-            <div key={solution.name} className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div key={solution.name} className="flex h-full flex-col rounded-3xl border border-white/10 bg-white/5 p-6 shadow-sm">
               <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F16921]/15 text-[#F16921]">
                 <solution.icon className="h-5 w-5" />
               </span>
-              <h3 className="text-xl font-semibold text-slate-900">{solution.name}</h3>
-              <p className="mt-3 text-sm text-slate-600">{solution.summary}</p>
-              <ul className="mt-6 space-y-2 text-sm text-slate-600">
+              <h3 className="text-xl font-semibold text-white">{solution.name}</h3>
+              <p className="mt-3 text-sm text-slate-300">{solution.summary}</p>
+              <ul className="mt-6 space-y-2 text-sm text-slate-300">
                 {solution.bullets.map((bullet) => (
                   <li key={bullet} className="flex items-start gap-2">
                     <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> {bullet}
                   </li>
                 ))}
               </ul>
-              <Link href={solution.href} className="mt-8 inline-flex items-center text-sm font-semibold text-slate-700 hover:text-slate-900">
+              <Link href={solution.href} className="mt-8 inline-flex items-center text-sm font-semibold text-slate-200 hover:text-white">
                 Explore details <ArrowIcon className="ml-2 h-4 w-4" />
               </Link>
             </div>
@@ -312,10 +312,10 @@ export function ProcessSection() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">How we work</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
             A proven EPC playbook from discovery to performance
           </h2>
-          <p className="mt-3 text-slate-600">
+          <p className="mt-3 text-slate-300">
             Our cross-functional teams run a transparent process with weekly updates, shared documentation and quality gates so you always know the status of your solar asset.
           </p>
         </div>
@@ -323,15 +323,15 @@ export function ProcessSection() {
           {steps.map((step, index) => (
             <li
               key={step.title}
-              className="group relative rounded-3xl border border-slate-200 bg-white p-6 transition duration-300 hover:border-slate-300 hover:bg-slate-50"
+              className="group relative rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:border-white/20 hover:bg-white/10"
             >
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Step {index + 1}</span>
-                  <h3 className="mt-2 text-2xl font-semibold text-slate-900">{step.title}</h3>
-                  <p className="mt-3 text-sm text-slate-600">{step.description}</p>
+                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Step {index + 1}</span>
+                  <h3 className="mt-2 text-2xl font-semibold text-white">{step.title}</h3>
+                  <p className="mt-3 text-sm text-slate-300">{step.description}</p>
                 </div>
-                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">{step.duration}</span>
+                <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-300">{step.duration}</span>
               </div>
             </li>
           ))}
@@ -348,25 +348,25 @@ export function ProjectsHighlightsSection() {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
             <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Proven track record</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Highlighted installations</h2>
-            <p className="mt-3 text-slate-600">
+            <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Highlighted installations</h2>
+            <p className="mt-3 text-slate-300">
               A glimpse into the industries and homes that trust us with their energy transition. Detailed case studies and references are available on request.
             </p>
           </div>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-400 hover:text-slate-900"
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/40 hover:bg-white/10 hover:text-white"
           >
             View complete list <ArrowIcon className="h-4 w-4" />
           </Link>
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {caseStudies.map((item) => (
-            <article key={item.title} className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
-              <p className="mt-4 text-2xl font-bold text-slate-900">{item.metric}</p>
-              <p className="mt-3 text-sm text-slate-600">{item.detail}</p>
-              <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-slate-700">
+            <article key={item.title} className="flex h-full flex-col rounded-3xl border border-white/10 bg-white/5 p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+              <p className="mt-4 text-2xl font-bold text-white">{item.metric}</p>
+              <p className="mt-3 text-sm text-slate-300">{item.detail}</p>
+              <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-slate-200">
                 Performance verified <SparkIcon className="h-4 w-4" />
               </div>
             </article>
@@ -383,13 +383,13 @@ export function TestimonialsFaqSection() {
       <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Client confidence</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Voices from our partners</h2>
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Voices from our partners</h2>
           <div className="mt-6 space-y-6">
             {testimonials.map((testimonial) => (
-              <figure key={testimonial.name} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <blockquote className="text-base text-slate-700">“{testimonial.quote}”</blockquote>
-                <figcaption className="mt-4 text-sm font-semibold text-slate-900">
-                  {testimonial.name} <span className="block text-xs font-normal text-slate-500">{testimonial.role}</span>
+              <figure key={testimonial.name} className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-sm">
+                <blockquote className="text-base text-slate-200">“{testimonial.quote}”</blockquote>
+                <figcaption className="mt-4 text-sm font-semibold text-white">
+                  {testimonial.name} <span className="block text-xs font-normal text-slate-400">{testimonial.role}</span>
                 </figcaption>
               </figure>
             ))}
@@ -397,12 +397,12 @@ export function TestimonialsFaqSection() {
         </div>
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">FAQs</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Frequently asked questions</h2>
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Frequently asked questions</h2>
           <div className="mt-6 space-y-4">
             {faqs.map((faq) => (
-              <details key={faq.question} className="group rounded-3xl border border-slate-200 bg-white p-5 text-sm text-slate-700 shadow-sm">
-                <summary className="cursor-pointer list-none font-semibold text-slate-900">{faq.question}</summary>
-                <p className="mt-3 text-sm text-slate-600">{faq.answer}</p>
+              <details key={faq.question} className="group rounded-3xl border border-white/10 bg-white/5 p-5 text-sm text-slate-200 shadow-sm">
+                <summary className="cursor-pointer list-none font-semibold text-white">{faq.question}</summary>
+                <p className="mt-3 text-sm text-slate-300">{faq.answer}</p>
               </details>
             ))}
           </div>
@@ -419,8 +419,8 @@ export function ContactSection() {
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-6">
             <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Start a conversation</p>
-            <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">Let’s design your next solar milestone</h2>
-            <p className="text-slate-600">
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">Let’s design your next solar milestone</h2>
+            <p className="text-slate-300">
               Share your site details, latest electricity bill and project goals. We’ll schedule a site visit, run generation simulations and send a proposal with ROI, subsidies and execution timelines.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -430,9 +430,9 @@ export function ContactSection() {
               <ContactCard icon={CalendarIcon} title="Site visits" detail="Scheduled within 48 hours" />
             </div>
           </div>
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 text-slate-900 shadow-xl">
-            <h3 className="text-2xl font-semibold text-slate-900">Request a customised proposal</h3>
-            <p className="mt-2 text-sm text-slate-600">
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 text-white shadow-xl">
+            <h3 className="text-2xl font-semibold text-white">Request a customised proposal</h3>
+            <p className="mt-2 text-sm text-slate-300">
               We respond within one business day with next steps and required documents.
             </p>
             <form action="https://formsubmit.co/dbr@bharathsolarepc.com" method="POST" className="mt-6 grid gap-4">
@@ -442,38 +442,38 @@ export function ContactSection() {
                 name="name"
                 placeholder="Your name"
                 required
-                className="rounded-2xl border border-slate-200 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+                className="rounded-2xl border border-white/10 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
               />
               <input
                 name="phone"
                 placeholder="Phone / WhatsApp"
                 required
-                className="rounded-2xl border border-slate-200 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+                className="rounded-2xl border border-white/10 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
               />
               <input
                 name="city"
                 placeholder="City"
-                className="rounded-2xl border border-slate-200 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+                className="rounded-2xl border border-white/10 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
               />
               <textarea
                 name="message"
                 placeholder="Share roof size, load profile or questions"
                 rows="4"
-                className="rounded-2xl border border-slate-200 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+                className="rounded-2xl border border-white/10 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
               />
               <button
                 type="submit"
-                className="rounded-full bg-[#147B3E] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/30 transition hover:bg-[#126736]"
+                className="rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-300 px-6 py-3 text-sm font-semibold text-slate-950 shadow-[0_25px_60px_-30px_rgba(16,185,129,0.6)] transition hover:scale-105"
               >
                 Send request
               </button>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-400">
                 Prefer WhatsApp? Message us instantly at{" "}
                 <a
                   href="https://wa.me/918977310017?text=Hi%20Bharath,%20I%27d%20like%20a%20solar%20quote."
                   target="_blank"
                   rel="noreferrer"
-                  className="font-semibold text-[#147B3E]"
+                  className="font-semibold text-emerald-300"
                 >
                   +91 89773 10017
                 </a>
@@ -488,20 +488,20 @@ export function ContactSection() {
 
 function ContactCard({ icon: Icon, title, detail, href }) {
   const content = (
-    <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 text-left text-slate-700 shadow-sm">
-      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 text-slate-600">
+    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-left text-slate-200 shadow-sm">
+      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-slate-300">
         <Icon className="h-5 w-5" />
       </span>
       <div>
-        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{title}</p>
-        <p className="text-sm font-semibold text-slate-900">{detail}</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-slate-400">{title}</p>
+        <p className="text-sm font-semibold text-white">{detail}</p>
       </div>
     </div>
   );
 
   if (href) {
     return (
-      <Link href={href} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#147B3E]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+      <Link href={href} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#147B3E]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
         {content}
       </Link>
     );
