@@ -133,6 +133,19 @@ section {
   animation-duration: 32s;
 }
 
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transform: translateX(0) !important;
+  }
+}
+
 .tag-pill {
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(148, 163, 184, 0.08));

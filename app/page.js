@@ -2,15 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "./components/layout/SiteChrome";
 import { ProjectsHighlightsSection } from "./components/marketing/sections";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 
 const heroStats = [
-  { label: "Rooftop Systems Delivered", value: "300+" },
-  { label: "Commercial & Industrial MWp", value: "18" },
-  { label: "Average Client Payback", value: "3.2 yrs" },
+  { label: "Rooftop Systems Delivered", value: 300, suffix: "+", decimals: 0 },
+  { label: "Commercial & Industrial MWp", value: 18, suffix: " MWp", decimals: 0 },
+  { label: "Average Client Payback", value: 3.2, suffix: " yrs", decimals: 1 },
 ];
 
 const heroBadges = ["Tier-1 modules", "Smart O&M", "Finance-ready"];
@@ -85,26 +85,57 @@ const marqueeItems = [
   },
 ];
 
+const LIVE_SNAPSHOT_INTERVAL_MS = 4800;
+const CASE_STUDY_CYCLE_MS = 6800;
+
 const caseStudyMilestones = [
   {
     label: "Feasibility",
     detail: "Digital twin of the campus, load profiling and ROI narrative in 4 days.",
     status: "complete",
+    owner: "Solutions lab",
+    duration: "4 days",
+    insights: [
+      "Digital twin ready within 96 hours",
+      "Load flow flagged two circuits for reinforcement",
+      "Financial story circulated to leadership for go-ahead",
+    ],
   },
   {
     label: "Engineering",
     detail: "PE-stamped designs, wind tunnel validation and tier-1 BOM within 10 days.",
     status: "complete",
+    owner: "Engineering desk",
+    duration: "10 days",
+    insights: [
+      "Structural checks cleared with 1.8 safety factor",
+      "Wind tunnel validation completed with action log",
+      "Tier-1 BOM locked with warranty trackers",
+    ],
   },
   {
     label: "Execution",
     detail: "Zero-shutdown installation with night-time crane operations and QA sign-offs.",
     status: "active",
+    owner: "Project delivery",
+    duration: "21 days",
+    insights: [
+      "Night crane slots reserved to avoid production loss",
+      "Sterile zone cable trays sealed and audited",
+      "QA punch list cleared stage-by-stage",
+    ],
   },
   {
     label: "Handover",
     detail: "Performance dashboards, O&M playbooks and DISCOM coordination done for you.",
     status: "upcoming",
+    owner: "Performance desk",
+    duration: "Go-live week",
+    insights: [
+      "Live dashboards configured with alert routing",
+      "DISCOM net-metering file submitted",
+      "O&M sprint calendar shared with client team",
+    ],
   },
 ];
 
@@ -165,8 +196,27 @@ function Hero({ scrollProgress }) {
   const sectionRef = useRef(null);
   const frameRef = useRef(0);
   const [cursor, setCursor] = useState({ x: 0.5, y: 0.5 });
+  const [liveSnapshot, setLiveSnapshot] = useState(() => ({
+    generation: 4.8,
+    planDelta: 0.12,
+    irradiance: 0.92,
+    availability: 0.998,
+    health: 0.98,
+    carbon: 3.9,
+    trend: createTrend(4.6),
+    insights: buildInsights(0.12, 0.92, 0.998, 0.98),
+  }));
+  const [statsRef, statsInView] = useInView({ threshold: 0.35, once: true });
 
   useEffect(() => () => frameRef.current && window.cancelAnimationFrame(frameRef.current), []);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setLiveSnapshot((prev) => produceLiveSnapshot(prev));
+    }, LIVE_SNAPSHOT_INTERVAL_MS);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   const updateCursor = (x, y) => {
     setCursor({ x: Math.min(Math.max(x, 0), 1), y: Math.min(Math.max(y, 0), 1) });
@@ -191,6 +241,11 @@ function Hero({ scrollProgress }) {
   const tiltY = (cursor.x - 0.5) * 12;
   const floatingShiftX = (cursor.x - 0.5) * 40;
   const floatingShiftY = (cursor.y - 0.5) * 30 - scrollProgress * 40;
+
+  const planDeltaClass = liveSnapshot.planDelta >= 0 ? "text-emerald-200" : "text-amber-200";
+  const trendDelta = liveSnapshot.trend.length > 1 ? liveSnapshot.trend[liveSnapshot.trend.length - 1] - liveSnapshot.trend[liveSnapshot.trend.length - 2] : 0;
+  const trendBadgeClass = trendDelta >= 0 ? "text-emerald-200" : "text-amber-200";
+  const refreshLabel = `${(LIVE_SNAPSHOT_INTERVAL_MS / 1000).toFixed(1)}s`;
 
   return (
     <section
@@ -253,22 +308,9 @@ function Hero({ scrollProgress }) {
               Explore solar solutions
             </Link>
           </div>
-          <dl className="grid gap-6 sm:grid-cols-3">
-            {heroStats.map((stat) => (
-              <div
-                key={stat.label}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/6 p-5 shadow-[0_24px_70px_-40px_rgba(148,163,184,0.7)] backdrop-blur"
-              >
-                <div
-                  className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  style={{ background: "linear-gradient(135deg, rgba(56,189,248,0.25), rgba(16,185,129,0.25))" }}
-                />
-                <div className="relative flex items-start justify-between">
-                  <dd className="text-2xl font-semibold text-white">{stat.value}</dd>
-                  <span className="mt-1 inline-flex h-2 w-6 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400 opacity-70" />
-                </div>
-                <dt className="relative mt-2 text-sm text-slate-300/80">{stat.label}</dt>
-              </div>
+          <dl ref={statsRef} className="grid gap-6 sm:grid-cols-3">
+            {heroStats.map((stat, index) => (
+              <AnimatedStat key={stat.label} index={index} active={statsInView} {...stat} />
             ))}
           </dl>
         </div>
@@ -288,35 +330,48 @@ function Hero({ scrollProgress }) {
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" aria-hidden /> Live
               </span>
             </div>
-            <div className="relative mt-6 space-y-5 text-slate-100">
+            <div className="relative mt-6 space-y-5 text-slate-100" aria-live="polite">
               <div className="rounded-2xl border border-white/10 bg-white/6 p-5">
                 <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Today&apos;s generation</p>
                 <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
                   <div>
-                    <p className="text-4xl font-semibold leading-none">4.8 MWh</p>
-                    <p className="mt-2 text-sm text-emerald-200">+12% vs plan</p>
+                    <p className="text-4xl font-semibold leading-none">
+                      {`${formatNumber(liveSnapshot.generation, 1)} MWh`}
+                    </p>
+                    <p className={`mt-2 text-sm ${planDeltaClass}`}>
+                      {`${formatDelta(liveSnapshot.planDelta * 100, 0, "%")} vs plan`}
+                    </p>
                   </div>
                   <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-slate-200/80">
                     <div className="flex flex-col">
                       <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Irradiance</span>
-                      <span className="text-sm font-semibold text-slate-100">92% optimal</span>
+                      <span className="text-sm font-semibold text-slate-100">{`${formatPercent(liveSnapshot.irradiance, 0)} optimal`}</span>
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Availability</span>
-                      <span className="text-sm font-semibold text-slate-100">100%</span>
+                      <span className="text-sm font-semibold text-slate-100">{`${formatPercent(liveSnapshot.availability, 1)}`}</span>
                     </div>
+                  </div>
+                </div>
+                <div className="mt-5 space-y-3">
+                  <Sparkline values={liveSnapshot.trend} className="h-20 w-full" />
+                  <div className="flex items-center justify-between text-xs text-slate-400">
+                    <span className={`font-semibold ${trendBadgeClass}`}>
+                      {`${trendDelta >= 0 ? "+" : "-"}${Math.abs(trendDelta).toFixed(2)} MWh this cycle`}
+                    </span>
+                    <span>{`Auto-updating every ${refreshLabel}`}</span>
                   </div>
                 </div>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="rounded-2xl border border-white/10 bg-white/6 p-5">
                   <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Health score</p>
-                  <p className="mt-3 text-3xl font-semibold">98%</p>
+                  <p className="mt-3 text-3xl font-semibold">{formatPercent(liveSnapshot.health, 0)}</p>
                   <p className="mt-2 text-sm leading-relaxed text-slate-200/80">All inverters are online and dispatch ready.</p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/6 p-5">
                   <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Carbon avoided</p>
-                  <p className="mt-3 text-3xl font-semibold">3.9 tCO₂e</p>
+                  <p className="mt-3 text-3xl font-semibold">{`${formatNumber(liveSnapshot.carbon, 1)} tCO₂e`}</p>
                   <p className="mt-2 text-sm leading-relaxed text-slate-200/80">Equal to planting 176 mature trees this week.</p>
                 </div>
               </div>
@@ -327,7 +382,7 @@ function Hero({ scrollProgress }) {
                 </p>
               </div>
               <ul className="grid gap-3 text-xs text-slate-300">
-                {["Voltage harmony across strings", "No ticket breaches in the last 30 days", "Last on-site audit: 6 days ago"].map((item) => (
+                {liveSnapshot.insights.map((item) => (
                   <li key={item} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3">
                     <span className="inline-flex h-2 w-2 rounded-full bg-emerald-300" aria-hidden />
                     <span className="text-sm text-slate-200">{item}</span>
@@ -396,7 +451,7 @@ function PartnerMarquee() {
   return (
     <section className="py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-6">
-        <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-white/5 p-8 shadow-[0_45px_120px_-50px_rgba(56,189,248,0.55)] md:p-12">
+        <div className="marquee relative overflow-hidden rounded-[36px] border border-white/10 bg-white/5 p-8 shadow-[0_45px_120px_-50px_rgba(56,189,248,0.55)] md:p-12">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.2),_transparent_65%)] opacity-80" aria-hidden />
           <div className="pointer-events-none absolute inset-0 border border-white/10" aria-hidden />
           <div className="relative flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
@@ -445,6 +500,93 @@ function CaseStudySpotlight() {
     active: "border-sky-400/40 bg-sky-400/10 text-sky-100",
     upcoming: "border-white/10 bg-white/5 text-slate-200",
   };
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [stageProgress, setStageProgress] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const pauseTimeoutRef = useRef(null);
+  const activeMilestone = caseStudyMilestones[activeIndex];
+  const progressThroughTimeline = ((activeIndex + stageProgress) / caseStudyMilestones.length) * 100;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setPrefersReducedMotion(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (paused || prefersReducedMotion) return undefined;
+    let animationFrame = 0;
+    let lastTimestamp;
+
+    const step = (timestamp) => {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const delta = timestamp - lastTimestamp;
+      lastTimestamp = timestamp;
+
+      setStageProgress((prev) => {
+        const next = prev + delta / CASE_STUDY_CYCLE_MS;
+        if (next >= 1) {
+          setActiveIndex((current) => (current + 1) % caseStudyMilestones.length);
+          return 0;
+        }
+        return next;
+      });
+
+      animationFrame = window.requestAnimationFrame(step);
+    };
+
+    animationFrame = window.requestAnimationFrame(step);
+
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, [paused, prefersReducedMotion]);
+
+  useEffect(
+    () => () => {
+      if (pauseTimeoutRef.current) window.clearTimeout(pauseTimeoutRef.current);
+    },
+    []
+  );
+
+  const handleUserPause = useCallback(() => {
+    if (prefersReducedMotion) return;
+    setPaused(true);
+    if (pauseTimeoutRef.current) window.clearTimeout(pauseTimeoutRef.current);
+    pauseTimeoutRef.current = window.setTimeout(() => setPaused(false), 10000);
+  }, [prefersReducedMotion]);
+
+  const handleResume = useCallback(() => {
+    if (pauseTimeoutRef.current) {
+      window.clearTimeout(pauseTimeoutRef.current);
+      pauseTimeoutRef.current = null;
+    }
+    if (!prefersReducedMotion) setPaused(false);
+  }, [prefersReducedMotion]);
+
+  const handleActivate = useCallback(
+    (index, shouldPause = false) => {
+      setActiveIndex(index);
+      setStageProgress(0);
+      if (shouldPause) handleUserPause();
+    },
+    [handleUserPause]
+  );
+
+  const handleMilestoneKeyDown = useCallback(
+    (event, index) => {
+      if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+        event.preventDefault();
+        handleActivate((index + 1) % caseStudyMilestones.length, true);
+      } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+        event.preventDefault();
+        handleActivate((index - 1 + caseStudyMilestones.length) % caseStudyMilestones.length, true);
+      }
+    },
+    [handleActivate]
+  );
 
   return (
     <section className="py-20 md:py-24">
@@ -495,31 +637,104 @@ function CaseStudySpotlight() {
             </div>
           </div>
         </div>
-        <div className="relative flex flex-col gap-6 rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_45px_120px_-50px_rgba(14,116,144,0.55)]">
-          <div className="absolute inset-y-10 left-6 w-px bg-gradient-to-b from-emerald-400/60 via-sky-400/40 to-transparent" aria-hidden />
-          <p className="text-xs uppercase tracking-[0.35em] text-slate-300">Quality gates</p>
-          <div className="flex flex-col gap-5">
-            {caseStudyMilestones.map((milestone) => (
-              <div key={milestone.label} className={`relative rounded-2xl border p-5 transition ${statusStyles[milestone.status]}`}>
-                <div className="absolute left-[-22px] top-5 h-3 w-3 rounded-full border border-white/20 bg-white/40 shadow-[0_0_0_4px_rgba(30,41,59,0.85)]" />
-                <p className="text-sm font-semibold uppercase tracking-[0.3em]">{milestone.label}</p>
-                <p className="mt-2 text-sm leading-relaxed">{milestone.detail}</p>
-                {milestone.status === "active" ? (
-                  <span className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white">
-                    In progress
-                  </span>
-                ) : null}
-                {milestone.status === "upcoming" ? (
-                  <span className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
-                    Next
-                  </span>
-                ) : null}
+        <div
+          className="relative flex flex-col gap-6 rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_45px_120px_-50px_rgba(14,116,144,0.55)]"
+          onMouseLeave={handleResume}
+        >
+          <div className="flex items-center gap-4">
+            <p className="text-xs uppercase tracking-[0.35em] text-slate-300">Quality gates</p>
+            <div className="flex flex-1 items-center gap-3">
+              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-emerald-300 via-sky-400 to-amber-300"
+                  style={{ width: `${progressThroughTimeline}%` }}
+                />
               </div>
-            ))}
+              <span className="text-xs text-slate-400">{`${activeIndex + 1}/${caseStudyMilestones.length}`}</span>
+            </div>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-5 text-sm text-slate-200">
-            <p className="font-semibold text-white">“Commissioned in 41 days with zero downtime”</p>
-            <p className="mt-2 text-sm text-slate-300">Facilities Head, Medlife Pharmaceuticals</p>
+          <div className="relative mt-2 flex flex-col gap-5">
+            <div className="absolute left-[10px] top-3 bottom-3 w-px bg-gradient-to-b from-emerald-400/60 via-sky-400/40 to-transparent" aria-hidden />
+            {caseStudyMilestones.map((milestone, index) => {
+              const isActive = index === activeIndex;
+              return (
+                <button
+                  key={milestone.label}
+                  type="button"
+                  onMouseEnter={() => handleActivate(index, true)}
+                  onFocus={() => handleActivate(index, true)}
+                  onClick={() => handleActivate(index, true)}
+                  onKeyDown={(event) => handleMilestoneKeyDown(event, index)}
+                  className={`relative overflow-hidden rounded-2xl border p-5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${statusStyles[milestone.status]} ${isActive ? "shadow-[0_25px_60px_-35px_rgba(56,189,248,0.65)]" : ""}`}
+                  aria-pressed={isActive}
+                >
+                  <span
+                    className={`absolute left-[-22px] top-5 h-3 w-3 rounded-full border border-white/20 shadow-[0_0_0_4px_rgba(30,41,59,0.85)] ${isActive ? "bg-emerald-300" : "bg-white/40"}`}
+                    aria-hidden
+                  />
+                  {isActive ? (
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-400/15 via-sky-400/15 to-transparent opacity-90" aria-hidden />
+                  ) : null}
+                  <div className="relative flex items-center justify-between gap-3">
+                    <p className="text-sm font-semibold uppercase tracking-[0.3em]">{milestone.label}</p>
+                    <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/80">{milestone.duration}</span>
+                  </div>
+                  <p className="relative mt-2 text-sm leading-relaxed">{milestone.detail}</p>
+                  {isActive ? (
+                    <div className="relative mt-4 h-1 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full rounded-full bg-gradient-to-r from-emerald-300 via-sky-400 to-amber-300"
+                        style={{ width: `${Math.min(stageProgress * 100, 100)}%` }}
+                      />
+                    </div>
+                  ) : null}
+                  {milestone.status === "upcoming" ? (
+                    <span className="relative mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
+                      Next
+                    </span>
+                  ) : null}
+                  {milestone.status === "active" && !prefersReducedMotion ? (
+                    <span className="relative mt-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white">
+                      In progress
+                    </span>
+                  ) : null}
+                </button>
+              );
+            })}
+          </div>
+          <div className="rounded-[28px] border border-white/10 bg-slate-950/60 p-6 text-sm text-slate-200">
+            <p className="text-xs uppercase tracking-[0.35em] text-emerald-300/80">Stage insights</p>
+            <h3 className="mt-3 text-xl font-semibold text-white">{activeMilestone.label}</h3>
+            <p className="mt-2 text-sm text-slate-200/90">{activeMilestone.detail}</p>
+            <dl className="mt-5 grid gap-4 sm:grid-cols-2">
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.3em] text-slate-500">Stage lead</dt>
+                <dd className="text-sm font-semibold text-white">{activeMilestone.owner}</dd>
+              </div>
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.3em] text-slate-500">Duration</dt>
+                <dd className="text-sm font-semibold text-white">{activeMilestone.duration}</dd>
+              </div>
+            </dl>
+            <ul className="mt-4 space-y-2 text-sm text-slate-200/85">
+              {activeMilestone.insights.map((point) => (
+                <li key={point} className="flex items-start gap-3">
+                  <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-emerald-300" aria-hidden />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+            <button
+              type="button"
+              onClick={() => handleActivate((activeIndex + 1) % caseStudyMilestones.length, true)}
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-100 transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            >
+              Advance timeline <ArrowIcon className="h-3.5 w-3.5" />
+            </button>
+            <div className="mt-5 rounded-2xl border border-white/10 bg-slate-900/50 p-5 text-sm text-slate-200">
+              <p className="font-semibold text-white">“Commissioned in 41 days with zero downtime”</p>
+              <p className="mt-2 text-sm text-slate-300">Facilities Head, Medlife Pharmaceuticals</p>
+            </div>
           </div>
         </div>
       </div>
@@ -583,6 +798,227 @@ function PaymentsTeaser() {
       </div>
     </section>
   );
+}
+
+function AnimatedStat({ label, value, suffix = "", decimals = 0, active, index }) {
+  const animatedValue = useAnimatedNumber(value, { active, duration: 1200 + index * 120 });
+  const displayValue = useMemo(() => formatNumber(animatedValue, decimals), [animatedValue, decimals]);
+
+  return (
+    <div
+      className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/6 p-5 shadow-[0_24px_70px_-40px_rgba(148,163,184,0.7)] backdrop-blur transition duration-500"
+      style={{
+        transitionDelay: `${index * 80}ms`,
+        opacity: active ? 1 : 0,
+        transform: active ? "translate3d(0,0,0)" : "translate3d(0,20px,0)",
+      }}
+    >
+      <div
+        className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{ background: "linear-gradient(135deg, rgba(56,189,248,0.25), rgba(16,185,129,0.25))" }}
+        aria-hidden
+      />
+      <div className="relative flex items-start justify-between">
+        <dd className="text-2xl font-semibold text-white">{`${displayValue}${suffix}`}</dd>
+        <span className="mt-1 inline-flex h-2 w-6 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400 opacity-70" />
+      </div>
+      <dt className="relative mt-2 text-sm text-slate-300/80">{label}</dt>
+    </div>
+  );
+}
+
+function Sparkline({ values = [], className }) {
+  const gradientId = useId();
+  const safeValues = values.length > 1 ? values : [0, 0];
+  const max = Math.max(...safeValues);
+  const min = Math.min(...safeValues);
+  const range = max - min || 1;
+  const points = safeValues.map((value, index) => {
+    const x = (index / (safeValues.length - 1 || 1)) * 100;
+    const y = ((max - value) / range) * 36 + 2;
+    return `${x},${y}`;
+  });
+  const polylinePoints = points.join(" ");
+  const areaPoints = `${polylinePoints} 100,40 0,40`;
+  const [lastX, lastY] = points[points.length - 1]?.split(",").map(Number) ?? [100, 20];
+
+  return (
+    <svg viewBox="0 0 100 40" preserveAspectRatio="none" className={className} role="presentation">
+      <defs>
+        <linearGradient id={`${gradientId}-stroke`} x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="rgba(56,189,248,0.85)" />
+          <stop offset="100%" stopColor="rgba(16,185,129,0.85)" />
+        </linearGradient>
+        <linearGradient id={`${gradientId}-fill`} x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="rgba(56,189,248,0.28)" />
+          <stop offset="100%" stopColor="rgba(16,185,129,0.08)" />
+        </linearGradient>
+      </defs>
+      <polygon points={areaPoints} fill={`url(#${gradientId}-fill)`} />
+      <polyline
+        points={polylinePoints}
+        fill="none"
+        stroke={`url(#${gradientId}-stroke)`}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx={lastX} cy={lastY} r="2.8" fill="#22c55e" stroke="rgba(15,23,42,0.9)" strokeWidth="1.2" />
+    </svg>
+  );
+}
+
+function useAnimatedNumber(target, { duration = 1200, active = true } = {}) {
+  const [value, setValue] = useState(0);
+  const previousTargetRef = useRef(0);
+  const frameRef = useRef(0);
+
+  useEffect(() => {
+    if (!active) {
+      previousTargetRef.current = 0;
+      setValue(0);
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
+      return;
+    }
+
+    const startValue = previousTargetRef.current;
+    const delta = target - startValue;
+    const startTime = performance.now();
+
+    const tick = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = easeOutCubic(progress);
+      const nextValue = startValue + delta * eased;
+      setValue(nextValue);
+
+      if (progress < 1) {
+        frameRef.current = requestAnimationFrame(tick);
+      } else {
+        previousTargetRef.current = target;
+      }
+    };
+
+    frameRef.current = requestAnimationFrame(tick);
+
+    return () => frameRef.current && cancelAnimationFrame(frameRef.current);
+  }, [active, duration, target]);
+
+  return active ? value : 0;
+}
+
+function useInView(options = {}) {
+  const { rootMargin = "0px", threshold = 0.1, once = false } = options;
+  const [node, setNode] = useState(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    if (!node) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          setInView(true);
+          if (once) observer.disconnect();
+        } else if (!once) {
+          setInView(false);
+        }
+      },
+      { rootMargin, threshold }
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, [node, rootMargin, threshold, once]);
+
+  const callbackRef = useCallback((element) => {
+    setNode(element);
+  }, []);
+
+  return [callbackRef, inView];
+}
+
+function formatNumber(value, decimals = 0) {
+  const numeric = Number.isFinite(value) ? value : 0;
+  return numeric.toLocaleString("en-IN", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
+}
+
+function formatPercent(value, decimals = 0) {
+  return `${formatNumber(value * 100, decimals)}%`;
+}
+
+function formatDelta(value, decimals = 0, suffix = "") {
+  const sign = value >= 0 ? "+" : "−";
+  return `${sign}${formatNumber(Math.abs(value), decimals)}${suffix}`;
+}
+
+function easeOutCubic(t) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+function randomStep(value, variance) {
+  return value + (Math.random() * 2 - 1) * variance;
+}
+
+function createTrend(seed = 4.6, length = 12) {
+  const trend = [];
+  let current = seed;
+  for (let index = 0; index < length; index += 1) {
+    current = clamp(randomStep(current, 0.18), seed - 0.6, seed + 0.6);
+    trend.push(Number(current.toFixed(2)));
+  }
+  return trend;
+}
+
+function buildInsights(planDelta, irradiance, availability, health) {
+  const planPercent = Math.round(planDelta * 100);
+  const irradiancePercent = Math.round(irradiance * 100);
+  const availabilityPercent = Math.round(availability * 100);
+  const healthPercent = Math.round(health * 100);
+
+  const planMessage =
+    planPercent >= 0
+      ? `Yield running ${planPercent}% ahead of plan`
+      : `Yield ${Math.abs(planPercent)}% below plan — recovery sweep scheduled`;
+  const irradianceMessage =
+    irradiancePercent >= 90
+      ? `Irradiance steady at ${irradiancePercent}% — modules in the sweet spot`
+      : `Irradiance at ${irradiancePercent}% — shading sweep queued`;
+  const reliabilityMessage =
+    availabilityPercent >= 99
+      ? `Availability ${availabilityPercent}% • health index ${healthPercent}%`
+      : `Availability ${availabilityPercent}% • health index ${healthPercent}% — crew mobilised`;
+
+  return [planMessage, irradianceMessage, reliabilityMessage];
+}
+
+function produceLiveSnapshot(previous) {
+  const generation = Number(clamp(randomStep(previous.generation, 0.22), 4.2, 5.4).toFixed(2));
+  const planDelta = Number(clamp(randomStep(previous.planDelta, 0.05), -0.12, 0.18).toFixed(3));
+  const irradiance = Number(clamp(randomStep(previous.irradiance, 0.02), 0.86, 0.97).toFixed(3));
+  const availability = Number(clamp(randomStep(previous.availability, 0.008), 0.97, 1).toFixed(3));
+  const health = Number(clamp(randomStep(previous.health, 0.012), 0.94, 0.99).toFixed(3));
+  const carbon = Number(clamp(randomStep(previous.carbon, 0.22), 3.0, 4.8).toFixed(2));
+  const trend = [...previous.trend.slice(-11), generation];
+
+  return {
+    generation,
+    planDelta,
+    irradiance,
+    availability,
+    health,
+    carbon,
+    trend,
+    insights: buildInsights(planDelta, irradiance, availability, health),
+  };
 }
 
 function SparkIcon({ className }) {
