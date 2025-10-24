@@ -1,14 +1,19 @@
-import Image from "next/image";
 import Link from "next/link";
+
+import DynamicHero from "./components/home/DynamicHero";
+import {
+  ArrowIcon,
+  CalculatorIcon,
+  CheckIcon,
+  CreditCardIcon,
+  EnvelopeIcon,
+  ProcessIcon,
+  QuoteIcon,
+  SunIcon,
+} from "./components/icons";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "./components/layout/SiteChrome";
 import { ProjectsHighlightsSection } from "./components/marketing/sections";
 import WhatsAppFloat from "./components/WhatsAppFloat";
-
-const heroStats = [
-  { label: "Rooftop Systems Delivered", value: "300+" },
-  { label: "Commercial & Industrial MWp", value: "18" },
-  { label: "Average Client Payback", value: "3.2 yrs" },
-];
 
 const sectionCards = [
   {
@@ -60,94 +65,13 @@ export default function Home() {
     <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       <BackgroundDecorations />
       <SiteHeader />
-      <Hero />
+      <DynamicHero />
       <SectionDirectory />
       <PaymentsTeaser />
       <ProjectsHighlightsSection />
       <SiteFooter />
       <WhatsAppFloat />
     </main>
-  );
-}
-
-function Hero() {
-  return (
-    <section className="relative overflow-hidden pb-20 pt-16 sm:pt-20">
-      <div
-        className="absolute inset-x-6 bottom-0 top-32 rounded-3xl border border-slate-800/60 bg-slate-900/70 blur-3xl"
-        aria-hidden
-      />
-      <div className="mx-auto grid max-w-6xl items-center gap-16 px-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-slate-300">
-            MNRE empanelled • Tier-1 components • EPC & O&M
-          </div>
-          <h1
-            className="mt-6 bg-gradient-to-r from-[#FF671F] via-[#FFE0B2] to-[#046A38] bg-clip-text text-4xl font-extrabold leading-tight text-transparent drop-shadow-[0_1px_1px_rgba(2,6,23,0.65)] sm:text-5xl lg:text-6xl"
-          >
-            Empowering India with clean solar energy
-          </h1>
-          <p className="mt-5 max-w-xl text-lg text-slate-300">
-            We design, build and maintain high-performance solar PV plants across Telangana, Andhra Pradesh and pan-India.
-            Explore the section that matters to you and get to the right answers faster.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Link
-              href="/calculator"
-              className="rounded-full bg-[#147B3E] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/30 transition hover:bg-[#126736]"
-            >
-              Estimate your savings
-            </Link>
-            <Link
-              href="/solutions"
-              className="rounded-full border border-slate-700 px-6 py-3 text-sm font-semibold text-slate-200 transition hover:bg-slate-800 hover:text-white"
-            >
-              Explore solar solutions
-            </Link>
-          </div>
-          <dl className="mt-10 grid gap-6 sm:grid-cols-3">
-            {heroStats.map((stat) => (
-              <div key={stat.label} className="rounded-2xl border border-slate-800 bg-slate-900/80 p-4 shadow-lg shadow-slate-950/40">
-                <dd className="text-2xl font-bold text-white">{stat.value}</dd>
-                <dt className="text-sm text-slate-400">{stat.label}</dt>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        <div className="relative">
-          <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900/80 to-slate-900 p-8 shadow-2xl shadow-slate-950/60">
-            <div className="flex items-center justify-between text-sm font-semibold text-slate-300">
-              <span className="flex items-center gap-2">
-                <SparkIcon className="h-4 w-4" /> Real-time monitoring
-              </span>
-              <span className="rounded-full bg-slate-800 px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-300">24/7</span>
-            </div>
-            <div className="mt-6 grid gap-4 text-white">
-              <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-4">
-                <p className="text-sm text-slate-400">This week</p>
-                <p className="mt-1 text-3xl font-bold">4.8 MWh generated</p>
-                <p className="text-sm text-emerald-400">+12% vs. weather-adjusted forecast</p>
-              </div>
-              <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-4">
-                <p className="text-sm text-slate-400">Carbon avoided</p>
-                <p className="mt-1 text-3xl font-bold">3.9 tCO₂e</p>
-                <p className="text-sm text-slate-300">Equivalent to planting 176 mature trees</p>
-              </div>
-            </div>
-            <div className="mt-6 rounded-2xl border border-[#147B3E]/30 bg-[#147B3E]/20 p-4 text-sm text-emerald-100">
-              <p className="font-semibold text-white">Dedicated performance desk</p>
-              <p className="opacity-90">
-                Get alerts before your DISCOM bill does. Our engineers review dashboards daily and dispatch crews before yield drops.
-              </p>
-            </div>
-            <div className="absolute -right-6 -top-6 hidden h-24 w-24 rounded-2xl border border-slate-800 bg-slate-900/80 backdrop-blur-lg sm:block">
-              <Image src="/globe.svg" alt="Solar network" fill className="p-6 opacity-70" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -233,78 +157,3 @@ function PaymentsTeaser() {
   );
 }
 
-function SparkIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l1.8 5.5H19l-4.5 3.4L16.5 19 12 15.6 7.5 19l1.5-7.1L4 8.5h5.2L12 3z" />
-    </svg>
-  );
-}
-
-function ArrowIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
-    </svg>
-  );
-}
-
-function SunIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <circle cx="12" cy="12" r="4" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-    </svg>
-  );
-}
-
-function CalculatorIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <rect x="4" y="3" width="16" height="18" rx="2" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8 9h8M10 13v4M8 15h4M14 13h2M14 17h2" />
-    </svg>
-  );
-}
-
-function ProcessIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" />
-    </svg>
-  );
-}
-
-function QuoteIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h8M5 11h5v6H5zm9 0h5v6h-5z" />
-    </svg>
-  );
-}
-
-function CreditCardIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 9h18M7 14h4" />
-    </svg>
-  );
-}
-
-function EnvelopeIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="m22 7-10 6L2 7" />
-    </svg>
-  );
-}
-
-function CheckIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5.5 12.5l3.5 3.5 9-9" />
-    </svg>
-  );
-}

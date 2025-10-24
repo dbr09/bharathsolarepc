@@ -18,10 +18,11 @@ export const navLinks = [
 
 export function BackgroundDecorations() {
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-      <div className="absolute inset-x-0 top-[-320px] h-[620px] bg-[radial-gradient(circle_at_top,_rgba(20,123,62,0.18),_transparent_65%)]" />
-      <div className="absolute inset-x-0 bottom-[-360px] h-[620px] bg-[radial-gradient(circle_at_bottom,_rgba(241,105,33,0.15),_transparent_70%)]" />
-      <div className="absolute left-1/2 top-1/3 h-72 w-72 -translate-x-1/2 rounded-full bg-[#147B3E]/10 blur-3xl" />
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div className="hero-gradient-overlay" />
+      <div className="hero-gradient-overlay hero-gradient-overlay--bottom" />
+      <div className="hero-background-orb" />
+      <div className="hero-background-orb hero-background-orb--secondary" />
     </div>
   );
 }
