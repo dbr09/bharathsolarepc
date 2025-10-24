@@ -30,21 +30,21 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <header className="sticky top-0 z-40 border-b border-white/40 bg-gradient-to-r from-[#FF9933]/95 via-white/95 to-[#128807]/95 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 text-slate-900">
         <Link href="/" className="flex items-center gap-3">
-          <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-900/30 ring-1 ring-white/60">
+          <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-200/80 ring-1 ring-slate-200">
             <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
           </span>
           <div className="hidden sm:block">
-            <p className="text-sm uppercase tracking-[0.24em] text-white/60">Bharath Solar EPC</p>
-            <p className="text-lg font-semibold text-white">Energy that pays for itself</p>
+            <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Bharath Solar EPC</p>
+            <p className="text-lg font-semibold text-slate-900">Energy that pays for itself</p>
           </div>
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
           {navLinks.map((item) => (
-            <Link key={item.label} href={item.href} className="text-white/70 hover:text-white">
+            <Link key={item.label} href={item.href} className="text-slate-800 transition hover:text-slate-950">
               {item.label}
             </Link>
           ))}
@@ -53,7 +53,7 @@ export function SiteHeader() {
         <div className="hidden items-center gap-3 md:flex">
           <a
             href="tel:+918977310017"
-            className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white/80 transition hover:border-white/40 hover:text-white"
+            className="rounded-full border border-white/60 px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-white/80 hover:text-slate-950"
           >
             +91 89773 10017
           </a>
@@ -68,7 +68,7 @@ export function SiteHeader() {
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 text-white md:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-300 text-slate-700 md:hidden"
           aria-label="Toggle navigation"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
@@ -82,19 +82,19 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-white/10 bg-slate-950/95 md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-6">
+        <div className="border-t border-white/40 bg-gradient-to-r from-[#FF9933]/95 via-white/95 to-[#128807]/95 md:hidden">
+          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-6 text-slate-900">
             {navLinks.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-base font-medium text-white/80 hover:text-white"
+                className="text-base font-medium text-slate-800 hover:text-slate-950"
                 onClick={() => setOpen(false)}
               >
                 {item.label}
               </Link>
             ))}
-            <a href="tel:+918977310017" className="text-base font-semibold text-white" onClick={() => setOpen(false)}>
+            <a href="tel:+918977310017" className="text-base font-semibold text-slate-950" onClick={() => setOpen(false)}>
               +91 89773 10017
             </a>
             <Link

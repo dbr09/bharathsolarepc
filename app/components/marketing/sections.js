@@ -21,6 +21,39 @@ export const valueProps = [
   },
 ];
 
+const technologyTopics = [
+  {
+    title: "High-efficiency solar panels",
+    description:
+      "We source BIS-listed mono PERC and TOPCon modules from Tier-1 manufacturers, balancing aesthetics with performance warranties that stretch past 25 years.",
+    bullets: [
+      "IEC 61215 / 61730 certified panels with <0.6% first-year degradation",
+      "Half-cut, multi-busbar cell layouts that minimise hot spots on Telangana rooftops",
+      "Comprehensive flash test and EL reports shared before every dispatch",
+    ],
+  },
+  {
+    title: "Intelligent string inverters",
+    description:
+      "Our inverter lineup spans hybrid, on-grid and plant-level controllers with advanced MPPT algorithms, remote firmware support and protections tuned for Indian grids.",
+    bullets: [
+      "String-level monitoring, IV curve analytics and SCADA/API integrations",
+      "Type II AC/DC surge protection, AFCI, anti-islanding and harmonic filters",
+      "Reactive power control and export limits that satisfy DISCOM interconnections",
+    ],
+  },
+  {
+    title: "Agrivoltaics & dual land use",
+    description:
+      "For farms and dairy clients we elevate module tables to preserve crop yields, integrate drip irrigation corridors and track agronomic metrics alongside energy output.",
+    bullets: [
+      "Custom tilt and row spacing that keeps 50–70% of sunlight available to crops",
+      "Lightweight trellis and fencing solutions that simplify farm logistics",
+      "Pilot programmes measuring soil moisture, microclimate and plant health",
+    ],
+  },
+];
+
 export const solutions = [
   {
     name: "Residential Rooftop",
@@ -299,6 +332,37 @@ export function SolutionsSection() {
                 Explore details <ArrowIcon className="ml-2 h-4 w-4" />
               </Link>
             </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function TechnologyInsightsSection() {
+  return (
+    <section className="py-16 md:py-20">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="max-w-3xl">
+          <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Technology deep dive</p>
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Components that maximise generation and resilience</h2>
+          <p className="mt-3 text-white/70">
+            We document every critical choice—from module binning to inverter firmware and agrivoltaic layouts—so you know why each asset performs in the field and on your balance sheet.
+          </p>
+        </div>
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          {technologyTopics.map((topic) => (
+            <article key={topic.title} className="flex h-full flex-col rounded-3xl border border-white/10 bg-white/5 p-6">
+              <h3 className="text-xl font-semibold text-white">{topic.title}</h3>
+              <p className="mt-3 text-sm text-white/70">{topic.description}</p>
+              <ul className="mt-6 space-y-2 text-sm text-white/70">
+                {topic.bullets.map((bullet) => (
+                  <li key={bullet} className="flex items-start gap-2">
+                    <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> {bullet}
+                  </li>
+                ))}
+              </ul>
+            </article>
           ))}
         </div>
       </div>

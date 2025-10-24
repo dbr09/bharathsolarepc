@@ -1,12 +1,8 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "./components/layout/SiteChrome";
-import { ProjectsHighlightsSection } from "./components/marketing/sections";
-
-const WhatsAppFloat = dynamic(() => import("./components/WhatsAppFloat"), { ssr: false });
+import { ProjectsHighlightsSection, TechnologyInsightsSection } from "./components/marketing/sections";
+import WhatsAppFloat from "./components/WhatsAppFloat";
 
 const heroStats = [
   { label: "Rooftop Systems Delivered", value: "300+" },
@@ -66,6 +62,7 @@ export default function Home() {
       <SiteHeader />
       <Hero />
       <SectionDirectory />
+      <TechnologyInsightsSection />
       <PaymentsTeaser />
       <ProjectsHighlightsSection />
       <SiteFooter />
@@ -83,8 +80,10 @@ function Hero() {
           <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-white/70">
             MNRE empanelled • Tier-1 components • EPC & O&M
           </div>
-          <h1 className="mt-6 text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
-            Power your business and home with <span className="text-[#F16921]">bankable</span> solar assets
+          <h1
+            className="mt-6 bg-gradient-to-r from-[#FF671F] via-white to-[#046A38] bg-clip-text text-4xl font-extrabold leading-tight text-transparent drop-shadow-[0_1px_1px_rgba(15,23,42,0.25)] sm:text-5xl lg:text-6xl"
+          >
+            Empowering India with clean solar energy
           </h1>
           <p className="mt-5 max-w-xl text-lg text-white/75">
             We design, build and maintain high-performance solar PV plants across Telangana, Andhra Pradesh and pan-India.
