@@ -13,7 +13,6 @@ export const navLinks = [
   { label: "Testimonials", href: "/testimonials" },
   { label: "Payments", href: "/payments" },
   { label: "Contact", href: "/contact" },
-  { label: "Subsidy", href: "/subsidy" },
 ];
 
 export function BackgroundDecorations() {
@@ -53,7 +52,7 @@ export function SiteHeader() {
         <div className="hidden items-center gap-3 md:flex">
           <a
             href="tel:+918977310017"
-            className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:text-white"
+            className="whitespace-nowrap rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:text-white"
           >
             +91 89773 10017
           </a>
@@ -94,7 +93,11 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <a href="tel:+918977310017" className="text-base font-semibold text-white" onClick={() => setOpen(false)}>
+            <a
+              href="tel:+918977310017"
+              className="whitespace-nowrap text-base font-semibold text-white"
+              onClick={() => setOpen(false)}
+            >
               +91 89773 10017
             </a>
             <Link
