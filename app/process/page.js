@@ -1,7 +1,9 @@
+import DynamicPageShell from "../components/layout/DynamicPageShell";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
 import PageIntro from "../components/layout/PageIntro";
-import { ContactSection, ProcessSection, ProjectsHighlightsSection } from "../components/marketing/sections";
+import { ContactSection, ProjectsHighlightsSection } from "../components/marketing/sections";
 import WhatsAppFloat from "../components/WhatsAppFloat";
+import ProcessExperience from "./ProcessExperience";
 
 export const metadata = {
   title: "Solar EPC Process — Bharath Solar EPC",
@@ -10,7 +12,7 @@ export const metadata = {
 
 export default function ProcessPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-white text-slate-900">
+    <DynamicPageShell accent="amber">
       <BackgroundDecorations />
       <SiteHeader />
       <PageIntro
@@ -18,11 +20,11 @@ export default function ProcessPage() {
         title="A proven EPC playbook from discovery to performance"
         description="Track the milestones that take your plant from feasibility to stable generation, with transparent communication at every step."
       />
-      <ProcessSection />
+      <ProcessExperience />
       <ProjectsHighlightsSection />
       <ContactSection />
       <SiteFooter />
       <WhatsAppFloat />
-    </main>
+    </DynamicPageShell>
   );
 }

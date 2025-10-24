@@ -1,3 +1,4 @@
+import DynamicPageShell from "../components/layout/DynamicPageShell";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
 import PageIntro from "../components/layout/PageIntro";
 import { CalculatorSection } from "../components/marketing/sections";
@@ -10,7 +11,7 @@ export const metadata = {
 
 export default function CalculatorPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-white text-slate-900">
+    <DynamicPageShell accent="emerald">
       <BackgroundDecorations />
       <SiteHeader />
       <PageIntro
@@ -21,6 +22,6 @@ export default function CalculatorPage() {
       <CalculatorSection />
       <SiteFooter />
       <WhatsAppFloat />
-    </main>
+    </DynamicPageShell>
   );
 }

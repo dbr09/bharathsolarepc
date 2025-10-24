@@ -1,3 +1,4 @@
+import DynamicPageShell from "../components/layout/DynamicPageShell";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
 import PageIntro from "../components/layout/PageIntro";
 import { ProjectsHighlightsSection, TestimonialsFaqSection } from "../components/marketing/sections";
@@ -10,7 +11,7 @@ export const metadata = {
 
 export default function TestimonialsPage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-white text-slate-900">
+    <DynamicPageShell accent="violet">
       <BackgroundDecorations />
       <SiteHeader />
       <PageIntro
@@ -22,6 +23,6 @@ export default function TestimonialsPage() {
       <ProjectsHighlightsSection />
       <SiteFooter />
       <WhatsAppFloat />
-    </main>
+    </DynamicPageShell>
   );
 }
