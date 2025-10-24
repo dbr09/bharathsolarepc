@@ -4,9 +4,15 @@
   color-scheme: light;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-sans, "Inter", "Helvetica Neue", Arial, sans-serif);
   line-height: 1.6;
+  background-color: white;
+  color: rgb(15 23 42 / 1);
 }
 
 a {
@@ -20,4 +26,22 @@ section {
 ::selection {
   background: rgba(20, 123, 62, 0.35);
   color: white;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .site-container {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .site-container-wide {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }

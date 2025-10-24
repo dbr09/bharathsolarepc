@@ -72,37 +72,37 @@ export default function Home() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden pb-20 pt-16 sm:pt-20">
+    <section className="relative overflow-hidden pb-16 pt-20 sm:pb-20 sm:pt-24">
       <div className="absolute inset-x-6 bottom-0 top-32 rounded-3xl border border-slate-200/60 bg-slate-100 blur-3xl" aria-hidden />
-      <div className="mx-auto grid max-w-6xl items-center gap-16 px-6 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="site-container grid items-center gap-12 sm:gap-16 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1 text-xs font-semibold uppercase tracking-[0.4em] text-slate-500">
             MNRE empanelled • Tier-1 components • EPC & O&M
           </div>
           <h1
-            className="mt-6 bg-gradient-to-r from-[#FF671F] via-white to-[#046A38] bg-clip-text text-4xl font-extrabold leading-tight text-transparent drop-shadow-[0_1px_1px_rgba(15,23,42,0.25)] sm:text-5xl lg:text-6xl"
+            className="mt-6 bg-gradient-to-r from-[#FF671F] via-white to-[#046A38] bg-clip-text text-3xl font-extrabold leading-tight text-transparent text-balance drop-shadow-[0_1px_1px_rgba(15,23,42,0.25)] sm:text-5xl lg:text-6xl"
           >
             Empowering India with clean solar energy
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-slate-600">
+          <p className="mt-5 max-w-xl text-base text-slate-600 text-balance sm:text-lg">
             We design, build and maintain high-performance solar PV plants across Telangana, Andhra Pradesh and pan-India.
             Explore the section that matters to you and get to the right answers faster.
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-8 flex flex-wrap gap-3 sm:gap-4">
             <Link
               href="/calculator"
-              className="rounded-full bg-[#147B3E] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/30 transition hover:bg-[#126736]"
+              className="rounded-full bg-[#147B3E] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/30 transition hover:bg-[#126736]"
             >
               Estimate your savings
             </Link>
             <Link
               href="/solutions"
-              className="rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
+              className="rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-100 hover:text-slate-900"
             >
               Explore solar solutions
             </Link>
           </div>
-          <dl className="mt-10 grid gap-6 sm:grid-cols-3">
+          <dl className="mt-10 grid gap-4 min-[420px]:grid-cols-2 sm:grid-cols-3 sm:gap-6">
             {heroStats.map((stat) => (
               <div key={stat.label} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                 <dd className="text-2xl font-bold text-slate-900">{stat.value}</dd>
@@ -113,7 +113,7 @@ function Hero() {
         </div>
 
         <div className="relative">
-          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-slate-100 p-8 shadow-2xl shadow-slate-200/60">
+          <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-slate-100 p-6 shadow-2xl shadow-slate-200/60 sm:p-8">
             <div className="flex items-center justify-between text-sm font-semibold text-slate-600">
               <span className="flex items-center gap-2">
                 <SparkIcon className="h-4 w-4" /> Real-time monitoring
@@ -150,21 +150,21 @@ function Hero() {
 
 function SectionDirectory() {
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="site-container">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Quick access</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Navigate to the details you need</h2>
-          <p className="mt-3 text-slate-600">
+          <h2 className="mt-4 text-3xl font-bold text-slate-900 text-balance sm:text-4xl">Navigate to the details you need</h2>
+          <p className="mt-3 text-base text-slate-600 text-balance sm:text-lg">
             Each section of the site focuses on a single outcome—solutions, pricing, process, success stories, payments or contacting our experts.
           </p>
         </div>
-        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
           {sectionCards.map((card) => (
             <Link
               key={card.title}
               href={card.href}
-              className="group flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md"
+              className="group flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md sm:p-6"
             >
               <div>
                 <span className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl ${card.accent}`}>
@@ -186,14 +186,14 @@ function SectionDirectory() {
 
 function PaymentsTeaser() {
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-slate-100 p-8 md:p-10">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="site-container">
+        <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-slate-100 p-6 shadow-xl shadow-slate-200/60 sm:p-8 md:p-10">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="max-w-3xl">
               <p className="text-xs uppercase tracking-[0.3em] text-[#F16921]">Razorpay integration</p>
-              <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Digital payments go live next week</h2>
-              <p className="mt-3 text-slate-600">
+              <h2 className="mt-4 text-3xl font-bold text-slate-900 text-balance sm:text-4xl">Digital payments go live next week</h2>
+              <p className="mt-3 text-base text-slate-600 text-balance sm:text-lg">
                 We are configuring a Razorpay-powered checkout so you can lock in designs, pay mobilisation advances and manage O&M renewals without paperwork or manual reconciliations.
               </p>
               <ul className="mt-4 space-y-2 text-sm text-slate-600">
@@ -208,7 +208,7 @@ function PaymentsTeaser() {
                 </li>
               </ul>
             </div>
-            <div className="flex shrink-0 flex-col items-start gap-4 rounded-3xl border border-slate-200 bg-white p-6 text-slate-700 shadow-sm">
+            <div className="flex shrink-0 flex-col items-start gap-4 rounded-3xl border border-slate-200 bg-white p-5 text-slate-700 shadow-sm sm:p-6">
               <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-100 text-violet-600">
                 <CreditCardIcon className="h-5 w-5" />
               </span>

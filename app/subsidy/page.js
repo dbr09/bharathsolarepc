@@ -1,55 +1,67 @@
 import Link from "next/link";
+import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
+import PageIntro from "../components/layout/PageIntro";
+import WhatsAppFloat from "../components/WhatsAppFloat";
 
 export const metadata = { title: "Subsidy — Bharath Solar EPC" };
 
 export default function Subsidy() {
   return (
-    <main className="mx-auto max-w-7xl px-6 py-14 bg-white text-black text-lg">
-      <h1 className="text-4xl font-extrabold">Residential Rooftop Subsidy</h1>
+    <main className="relative min-h-screen overflow-hidden bg-white text-slate-900">
+      <BackgroundDecorations />
+      <SiteHeader />
+      <PageIntro
+        eyebrow="Residential rooftop"
+        title="Subsidy support from application to commissioning"
+        description="Eligibility, portal workflows and documentation change by DISCOM. We stay on top of every update so your project qualifies without delays."
+      />
 
-      <p className="mt-3 text-zinc-700">
-        Subsidy programs change by state/DISCOM and national schemes. We’ll confirm the latest eligibility,
-        portal workflow, and documents for your address.
-      </p>
+      <section className="py-14 sm:py-16 md:py-20">
+        <div className="site-container-wide space-y-8">
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+              <h3 className="text-2xl font-semibold text-slate-900">Typical requirements</h3>
+              <ul className="mt-3 space-y-2 text-sm text-slate-600">
+                <li>Residential consumer category with sanctioned load aligned to scheme.</li>
+                <li>Registered vendor/installer, net-metering and DISCOM inspections.</li>
+                <li>Modules and inverters approved under current MNRE/DISCOM lists.</li>
+                <li>Accurate documentation uploads and completion photographs.</li>
+              </ul>
+            </div>
+            <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+              <h3 className="text-2xl font-semibold text-slate-900">How we help</h3>
+              <ul className="mt-3 space-y-2 text-sm text-slate-600">
+                <li>End-to-end paperwork, portal management and inspection scheduling.</li>
+                <li>Site survey, technical drawings, installation and commissioning.</li>
+                <li>Net-metering coordination, payment milestones and O&M onboarding.</li>
+              </ul>
+            </div>
+          </div>
 
-      <div className="mt-8 grid md:grid-cols-2 gap-6">
-        <div className="rounded-2xl border border-zinc-200 bg-white p-7">
-          <h3 className="text-2xl font-semibold">Typical Requirements</h3>
-          <ul className="mt-2 list-disc pl-5 text-zinc-800">
-            <li>Residential consumer category</li>
-            <li>Registered vendor/installer & net-metering</li>
-            <li>Approved modules/inverters as per current lists</li>
-            <li>DISCOM application and inspection</li>
-          </ul>
+          <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+            <h3 className="text-2xl font-semibold text-slate-900">Start your subsidy-ready proposal</h3>
+            <p className="mt-2 text-sm text-slate-600 text-balance sm:text-base">
+              Message us your address and latest electricity bill. We will confirm current subsidy availability with your DISCOM and share the checklist to get started.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a
+                href="https://wa.me/918977310017?text=Hi%20Bharath,%20please%20guide%20me%20on%20current%20rooftop%20subsidy%20for%20my%20home."
+                className="rounded-full bg-[#147B3E] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#147B3E]/30 transition hover:bg-[#126736]"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp us
+              </a>
+              <Link href="/contact" className="rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-900">
+                Get free quote
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className="rounded-2xl border border-zinc-200 bg-white p-7">
-          <h3 className="text-2xl font-semibold">How We Help</h3>
-          <ul className="mt-2 list-disc pl-5 text-zinc-800">
-            <li>End-to-end paperwork & portal assistance</li>
-            <li>Site survey, technical drawing & installation</li>
-            <li>Net-metering & commissioning support</li>
-          </ul>
-        </div>
-      </div>
+      </section>
 
-      <div className="mt-8 rounded-2xl border border-zinc-200 p-7">
-        <h3 className="text-2xl font-semibold">Start Your Subsidy-Ready Proposal</h3>
-        <p className="text-zinc-700 mt-2">
-          Message us your address and last electricity bill; we’ll confirm current subsidy options for your DISCOM.
-        </p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          <a
-            href="https://wa.me/918977310017?text=Hi%20Bharath,%20please%20guide%20me%20on%20current%20rooftop%20subsidy%20for%20my%20home."
-            className="px-6 py-3 rounded-xl bg-[#147B3E] text-white font-semibold hover:opacity-90"
-            target="_blank" rel="noopener noreferrer"
-          >
-            WhatsApp Us
-          </a>
-          <Link href="/#contact" className="px-6 py-3 rounded-xl border border-zinc-300 hover:border-[#147B3E]">
-            Get Free Quote
-          </Link>
-        </div>
-      </div>
+      <SiteFooter />
+      <WhatsAppFloat />
     </main>
   );
 }

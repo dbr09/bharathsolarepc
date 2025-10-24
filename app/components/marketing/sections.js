@@ -124,22 +124,22 @@ export const faqs = [
 
 export function ValueHighlightsSection() {
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="site-container">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Why Bharath Solar EPC</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-bold text-slate-900 text-balance sm:text-4xl">
             Everything you need to own and run dependable solar assets
           </h2>
-          <p className="mt-3 text-slate-600">
+          <p className="mt-3 text-base text-slate-600 text-balance sm:text-lg">
             From feasibility to lifetime performance, our multi-disciplinary team covers electrical, structural and financial diligence so you always know what to expect.
           </p>
         </div>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:gap-6 md:grid-cols-3">
           {valueProps.map((item) => (
             <div
               key={item.title}
-              className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:bg-slate-50"
+              className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:bg-slate-50 sm:p-6"
             >
               <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#147B3E]/15 text-[#147B3E]">
                 <item.icon className="h-5 w-5" />
@@ -160,13 +160,13 @@ export function ValueHighlightsSection() {
 
 export function CalculatorSection() {
   return (
-    <section className="relative py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+    <section className="relative py-14 sm:py-16 md:py-20">
+      <div className="site-container">
+        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Plan your plant</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Solar sizing calculator</h2>
-            <p className="mt-3 text-slate-600">
+            <h2 className="mt-4 text-3xl font-bold text-slate-900 text-balance sm:text-4xl">Solar sizing calculator</h2>
+            <p className="mt-3 text-base text-slate-600 text-balance sm:text-lg">
               1 kW of rooftop solar in Telangana generates about <strong>150 units</strong> per month. Enter your electricity usage and tariff to estimate system size, space requirement and payback.
             </p>
             <ul className="mt-6 space-y-3 text-sm text-slate-600">
@@ -221,7 +221,7 @@ function Calculator() {
   }, [tariff, unitsMonth]);
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/70">
+    <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-xl shadow-slate-200/70 sm:p-6">
       <form className="space-y-4">
         <div>
           <label htmlFor="units" className="text-sm font-semibold text-slate-700">
@@ -231,6 +231,7 @@ function Calculator() {
             id="units"
             value={unitsMonth}
             onChange={(event) => setUnitsMonth(event.target.value)}
+            inputMode="decimal"
             className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
           />
         </div>
@@ -242,6 +243,7 @@ function Calculator() {
             id="tariff"
             value={tariff}
             onChange={(event) => setTariff(event.target.value)}
+            inputMode="decimal"
             className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
           />
         </div>
@@ -262,27 +264,27 @@ function Calculator() {
 
 function ResultRow({ label, value }) {
   return (
-    <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-center">
-      <span className="text-slate-500">{label}</span>
-      <span className="font-semibold text-slate-900">{value}</span>
+    <div className="flex flex-col justify-between gap-1 rounded-2xl bg-slate-50/60 px-4 py-3 sm:flex-row sm:items-center sm:bg-transparent sm:px-0 sm:py-0">
+      <span className="text-sm text-slate-500 sm:text-base">{label}</span>
+      <span className="text-base font-semibold text-slate-900">{value}</span>
     </div>
   );
 }
 
 export function SolutionsSection() {
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="site-container">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Solutions</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Tailored EPC engagements for every segment</h2>
-          <p className="mt-3 text-slate-600">
+          <h2 className="mt-4 text-3xl font-bold text-slate-900 text-balance sm:text-4xl">Tailored EPC engagements for every segment</h2>
+          <p className="mt-3 text-base text-slate-600 text-balance sm:text-lg">
             Choose the engagement that fits your load profile, roof architecture and financial goals. Every project receives design, supply, installation and long-term support under one roof.
           </p>
         </div>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:gap-6 md:grid-cols-3">
           {solutions.map((solution) => (
-            <div key={solution.name} className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div key={solution.name} className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F16921]/15 text-[#F16921]">
                 <solution.icon className="h-5 w-5" />
               </span>
@@ -295,7 +297,7 @@ export function SolutionsSection() {
                   </li>
                 ))}
               </ul>
-              <Link href={solution.href} className="mt-8 inline-flex items-center text-sm font-semibold text-slate-700 hover:text-slate-900">
+              <Link href={solution.href} className="mt-8 inline-flex items-center text-sm font-semibold text-slate-700 transition hover:text-slate-900">
                 Explore details <ArrowIcon className="ml-2 h-4 w-4" />
               </Link>
             </div>
@@ -308,22 +310,22 @@ export function SolutionsSection() {
 
 export function ProcessSection() {
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="site-container">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">How we work</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-bold text-slate-900 text-balance sm:text-4xl">
             A proven EPC playbook from discovery to performance
           </h2>
-          <p className="mt-3 text-slate-600">
+          <p className="mt-3 text-base text-slate-600 text-balance sm:text-lg">
             Our cross-functional teams run a transparent process with weekly updates, shared documentation and quality gates so you always know the status of your solar asset.
           </p>
         </div>
-        <ol className="mt-12 space-y-6">
+        <ol className="mt-10 space-y-6">
           {steps.map((step, index) => (
             <li
               key={step.title}
-              className="group relative rounded-3xl border border-slate-200 bg-white p-6 transition duration-300 hover:border-slate-300 hover:bg-slate-50"
+              className="group relative rounded-3xl border border-slate-200 bg-white p-5 transition duration-300 hover:border-slate-300 hover:bg-slate-50 sm:p-6"
             >
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
@@ -343,13 +345,13 @@ export function ProcessSection() {
 
 export function ProjectsHighlightsSection() {
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="site-container">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
             <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Proven track record</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Highlighted installations</h2>
-            <p className="mt-3 text-slate-600">
+            <h2 className="mt-4 text-3xl font-bold text-slate-900 text-balance sm:text-4xl">Highlighted installations</h2>
+            <p className="mt-3 text-base text-slate-600 text-balance sm:text-lg">
               A glimpse into the industries and homes that trust us with their energy transition. Detailed case studies and references are available on request.
             </p>
           </div>
@@ -360,9 +362,9 @@ export function ProjectsHighlightsSection() {
             View complete list <ArrowIcon className="h-4 w-4" />
           </Link>
         </div>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:gap-6 md:grid-cols-3">
           {caseStudies.map((item) => (
-            <article key={item.title} className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <article key={item.title} className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
               <p className="mt-4 text-2xl font-bold text-slate-900">{item.metric}</p>
               <p className="mt-3 text-sm text-slate-600">{item.detail}</p>
@@ -379,15 +381,15 @@ export function ProjectsHighlightsSection() {
 
 export function TestimonialsFaqSection() {
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[1.05fr_0.95fr]">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="site-container grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Client confidence</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Voices from our partners</h2>
-          <div className="mt-6 space-y-6">
+          <h2 className="mt-4 text-3xl font-bold text-slate-900 text-balance sm:text-4xl">Voices from our partners</h2>
+          <div className="mt-6 space-y-5">
             {testimonials.map((testimonial) => (
-              <figure key={testimonial.name} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <blockquote className="text-base text-slate-700">“{testimonial.quote}”</blockquote>
+              <figure key={testimonial.name} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+                <blockquote className="text-base text-slate-700 text-balance">“{testimonial.quote}”</blockquote>
                 <figcaption className="mt-4 text-sm font-semibold text-slate-900">
                   {testimonial.name} <span className="block text-xs font-normal text-slate-500">{testimonial.role}</span>
                 </figcaption>
@@ -397,12 +399,12 @@ export function TestimonialsFaqSection() {
         </div>
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">FAQs</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Frequently asked questions</h2>
+          <h2 className="mt-4 text-3xl font-bold text-slate-900 text-balance sm:text-4xl">Frequently asked questions</h2>
           <div className="mt-6 space-y-4">
             {faqs.map((faq) => (
               <details key={faq.question} className="group rounded-3xl border border-slate-200 bg-white p-5 text-sm text-slate-700 shadow-sm">
                 <summary className="cursor-pointer list-none font-semibold text-slate-900">{faq.question}</summary>
-                <p className="mt-3 text-sm text-slate-600">{faq.answer}</p>
+                <p className="mt-3 text-sm text-slate-600 text-balance">{faq.answer}</p>
               </details>
             ))}
           </div>
@@ -414,13 +416,13 @@ export function TestimonialsFaqSection() {
 
 export function ContactSection() {
   return (
-    <section className="py-24">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+    <section className="py-20 sm:py-24">
+      <div className="site-container">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-6">
             <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Start a conversation</p>
-            <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">Let’s design your next solar milestone</h2>
-            <p className="text-slate-600">
+            <h2 className="text-3xl font-bold text-slate-900 text-balance sm:text-4xl">Let’s design your next solar milestone</h2>
+            <p className="text-base text-slate-600 text-balance sm:text-lg">
               Share your site details, latest electricity bill and project goals. We’ll schedule a site visit, run generation simulations and send a proposal with ROI, subsidies and execution timelines.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -430,12 +432,12 @@ export function ContactSection() {
               <ContactCard icon={CalendarIcon} title="Site visits" detail="Scheduled within 48 hours" />
             </div>
           </div>
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 text-slate-900 shadow-xl">
-            <h3 className="text-2xl font-semibold text-slate-900">Request a customised proposal</h3>
-            <p className="mt-2 text-sm text-slate-600">
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 text-slate-900 shadow-xl sm:p-8">
+            <h3 className="text-2xl font-semibold text-slate-900 text-balance">Request a customised proposal</h3>
+            <p className="mt-2 text-sm text-slate-600 text-balance">
               We respond within one business day with next steps and required documents.
             </p>
-            <form action="https://formsubmit.co/dbr@bharathsolarepc.com" method="POST" className="mt-6 grid gap-4">
+            <form action="https://formsubmit.co/dbr@bharathsolarepc.com" method="POST" className="mt-6 grid gap-3">
               <input type="hidden" name="_subject" value="New Lead - Bharath Solar EPC" />
               <input type="hidden" name="_captcha" value="false" />
               <input

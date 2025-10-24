@@ -9,7 +9,8 @@ export default function WhatsAppFloat() {
       href={whatsappLink}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-full bg-[#25D366] px-5 py-3 text-white shadow-2xl shadow-[#25D366]/40 ring-1 ring-white/30 transition-transform duration-200 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366]"
+      className="fixed right-4 z-50 flex items-center gap-3 rounded-full bg-[#25D366] px-4 py-2.5 text-white shadow-2xl shadow-[#25D366]/40 ring-1 ring-white/30 transition-transform duration-200 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366] sm:right-6 sm:px-5 sm:py-3"
+      style={{ bottom: "calc(1.25rem + env(safe-area-inset-bottom))" }}
     >
       <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15">
         <svg
@@ -29,7 +30,7 @@ export default function WhatsAppFloat() {
           />
         </svg>
       </span>
-      <span className="hidden text-sm font-semibold uppercase tracking-wide sm:inline">Chat on WhatsApp</span>
+      <span className="text-xs font-semibold uppercase tracking-wide sm:text-sm">Chat on WhatsApp</span>
     </a>
   );
 }
