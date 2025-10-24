@@ -19,12 +19,13 @@ export const navLinks = [
 export function BackgroundDecorations() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-      <div className="backdrop-orb absolute left-[-8%] top-[12%] h-[420px] w-[420px] blur-[70px] opacity-90" />
-      <div className="backdrop-orb absolute right-[-12%] top-[-16%] h-[540px] w-[540px] blur-[90px] opacity-70" data-variant="emerald" />
-      <div className="backdrop-orb absolute bottom-[-24%] left-[24%] h-[580px] w-[580px] blur-[100px] opacity-70" data-variant="amber" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.65),_transparent_65%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.75),_transparent_65%)]" />
       <div className="absolute inset-x-0 top-1/3 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
       <div className="absolute inset-x-0 bottom-1/4 h-px bg-gradient-to-r from-transparent via-emerald-300/20 to-transparent" />
+      <div className="backdrop-orb absolute left-[-10%] top-[10%] h-[520px] w-[520px] blur-[80px] opacity-95" />
+      <div className="backdrop-orb absolute right-[-18%] top-[-14%] h-[620px] w-[620px] blur-[100px] opacity-80" data-variant="emerald" />
+      <div className="backdrop-orb absolute bottom-[-26%] left-[30%] h-[640px] w-[640px] blur-[110px] opacity-70" data-variant="amber" />
+      <div className="aurora-grid" />
     </div>
   );
 }
@@ -51,22 +52,30 @@ export function SiteHeader() {
   return (
     <header
       className={`group sticky top-0 z-40 border-b transition-all duration-500 ${
-        scrolled ? "border-white/10 bg-slate-950/80 shadow-[0_18px_60px_-40px_rgba(15,118,110,0.75)] backdrop-blur-xl" : "border-transparent"
+        scrolled
+          ? "border-white/10 bg-slate-950/80 shadow-[0_24px_65px_-40px_rgba(15,118,110,0.8)] backdrop-blur-xl"
+          : "border-transparent"
       }`}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/70 to-slate-950/30 opacity-90 transition-opacity duration-500 group-hover:opacity-100" aria-hidden />
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 text-slate-200">
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/70 to-slate-950/35 opacity-95 transition-opacity duration-500 group-hover:opacity-100" aria-hidden />
+      <div className="absolute inset-x-0 top-0 h-0.5 overflow-hidden bg-white/10" aria-hidden>
+        <span
+          className="block h-full origin-left bg-gradient-to-r from-emerald-400 via-sky-400 to-amber-300 transition-transform duration-500"
+          style={{ transform: `scaleX(${Math.max(progress, 0.03)})` }}
+        />
+      </div>
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 text-slate-100">
         <Link href="/" className="relative flex items-center gap-3">
-          <span className="glow-border relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white/95 shadow-[0_25px_50px_-12px_rgba(15,118,110,0.45)] ring-1 ring-white/30">
+          <span className="glow-border relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(15,118,110,0.45)] ring-1 ring-white/30">
             <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
           </span>
           <div className="hidden sm:block">
-            <p className="text-sm uppercase tracking-[0.24em] text-slate-300">Bharath Solar EPC</p>
-            <p className="mt-1 hidden text-xs text-slate-500 sm:block">Premier EPC partner for industrial & residential solar</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-slate-300/90">Bharath Solar EPC</p>
+            <p className="mt-1 hidden text-sm text-slate-300 sm:block">Clean energy architecture for industries, institutions & homes</p>
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-2 md:flex">
+        <nav className="hidden items-center gap-3 md:flex">
           {navLinks.map((item) => {
             const isActive =
               pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
@@ -74,7 +83,7 @@ export function SiteHeader() {
               <Link
                 key={item.label}
                 href={item.href}
-                className={`group relative inline-flex items-center rounded-full px-3 py-2 text-sm transition ${
+                className={`group relative inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                   isActive ? "text-white" : "text-slate-300 hover:text-white"
                 }`}
               >
@@ -83,23 +92,30 @@ export function SiteHeader() {
                     isActive ? "opacity-80" : ""
                   }`}
                 />
-                <span className={`absolute inset-0 rounded-full border border-white/5 transition ${isActive ? "border-white/40" : "group-hover:border-white/10"}`} />
-                <span className="relative z-10 font-medium">{item.label}</span>
+                <span className={`absolute inset-0 rounded-full border border-white/5 transition ${isActive ? "border-white/40" : "group-hover:border-white/15"}`} />
+                <span className="relative z-10">{item.label}</span>
               </Link>
             );
           })}
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <a
-            href="tel:+918977310017"
-            className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-white/30 hover:bg-white/10 hover:text-white"
-          >
-            <PhoneIcon className="h-4 w-4" /> +91 89773 10017
-          </a>
+          <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-300/80">
+            <span className="hidden sm:inline-flex items-center gap-2 text-[0.85rem] normal-case tracking-normal text-slate-100">
+              <PhoneIcon className="h-4 w-4 text-emerald-300" />
+              <a
+                href="tel:+918977310017"
+                className="font-semibold text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              >
+                +91 89773 10017
+              </a>
+            </span>
+            <span className="hidden h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.75)] sm:block" aria-hidden />
+            <span className="text-[0.7rem] tracking-[0.42em] text-emerald-200/80">Talk today</span>
+          </div>
           <Link
             href="/contact"
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_18px_40px_-18px_rgba(16,185,129,0.7)] transition hover:scale-[1.03] hover:shadow-[0_25px_60px_-24px_rgba(16,185,129,0.8)]"
+            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             <span className="relative z-10">Talk to an expert</span>
             <span className="relative z-10 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20">

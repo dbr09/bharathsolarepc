@@ -185,21 +185,20 @@ export default function ProjectExplorer({ projects }) {
         <div className="absolute -right-32 top-32 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl" aria-hidden />
       </div>
 
-      <header className="overflow-hidden rounded-4xl border border-white/10 bg-white/5 p-8 shadow-[0_40px_140px_-80px_rgba(56,189,248,0.9)] backdrop-blur-xl sm:p-10">
+      <header className="overflow-hidden rounded-4xl border border-white/10 bg-white/6 p-8 shadow-[0_45px_160px_-90px_rgba(56,189,248,0.85)] backdrop-blur-xl sm:p-10">
         <p className="text-sm font-semibold uppercase tracking-[0.4em] text-emerald-300/80">Project Showcase</p>
         <h1 className="mt-4 text-4xl font-semibold text-slate-50 sm:text-5xl">
           Our projects, explored dynamically
         </h1>
-        <p className="mt-4 max-w-2xl text-lg text-slate-300">
-          Toggle sectors, scrub the timeline, and switch between immersive cards or a performance table to
-          discover how Bharath Solar EPC deploys clean energy across Telangana and beyond.
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-200/90">
+          Toggle sectors, scrub the timeline, and switch between immersive cards or a performance table to discover how Bharath Solar EPC deploys clean energy across Telangana and beyond.
         </p>
       </header>
 
-      <section className="rounded-4xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl sm:p-8">
+      <section className="rounded-4xl border border-white/10 bg-white/6 p-6 backdrop-blur-xl sm:p-8">
         <div className="flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:items-end lg:gap-8">
           <label className="lg:col-span-5">
-            <span className="text-sm font-medium text-slate-300">Search</span>
+            <span className="text-sm font-medium text-slate-200/90">Search</span>
             <input
               className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-900/40 px-4 py-3 text-base text-slate-100 placeholder:text-slate-500 focus:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-400/40"
               placeholder="Search by client, location or technology"
@@ -210,7 +209,7 @@ export default function ProjectExplorer({ projects }) {
           </label>
 
           <label className="lg:col-span-3">
-            <span className="text-sm font-medium text-slate-300">Sector</span>
+            <span className="text-sm font-medium text-slate-200/90">Sector</span>
             <select
               className="mt-2 w-full rounded-2xl border border-white/10 bg-slate-900/40 px-4 py-3 text-base text-slate-100 focus:border-emerald-400/60 focus:outline-none focus:ring-2 focus:ring-emerald-400/40"
               value={selectedSector}
@@ -226,7 +225,7 @@ export default function ProjectExplorer({ projects }) {
           </label>
 
           <div className="lg:col-span-4">
-            <span className="text-sm font-medium text-slate-300">Timeline focus</span>
+            <span className="text-sm font-medium text-slate-200/90">Timeline focus</span>
             <div className="mt-3 grid gap-4">
               <div className="grid grid-cols-2 gap-3">
                 <div>
@@ -270,7 +269,7 @@ export default function ProjectExplorer({ projects }) {
 
         <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="text-sm font-medium text-slate-300">Sort by</span>
+            <span className="text-sm font-medium text-slate-200/90">Sort by</span>
             <div className="flex flex-wrap gap-2">
               {[
                 { key: "recent", label: "Most recent" },
@@ -285,7 +284,7 @@ export default function ProjectExplorer({ projects }) {
                   className={`${baseButtonClasses} ${
                     sortKey === option.key
                       ? "border-emerald-400/60 bg-emerald-400/10 text-emerald-200 shadow-[0_10px_40px_-20px_rgba(16,185,129,0.7)]"
-                      : "border-white/10 bg-slate-900/30 text-slate-300 hover:border-white/20 hover:bg-slate-900/50"
+                      : "border-white/10 bg-slate-900/30 text-slate-200/80 hover:border-white/20 hover:bg-slate-900/50"
                   }`}
                 >
                   {option.label}
@@ -295,7 +294,7 @@ export default function ProjectExplorer({ projects }) {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-medium text-slate-300">View</span>
+            <span className="text-sm font-medium text-slate-200/90">View</span>
             {[
               { key: "grid", label: "Interactive cards" },
               { key: "table", label: "Performance table" },
@@ -307,7 +306,7 @@ export default function ProjectExplorer({ projects }) {
                 className={`${baseButtonClasses} ${
                   view === option.key
                     ? "border-sky-400/60 bg-sky-400/10 text-sky-200 shadow-[0_10px_40px_-20px_rgba(56,189,248,0.7)]"
-                    : "border-white/10 bg-slate-900/30 text-slate-300 hover:border-white/20 hover:bg-slate-900/50"
+                    : "border-white/10 bg-slate-900/30 text-slate-200/80 hover:border-white/20 hover:bg-slate-900/50"
                 }`}
               >
                 {option.label}
@@ -365,7 +364,7 @@ export default function ProjectExplorer({ projects }) {
 
               return (
                 <div key={entry.sector} className="space-y-2">
-                  <div className="flex items-center justify-between text-sm text-slate-300">
+                  <div className="flex items-center justify-between text-sm text-slate-200/80">
                     <span className="font-medium text-slate-100">{entry.sector}</span>
                     <span>
                       {formatCapacity(entry.capacity)} · {entry.count} project{entry.count === 1 ? "" : "s"}
@@ -404,9 +403,9 @@ export default function ProjectExplorer({ projects }) {
                   </div>
 
                   <h3 className="mt-4 text-2xl font-semibold text-slate-50">{project.client}</h3>
-                  <p className="mt-2 text-sm text-slate-300">{project.location}</p>
+                  <p className="mt-2 text-sm text-slate-200/80">{project.location}</p>
 
-                  <dl className="mt-6 grid grid-cols-2 gap-4 text-sm text-slate-300">
+                  <dl className="mt-6 grid grid-cols-2 gap-4 text-sm text-slate-200/80">
                     <div>
                       <dt className="text-xs uppercase tracking-wide text-slate-400">System size</dt>
                       <dd className="mt-1 text-lg font-semibold text-emerald-200">{project.capacityLabel}</dd>
@@ -417,7 +416,7 @@ export default function ProjectExplorer({ projects }) {
                     </div>
                     <div className="col-span-2">
                       <dt className="text-xs uppercase tracking-wide text-slate-400">Highlights</dt>
-                      <dd className="mt-1 text-sm text-slate-300">
+                      <dd className="mt-1 text-sm text-slate-200/80">
                         {[project.location, project.timeline]
                           .filter(Boolean)
                           .map((value, index) => (
@@ -478,7 +477,7 @@ export default function ProjectExplorer({ projects }) {
           </section>
         )
       ) : (
-        <section className="rounded-4xl border border-dashed border-white/20 bg-white/5 p-16 text-center text-slate-300">
+        <section className="rounded-4xl border border-dashed border-white/20 bg-white/6 p-16 text-center text-slate-200/80">
           <p className="text-lg font-semibold text-slate-100">No projects match those filters yet.</p>
           <p className="mt-2 text-sm">
             Try broadening your search or resetting the controls to see our full portfolio.

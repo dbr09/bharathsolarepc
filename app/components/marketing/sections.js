@@ -247,11 +247,12 @@ export function ValueHighlightsSection() {
   const active = valueProps[activeIndex];
 
   return (
-    <section className="relative py-16 md:py-20">
+    <section className="relative py-16 md:py-24">
+      <div className="pointer-events-none absolute inset-x-0 top-12 h-64 bg-gradient-to-r from-emerald-400/15 via-transparent to-sky-400/15 blur-3xl" aria-hidden />
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div
-            className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 shadow-[0_35px_90px_-55px_rgba(56,189,248,0.65)]"
+            className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/6 p-8 shadow-[0_45px_120px_-60px_rgba(56,189,248,0.65)] backdrop-blur-xl"
             onPointerMove={(event) => {
               const rect = event.currentTarget.getBoundingClientRect();
               const x = ((event.clientX - rect.left) / rect.width) * 100;
@@ -262,29 +263,29 @@ export function ValueHighlightsSection() {
           >
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0 opacity-70 transition-all duration-500"
+              className="pointer-events-none absolute inset-0 opacity-80 transition-all duration-500"
               style={{
-                background: `radial-gradient(circle at ${hoverPoint.x}% ${hoverPoint.y}%, rgba(56, 189, 248, 0.28), transparent 65%)`,
+                background: `radial-gradient(circle at ${hoverPoint.x}% ${hoverPoint.y}%, rgba(56, 189, 248, 0.32), transparent 68%)`,
               }}
             />
             <div className="relative z-10 space-y-6">
               <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Why Bharath Solar EPC</p>
-                <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
+                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-amber-200/90">Why Bharath Solar EPC</p>
+                <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl md:text-[2.6rem]">
                   Everything you need to own and run dependable solar assets
                 </h2>
-                <p className="mt-3 text-base text-slate-300">
+                <p className="mt-4 text-base leading-relaxed text-slate-200/90">
                   From feasibility to lifetime performance, our multi-disciplinary team covers electrical, structural and financial diligence so you always know what to expect.
                 </p>
               </div>
-              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-inner shadow-emerald-500/10">
+              <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-6 shadow-inner shadow-emerald-500/10 backdrop-blur">
                 <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Now spotlighting</p>
                 <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
                   <div className="max-w-xl">
                     <h3 className="text-2xl font-semibold text-white sm:text-3xl">{active.title}</h3>
-                    <p className="mt-3 text-sm text-slate-300">{active.spotlight}</p>
+                    <p className="mt-3 text-base leading-relaxed text-slate-200/80">{active.spotlight}</p>
                   </div>
-                  <span className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-white/10 text-emerald-300">
+                  <span className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-white/10 text-emerald-300 shadow-[0_12px_30px_-18px_rgba(16,185,129,0.9)]">
                     <active.icon className="h-5 w-5" />
                   </span>
                 </div>
@@ -292,9 +293,9 @@ export function ValueHighlightsSection() {
                   {active.metrics.map((metric) => (
                     <div
                       key={metric.label}
-                      className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
+                      className="rounded-2xl border border-white/10 bg-white/6 p-4 text-sm text-slate-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur"
                     >
-                      <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{metric.label}</p>
+                      <p className="text-[0.65rem] uppercase tracking-[0.32em] text-slate-400">{metric.label}</p>
                       <p className="mt-2 text-lg font-semibold text-white">{metric.value}</p>
                     </div>
                   ))}
@@ -331,8 +332,8 @@ export function ValueHighlightsSection() {
                     </span>
                     <div>
                       <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-                      <p className="mt-2 text-sm text-slate-300">{item.description}</p>
-                      <span className="mt-4 inline-flex items-center text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">
+                      <p className="mt-3 text-sm leading-relaxed text-slate-200/90">{item.description}</p>
+                      <span className="mt-4 inline-flex items-center text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-slate-400">
                         Explore
                         <ArrowIcon className="ml-2 h-4 w-4" />
                       </span>
@@ -355,15 +356,15 @@ export function CalculatorSection() {
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="space-y-6">
             <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Plan your plant</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Plan your plant</p>
               <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Solar sizing calculator</h2>
-              <p className="mt-3 text-base text-slate-300">
+              <p className="mt-4 text-base leading-relaxed text-slate-200/90">
                 1 kW of rooftop solar in Telangana generates about <strong>150 units</strong> per month. Dial in your consumption profile and tariff band to instantly view the ideal system size, investment and payback.
               </p>
             </div>
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-inner">
+            <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-6 shadow-inner">
               <p className="text-xs uppercase tracking-[0.35em] text-slate-400">How to use</p>
-              <ul className="mt-4 space-y-3 text-sm text-slate-300">
+              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-slate-200/90">
                 <li className="flex items-start gap-3">
                   <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Start with a quick preset or drag the sliders to match your monthly bill and tariff slab.
                 </li>
@@ -448,7 +449,7 @@ function Calculator() {
   const tariffValue = Number.parseFloat(tariff) || 0;
 
   return (
-    <div className="space-y-6 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_30px_80px_-40px_rgba(16,185,129,0.55)]">
+    <div className="space-y-6 rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_40px_110px_-55px_rgba(16,185,129,0.65)] backdrop-blur-xl">
       <form className="space-y-5">
         <div>
           <label htmlFor="units" className="text-sm font-semibold text-slate-200">
@@ -578,7 +579,7 @@ function Calculator() {
 function ResultRow({ label, value }) {
   return (
     <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-center">
-      <span className="text-slate-400">{label}</span>
+      <span className="text-slate-300/80">{label}</span>
       <span className="font-semibold text-white">{value}</span>
     </div>
   );
@@ -640,7 +641,7 @@ export function SolutionsSection() {
                     <active.icon className="h-5 w-5" />
                   </span>
                 </div>
-                <p className="text-sm text-slate-300">{active.detail}</p>
+                <p className="text-base leading-relaxed text-slate-200/90">{active.detail}</p>
                 {viewMode === "impact" ? (
                   <div className="grid gap-4 sm:grid-cols-3">
                     {active.stats.map((stat) => (
@@ -651,7 +652,7 @@ export function SolutionsSection() {
                     ))}
                   </div>
                 ) : (
-                  <ul className="space-y-3 text-sm text-slate-300">
+                  <ul className="space-y-3 text-sm leading-relaxed text-slate-200/90">
                     {active.experience.map((item) => (
                       <li key={item} className="flex items-start gap-2">
                         <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> {item}
@@ -703,9 +704,9 @@ export function SolutionsSection() {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-white">{solution.name}</h3>
-                      <p className="mt-2 text-sm text-slate-300">{solution.summary}</p>
+                      <p className="mt-3 text-sm leading-relaxed text-slate-200/90">{solution.summary}</p>
                     </div>
-                    <ul className="space-y-2 text-xs text-slate-300">
+                    <ul className="space-y-2 text-xs text-slate-200/80">
                       {solution.bullets.map((bullet) => (
                         <li key={bullet} className="flex items-start gap-2">
                           <CheckIcon className="mt-1 h-3.5 w-3.5 text-[#147B3E]" /> {bullet}
@@ -732,11 +733,11 @@ export function ProcessSection() {
     <section className="py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
-          <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">How we work</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">How we work</p>
           <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
             A proven EPC playbook from discovery to performance
           </h2>
-          <p className="mt-3 text-slate-300">
+          <p className="mt-4 text-base leading-relaxed text-slate-200/90">
             Our cross-functional teams run a transparent process with weekly updates, shared documentation and quality gates so you always know the status of your solar asset.
           </p>
         </div>
@@ -750,7 +751,7 @@ export function ProcessSection() {
                 <div>
                   <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Step {index + 1}</span>
                   <h3 className="mt-2 text-2xl font-semibold text-white">{step.title}</h3>
-                  <p className="mt-3 text-sm text-slate-300">{step.description}</p>
+              <p className="mt-4 text-sm leading-relaxed text-slate-200/90">{step.description}</p>
                 </div>
                 <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-300">{step.duration}</span>
               </div>
@@ -786,9 +787,9 @@ export function ProjectsHighlightsSection() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
-            <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Proven track record</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Proven track record</p>
             <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Highlighted installations</h2>
-            <p className="mt-3 text-slate-300">
+            <p className="mt-4 text-base leading-relaxed text-slate-200/90">
               A glimpse into the industries and homes that trust us with their energy transition. Use the carousel to surface the projects most relevant to you.
             </p>
           </div>
@@ -813,7 +814,7 @@ export function ProjectsHighlightsSection() {
                 </span>
               </div>
               <p className="text-lg font-semibold text-white">{active.metric}</p>
-              <p className="text-sm text-slate-200">{active.detail}</p>
+              <p className="text-base leading-relaxed text-slate-200/90">{active.detail}</p>
               <div className="grid gap-3 sm:grid-cols-3">
                 {active.impact.map((item) => (
                   <div key={item} className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs uppercase tracking-[0.3em] text-slate-400">
@@ -860,7 +861,7 @@ export function ProjectsHighlightsSection() {
                       {index + 1}
                     </span>
                   </div>
-                  <p className="mt-3 text-xs text-slate-300">{item.detail}</p>
+                  <p className="mt-3 text-xs leading-relaxed text-slate-200/80">{item.detail}</p>
                   <span className="mt-4 inline-flex items-center text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">
                     Review spotlight <ArrowIcon className="ml-2 h-3.5 w-3.5" />
                   </span>
@@ -912,10 +913,10 @@ export function TestimonialsFaqSection() {
       <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="space-y-6">
           <div>
-            <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Client confidence</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Client confidence</p>
             <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Voices from our partners</h2>
           </div>
-          <figure className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 shadow-[0_35px_90px_-55px_rgba(129,140,248,0.45)]">
+          <figure className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/6 p-8 shadow-[0_40px_110px_-55px_rgba(129,140,248,0.5)] backdrop-blur-xl">
             <span aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/20 via-transparent to-emerald-400/20 opacity-60" />
             <div className="relative z-10 space-y-6">
               <div className="flex flex-wrap items-center justify-between gap-4">
@@ -926,7 +927,7 @@ export function TestimonialsFaqSection() {
                 </div>
                 <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-emerald-200">{active.rating}</span>
               </div>
-              <blockquote className="text-lg text-slate-100">“{active.quote}”</blockquote>
+              <blockquote className="text-xl leading-relaxed text-slate-100">“{active.quote}”</blockquote>
               <div className="flex items-center gap-4">
                 {testimonials.map((item, index) => {
                   const isActive = index === activeIndex;
@@ -958,13 +959,13 @@ export function TestimonialsFaqSection() {
           </figure>
         </div>
         <div>
-          <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">FAQs</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">FAQs</p>
           <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Frequently asked questions</h2>
           <div className="mt-6 space-y-4">
             {faqs.map((faq) => (
               <details key={faq.question} className="group rounded-3xl border border-white/10 bg-white/5 p-5 text-sm text-slate-200 shadow-sm">
                 <summary className="cursor-pointer list-none font-semibold text-white">{faq.question}</summary>
-                <p className="mt-3 text-sm text-slate-300">{faq.answer}</p>
+                <p className="mt-4 text-sm leading-relaxed text-slate-200/90">{faq.answer}</p>
               </details>
             ))}
           </div>
@@ -983,9 +984,9 @@ export function ContactSection() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-6">
-            <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Start a conversation</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Start a conversation</p>
             <h2 className="text-3xl font-bold text-white sm:text-4xl">Let’s design your next solar milestone</h2>
-            <p className="text-slate-300">
+            <p className="text-base leading-relaxed text-slate-200/90">
               Share your site details, latest electricity bill and project goals. We’ll schedule a site visit, run generation simulations and send a proposal with ROI, subsidies and execution timelines.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -995,9 +996,9 @@ export function ContactSection() {
               <ContactCard icon={CalendarIcon} title="Site visits" detail="Scheduled within 48 hours" />
             </div>
           </div>
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 text-white shadow-xl">
+          <div className="rounded-3xl border border-white/10 bg-white/6 p-8 text-white shadow-[0_40px_110px_-55px_rgba(34,197,94,0.55)] backdrop-blur-xl">
             <h3 className="text-2xl font-semibold text-white">Request a customised proposal</h3>
-            <p className="mt-2 text-sm text-slate-300">
+            <p className="mt-3 text-sm leading-relaxed text-slate-200/90">
               We respond within one business day with next steps and required documents.
             </p>
             <form action="https://formsubmit.co/dbr@bharathsolarepc.com" method="POST" className="mt-6 grid gap-4">
@@ -1074,7 +1075,7 @@ export function ContactSection() {
                   {active.timeframe}
                 </span>
               </div>
-              <p className="text-sm text-slate-300">{active.summary}</p>
+              <p className="text-sm leading-relaxed text-slate-200/80">{active.summary}</p>
               <ul className="grid gap-2 sm:grid-cols-2">
                 {active.outputs.map((output) => (
                   <li key={output} className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
@@ -1106,8 +1107,8 @@ export function ContactSection() {
 
 function ContactCard({ icon: Icon, title, detail, href }) {
   const content = (
-    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-left text-slate-200 shadow-sm">
-      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-slate-300">
+    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/6 p-4 text-left text-slate-200 shadow-[0_24px_60px_-40px_rgba(59,130,246,0.55)] backdrop-blur">
+      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 text-slate-200">
         <Icon className="h-5 w-5" />
       </span>
       <div>

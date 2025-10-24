@@ -226,7 +226,7 @@ function Hero({ scrollProgress }) {
               Empowering India with clean solar energy
             </span>
           </h1>
-          <p className="max-w-xl text-lg text-slate-300">
+          <p className="max-w-xl text-lg leading-relaxed text-slate-200/90">
             We design, build and maintain high-performance solar PV plants across Telangana, Andhra Pradesh and pan-India.
             Slide through the experience, explore the section that matters to you and feel the momentum of a future-ready EPC partner.
           </p>
@@ -240,7 +240,7 @@ function Hero({ scrollProgress }) {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/calculator"
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-7 py-3 text-sm font-semibold text-slate-950 shadow-[0_25px_50px_-20px_rgba(16,185,129,0.7)] transition hover:scale-105"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-7 py-3 text-sm font-semibold text-slate-950 shadow-[0_25px_50px_-20px_rgba(16,185,129,0.7)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               <span className="relative z-10">Estimate your savings</span>
               <ArrowIcon className="relative z-10 h-4 w-4" />
@@ -248,7 +248,7 @@ function Hero({ scrollProgress }) {
             </Link>
             <Link
               href="/solutions"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-7 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/30 hover:bg-white/10"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/6 px-7 py-3 text-sm font-semibold text-slate-100 transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               Explore solar solutions
             </Link>
@@ -257,7 +257,7 @@ function Hero({ scrollProgress }) {
             {heroStats.map((stat) => (
               <div
                 key={stat.label}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 shadow-[0_20px_50px_-32px_rgba(148,163,184,0.8)]"
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/6 p-5 shadow-[0_24px_70px_-40px_rgba(148,163,184,0.7)] backdrop-blur"
               >
                 <div
                   className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -267,7 +267,7 @@ function Hero({ scrollProgress }) {
                   <dd className="text-2xl font-semibold text-white">{stat.value}</dd>
                   <span className="mt-1 inline-flex h-2 w-6 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400 opacity-70" />
                 </div>
-                <dt className="relative mt-2 text-sm text-slate-300">{stat.label}</dt>
+                <dt className="relative mt-2 text-sm text-slate-300/80">{stat.label}</dt>
               </div>
             ))}
           </dl>
@@ -275,7 +275,7 @@ function Hero({ scrollProgress }) {
 
         <div className="relative flex items-center justify-center">
           <div
-            className="relative w-full max-w-xl overflow-hidden rounded-[32px] border border-white/10 bg-black/40 p-8 shadow-[0_45px_100px_-40px_rgba(16,185,129,0.65)]"
+            className="relative w-full max-w-xl overflow-hidden rounded-[32px] border border-white/10 bg-black/45 p-8 shadow-[0_55px_130px_-55px_rgba(16,185,129,0.7)] backdrop-blur-xl"
             style={{ transform: `perspective(1200px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)` }}
           >
             <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-white/10" aria-hidden />
@@ -289,14 +289,14 @@ function Hero({ scrollProgress }) {
               </span>
             </div>
             <div className="relative mt-6 space-y-5 text-slate-100">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+              <div className="rounded-2xl border border-white/10 bg-white/6 p-5">
                 <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Today&apos;s generation</p>
                 <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
                   <div>
                     <p className="text-4xl font-semibold leading-none">4.8 MWh</p>
                     <p className="mt-2 text-sm text-emerald-200">+12% vs plan</p>
                   </div>
-                  <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-slate-300">
+                  <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-slate-200/80">
                     <div className="flex flex-col">
                       <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Irradiance</span>
                       <span className="text-sm font-semibold text-slate-100">92% optimal</span>
@@ -309,15 +309,15 @@ function Hero({ scrollProgress }) {
                 </div>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <div className="rounded-2xl border border-white/10 bg-white/6 p-5">
                   <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Health score</p>
                   <p className="mt-3 text-3xl font-semibold">98%</p>
-                  <p className="mt-2 text-sm text-slate-300">All inverters are online and dispatch ready.</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-200/80">All inverters are online and dispatch ready.</p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <div className="rounded-2xl border border-white/10 bg-white/6 p-5">
                   <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Carbon avoided</p>
                   <p className="mt-3 text-3xl font-semibold">3.9 tCO₂e</p>
-                  <p className="mt-2 text-sm text-slate-300">Equal to planting 176 mature trees this week.</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-200/80">Equal to planting 176 mature trees this week.</p>
                 </div>
               </div>
               <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-5 text-sm text-emerald-100">
