@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Bharath Solar EPC",
+  title: "Empowering india with claen solar energy",
   description: "Design, build and maintain high-performance solar plants across Telangana and India.",
 };
 
