@@ -64,18 +64,22 @@ export function SiteHeader() {
           style={{ transform: `scaleX(${Math.max(progress, 0.03)})` }}
         />
       </div>
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 text-slate-100 sm:px-6">
-        <Link href="/" className="relative flex items-center gap-3">
-          <span className="glow-border relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(15,118,110,0.45)] ring-1 ring-white/30">
+      <div
+        className={`mx-auto flex max-w-7xl items-center justify-between px-4 text-slate-100 transition-[padding] duration-500 sm:px-6 ${
+          scrolled ? "py-2.5 sm:py-3" : "py-3 sm:py-3.5"
+        }`}
+      >
+        <Link href="/" className="relative flex items-center gap-2.5 sm:gap-3">
+          <span className="glow-border relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-white shadow-[0_20px_40px_-12px_rgba(15,118,110,0.45)] ring-1 ring-white/30 sm:h-11 sm:w-11">
             <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
           </span>
           <div className="hidden sm:block">
             <p className="text-xs font-semibold uppercase tracking-[0.32em] text-slate-300/90">Bharath Solar EPC</p>
-            <p className="mt-1 hidden text-sm text-slate-300 sm:block">Clean energy architecture for industries, institutions & homes</p>
+            <p className="mt-0.5 hidden text-sm text-slate-300 sm:block">Clean energy architecture for industries, institutions & homes</p>
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-3 md:flex">
+        <nav className="hidden items-center gap-2.5 md:flex">
           {navLinks.map((item) => {
             const isActive =
               pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
@@ -83,7 +87,7 @@ export function SiteHeader() {
               <Link
                 key={item.label}
                 href={item.href}
-                className={`group relative inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                className={`group relative inline-flex items-center rounded-full px-3.5 py-1.5 text-[0.92rem] font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                   isActive ? "text-white" : "text-slate-300 hover:text-white"
                 }`}
               >
@@ -99,9 +103,9 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-300/80">
-            <span className="hidden sm:inline-flex items-center gap-2 text-[0.85rem] normal-case tracking-normal text-slate-100">
+        <div className="hidden items-center gap-2.5 md:flex">
+          <div className="flex items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-[0.7rem] uppercase tracking-[0.36em] text-slate-300/80">
+            <span className="hidden sm:inline-flex items-center gap-1.5 text-[0.85rem] normal-case tracking-normal text-slate-100">
               <PhoneIcon className="h-4 w-4 text-emerald-300" />
               <a
                 href="tel:+918977310017"
@@ -110,12 +114,12 @@ export function SiteHeader() {
                 +91 89773 10017
               </a>
             </span>
-            <span className="hidden h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.75)] sm:block" aria-hidden />
-            <span className="text-[0.7rem] tracking-[0.42em] text-emerald-200/80">Talk today</span>
+            <span className="hidden h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(74,222,128,0.75)] sm:block" aria-hidden />
+            <span className="text-[0.68rem] tracking-[0.48em] text-emerald-200/80">Talk today</span>
           </div>
           <Link
             href="/contact"
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            className="group relative inline-flex items-center gap-1.5 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-3.5 py-1.5 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             <span className="relative z-10">Talk to an expert</span>
             <span className="relative z-10 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
@@ -128,7 +132,7 @@ export function SiteHeader() {
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-100 transition hover:border-white/20 hover:bg-white/10 md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-100 transition hover:border-white/20 hover:bg-white/10 md:hidden"
           aria-label="Toggle navigation"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
