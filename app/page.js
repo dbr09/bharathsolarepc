@@ -169,7 +169,7 @@ export default function Home() {
   const accentPosition = `${50 + scrollProgress * 35}% ${35 + scrollProgress * 20}%`;
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-transparent text-slate-100">
+    <main className="relative min-h-screen overflow-x-hidden bg-transparent text-slate-100">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 transition-opacity duration-700"
@@ -322,13 +322,18 @@ function Hero({ scrollProgress }) {
           >
             <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-white/10" aria-hidden />
             <div className="pointer-events-none absolute inset-[18px] rounded-[24px] border border-white/10 opacity-40" aria-hidden />
-            <div className="relative flex items-center justify-between text-sm font-semibold text-emerald-200/90">
+            <div className="relative flex flex-wrap items-center justify-between gap-3 text-sm font-semibold text-emerald-200/90">
               <span className="flex items-center gap-2">
                 <SparkIcon className="h-4 w-4" /> Real-time monitoring
               </span>
-              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs uppercase tracking-[0.3em] text-emerald-100">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" aria-hidden /> Live
-              </span>
+              <div className="flex items-center gap-2 text-xs uppercase tracking-[0.25em]">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/35 bg-emerald-400/10 px-3 py-1 text-[0.7rem] font-semibold text-emerald-100 shadow-[0_0_18px_rgba(16,185,129,0.25)]">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" aria-hidden /> Live feed
+                </span>
+                <span className="hidden items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/5 px-3 py-1 text-[0.65rem] font-medium text-emerald-100/80 sm:inline-flex">
+                  <RefreshIcon className="h-3.5 w-3.5" /> {refreshLabel}
+                </span>
+              </div>
             </div>
             <div className="relative mt-6 space-y-5 text-slate-100" aria-live="polite">
               <div className="rounded-2xl border border-white/10 bg-white/6 p-5">
@@ -1024,6 +1029,18 @@ function SparkIcon({ className }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l1.8 5.5H19l-4.5 3.4L16.5 19 12 15.6 7.5 19l1.5-7.1L4 8.5h5.2L12 3z" />
+    </svg>
+  );
+}
+
+function RefreshIcon({ className }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M4 4v6h6M20 20v-6h-6M5.63 18.37A8 8 0 0 0 18 12h2m-1.63-6.37A8 8 0 0 0 6 12H4"
+      />
     </svg>
   );
 }
