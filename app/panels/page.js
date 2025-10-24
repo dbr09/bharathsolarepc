@@ -1,3 +1,7 @@
+import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
+import PageIntro from "../components/layout/PageIntro";
+import WhatsAppFloat from "../components/WhatsAppFloat";
+
 export const metadata = { title: "Types of Panels — Bharath Solar EPC" };
 
 export default function Panels() {
@@ -9,25 +13,39 @@ export default function Panels() {
   ];
 
   return (
-    <main className="mx-auto max-w-7xl px-6 py-14 bg-white text-black text-lg">
-      <h1 className="text-4xl font-extrabold">Types of Solar Panels</h1>
-      <p className="mt-3 text-zinc-700">
-        We usually recommend Tier-1 mono PERC / TOPCon modules for Indian rooftops based on budget and roof space.
-      </p>
+    <main className="relative min-h-screen overflow-hidden bg-white text-slate-900">
+      <BackgroundDecorations />
+      <SiteHeader />
+      <PageIntro
+        eyebrow="Module technology"
+        title="Solar panel types we deploy across rooftops"
+        description="Tier-1 mono PERC and emerging TOPCon/HJT modules deliver the best balance of efficiency, aesthetics and availability for Indian homes and industries."
+      />
 
-      <div className="mt-8 grid md:grid-cols-2 gap-6">
-        {types.map((t, i) => (
-          <div key={i} className="rounded-2xl border border-zinc-200 bg-white p-7">
-            <h3 className="text-2xl font-semibold">{t.name}</h3>
-            <p className="mt-2 text-zinc-800"><b>Pros:</b> {t.pros}</p>
-            <p className="mt-1 text-zinc-800"><b>Cons:</b> {t.cons}</p>
+      <section className="py-14 sm:py-16 md:py-20">
+        <div className="site-container-wide space-y-8">
+          <div className="grid gap-6 md:grid-cols-2">
+            {types.map((t, i) => (
+              <div key={i} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+                <h3 className="text-2xl font-semibold text-slate-900">{t.name}</h3>
+                <p className="mt-3 text-sm text-slate-700">
+                  <span className="font-semibold text-slate-900">Pros:</span> {t.pros}
+                </p>
+                <p className="mt-2 text-sm text-slate-700">
+                  <span className="font-semibold text-slate-900">Cons:</span> {t.cons}
+                </p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <p className="mt-8 text-zinc-800 font-medium">
-        In collaboration with <span className="font-bold">SUVAHIK</span>.
-      </p>
+          <p className="text-base text-slate-600 text-balance sm:text-lg">
+            Need help deciding? Share your roof photos and recent electricity bill and our engineers will shortlist the right technology mix for your goals.
+          </p>
+        </div>
+      </section>
+
+      <SiteFooter />
+      <WhatsAppFloat />
     </main>
   );
 }

@@ -80,13 +80,13 @@ export default function PaymentsPage() {
 
 function PaymentOverview() {
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-8 rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/70 md:grid-cols-[1.1fr_0.9fr]">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="site-container">
+        <div className="grid gap-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/70 md:grid-cols-[1.1fr_0.9fr] sm:p-8">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-[#F16921]">What to expect</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Built for finance teams and project owners</h2>
-            <p className="mt-4 text-slate-600">
+            <h2 className="mt-4 text-3xl font-bold text-slate-900 text-balance sm:text-4xl">Built for finance teams and project owners</h2>
+            <p className="mt-4 text-base text-slate-600 text-balance sm:text-lg">
               Every payment request includes scope summaries, GST breakdowns and links to supporting documents. Your clients get the transparency they need, and you get real-time dashboards for settlements.
             </p>
             <div className="mt-6 grid gap-4">
@@ -103,11 +103,11 @@ function PaymentOverview() {
               ))}
             </div>
           </div>
-          <div className="flex flex-col justify-between gap-6 rounded-3xl border border-slate-200 bg-gradient-to-br from-violet-50 via-white to-white p-6 text-slate-900">
+          <div className="flex flex-col justify-between gap-6 rounded-3xl border border-slate-200 bg-gradient-to-br from-violet-50 via-white to-white p-5 text-slate-900 sm:p-6">
             <div>
               <p className="text-sm font-semibold text-slate-600">Live ETA</p>
               <p className="mt-2 text-4xl font-bold">Week of {getNextWeekLabel()}</p>
-              <p className="mt-3 text-sm text-slate-600">
+              <p className="mt-3 text-sm text-slate-600 text-balance">
                 We are running compliance checks and sandbox flows now. Share your invoicing workflow to be part of the pilot batch.
               </p>
             </div>
@@ -127,13 +127,13 @@ function PaymentOverview() {
 
 function IntegrationTimeline() {
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">Launch timeline</h2>
-        <p className="mt-3 text-slate-600">Here’s how we roll out Razorpay across every engagement over the next few days.</p>
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="site-container">
+        <h2 className="text-3xl font-bold text-slate-900 text-balance sm:text-4xl">Launch timeline</h2>
+        <p className="mt-3 text-base text-slate-600 text-balance sm:text-lg">Here’s how we roll out Razorpay across every engagement over the next few days.</p>
+        <div className="mt-8 grid gap-4 sm:gap-6 md:grid-cols-3">
           {integrationTimeline.map((item) => (
-            <div key={item.phase} className="flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div key={item.phase} className="flex h-full flex-col justify-between rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
               <div>
                 <p className="text-xs uppercase tracking-[0.3em] text-slate-500">{item.window}</p>
                 <h3 className="mt-3 text-xl font-semibold text-slate-900">{item.phase}</h3>
@@ -152,16 +152,16 @@ function IntegrationTimeline() {
 
 function SupportHighlights() {
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="site-container">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Beyond collections</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Finance, compliance and customer support ready</h2>
-          <p className="mt-3 text-slate-600">Each digital payment step is backed by documentation workflows so your auditors, procurement teams and customers stay aligned.</p>
+          <h2 className="mt-4 text-3xl font-bold text-slate-900 text-balance sm:text-4xl">Finance, compliance and customer support ready</h2>
+          <p className="mt-3 text-base text-slate-600 text-balance sm:text-lg">Each digital payment step is backed by documentation workflows so your auditors, procurement teams and customers stay aligned.</p>
         </div>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:gap-6 md:grid-cols-3">
           {supportBlocks.map((block) => (
-            <div key={block.title} className="rounded-3xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm">
+            <div key={block.title} className="rounded-3xl border border-slate-200 bg-white p-5 text-slate-900 shadow-sm sm:p-6">
               <h3 className="text-lg font-semibold">{block.title}</h3>
               <p className="mt-3 text-sm text-slate-600">{block.description}</p>
             </div>
@@ -174,13 +174,13 @@ function SupportHighlights() {
 
 function ContactCta() {
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="rounded-3xl border border-slate-200 bg-white p-8 text-slate-800 shadow-xl md:flex md:items-center md:justify-between md:gap-10">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="site-container">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 text-slate-800 shadow-xl md:flex md:items-center md:justify-between md:gap-10 sm:p-8">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Need a payment walkthrough?</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900">Schedule a Razorpay demo for your finance team</h2>
-            <p className="mt-3 text-slate-600">
+            <h2 className="mt-4 text-3xl font-bold text-slate-900 text-balance">Schedule a Razorpay demo for your finance team</h2>
+            <p className="mt-3 text-base text-slate-600 text-balance sm:text-lg">
               We’ll showcase the payment links, receipts, reconciliations and reporting so you know exactly what launches next week.
             </p>
           </div>

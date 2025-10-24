@@ -1,3 +1,7 @@
+import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
+import PageIntro from "../components/layout/PageIntro";
+import WhatsAppFloat from "../components/WhatsAppFloat";
+
 export const metadata = { title: "On-grid, Off-grid & Hybrid — Bharath Solar EPC" };
 
 export default function Systems() {
@@ -8,19 +12,37 @@ export default function Systems() {
   ];
 
   return (
-    <main className="mx-auto max-w-7xl px-6 py-14 bg-white text-black text-lg">
-      <h1 className="text-4xl font-extrabold">System Types</h1>
-      <p className="mt-3 text-zinc-700">Choose based on power-cut situation, budget, and goals.</p>
+    <main className="relative min-h-screen overflow-hidden bg-white text-slate-900">
+      <BackgroundDecorations />
+      <SiteHeader />
+      <PageIntro
+        eyebrow="System architectures"
+        title="Choose on-grid, off-grid or hybrid configurations"
+        description="Each architecture balances budget, outage coverage and regulatory requirements. We tailor designs to your load profile and power-cut patterns."
+      />
 
-      <div className="mt-8 grid md:grid-cols-3 gap-6">
-        {items.map((s, i) => (
-          <div key={i} className="rounded-2xl border border-zinc-200 bg-white p-7">
-            <h3 className="text-2xl font-semibold">{s.name}</h3>
-            <p className="mt-2 text-zinc-800"><b>Best for:</b> {s.bestFor}</p>
-            <p className="mt-1 text-zinc-700">{s.notes}</p>
+      <section className="py-14 sm:py-16 md:py-20">
+        <div className="site-container-wide space-y-8">
+          <div className="grid gap-6 md:grid-cols-3">
+            {items.map((s, i) => (
+              <div key={i} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+                <h3 className="text-2xl font-semibold text-slate-900">{s.name}</h3>
+                <p className="mt-3 text-sm text-slate-700">
+                  <span className="font-semibold text-slate-900">Best for:</span> {s.bestFor}
+                </p>
+                <p className="mt-2 text-sm text-slate-600">{s.notes}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+
+          <p className="text-base text-slate-600 text-balance sm:text-lg">
+            Unsure which option suits your operations? We assess outage history, critical loads and ROI targets before recommending the architecture and inverter topology.
+          </p>
+        </div>
+      </section>
+
+      <SiteFooter />
+      <WhatsAppFloat />
     </main>
   );
 }

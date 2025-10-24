@@ -1,3 +1,7 @@
+import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
+import PageIntro from "../components/layout/PageIntro";
+import WhatsAppFloat from "../components/WhatsAppFloat";
+
 export const metadata = { title: "Our Projects — Bharath Solar EPC" };
 
 const DATA = [
@@ -30,36 +34,63 @@ const DATA = [
 
 export default function Projects() {
   return (
-    <main className="mx-auto max-w-7xl px-6 py-14 bg-white text-black text-lg">
-      <h1 className="text-4xl font-extrabold">Our Projects</h1>
-      <p className="mt-3 text-zinc-700">Selected references. Photos available on request.</p>
+    <main className="relative min-h-screen overflow-hidden bg-white text-slate-900">
+      <BackgroundDecorations />
+      <SiteHeader />
+      <PageIntro
+        eyebrow="Project references"
+        title="Installations delivering dependable generation"
+        description="A snapshot of commercial, industrial, institutional and residential solar assets we have engineered and maintained. Detailed photos and performance reports are available on request."
+      />
 
-      <div className="mt-8 overflow-x-auto rounded-2xl border border-zinc-200">
-        <table className="min-w-full text-base">
-          <thead className="bg-zinc-50">
-            <tr className="text-left">
-              <th className="p-4 font-semibold">#</th>
-              <th className="p-4 font-semibold">Name of Customer</th>
-              <th className="p-4 font-semibold">Solar Plant Details</th>
-              <th className="p-4 font-semibold">Year</th>
-            </tr>
-          </thead>
-          <tbody>
-            {DATA.map((r, i) => (
-              <tr key={i} className="border-t odd:bg-white even:bg-zinc-50">
-                <td className="p-4">{i + 1}</td>
-                <td className="p-4">{r.name}</td>
-                <td className="p-4">{r.size}</td>
-                <td className="p-4">{r.year}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <section className="py-14 sm:py-16 md:py-20">
+        <div className="site-container-wide">
+          <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+            <div className="hidden overflow-x-auto rounded-2xl border border-slate-200 md:block">
+              <table className="min-w-full text-left text-sm">
+                <thead className="bg-slate-50">
+                  <tr className="text-slate-700">
+                    <th className="px-4 py-3 font-semibold">#</th>
+                    <th className="px-4 py-3 font-semibold">Name of customer</th>
+                    <th className="px-4 py-3 font-semibold">Plant details</th>
+                    <th className="px-4 py-3 font-semibold">Year</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {DATA.map((r, i) => (
+                    <tr key={i} className="border-t border-slate-100 odd:bg-white even:bg-slate-50">
+                      <td className="px-4 py-3 text-slate-600">{i + 1}</td>
+                      <td className="px-4 py-3 text-slate-900">{r.name}</td>
+                      <td className="px-4 py-3 text-slate-700">{r.size}</td>
+                      <td className="px-4 py-3 text-slate-700">{r.year}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
-      <p className="mt-6 text-zinc-800 font-medium">
-        In collaboration with <span className="font-bold">SUVAHIK</span>.
-      </p>
+            <div className="space-y-4 md:hidden">
+              {DATA.map((r, i) => (
+                <div key={i} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-slate-500">
+                    <span>Project {i + 1}</span>
+                    <span>{r.year}</span>
+                  </div>
+                  <p className="mt-3 text-base font-semibold text-slate-900">{r.name}</p>
+                  <p className="mt-1 text-sm text-slate-600">{r.size}</p>
+                </div>
+              ))}
+            </div>
+
+            <p className="mt-6 text-sm text-slate-600">
+              In collaboration with <span className="font-semibold text-slate-900">SUVAHIK</span>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <SiteFooter />
+      <WhatsAppFloat />
     </main>
   );
 }
