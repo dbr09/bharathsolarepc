@@ -1,7 +1,8 @@
 import DynamicPageShell from "../components/layout/DynamicPageShell";
 import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
 import PageIntro from "../components/layout/PageIntro";
-import { ProjectsHighlightsSection, faqs, testimonials } from "../components/marketing/sections";
+import { ProjectsHighlightsSection } from "../components/marketing/sections";
+import { faqs, testimonials } from "../data/testimonials";
 import WhatsAppFloat from "../components/WhatsAppFloat";
 
 export const metadata = {
