@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
   font-family: var(--font-sans, "Inter", "Helvetica Neue", Arial, sans-serif);
   line-height: 1.6;
+  background-color: rgb(2 6 23);
+  color: rgb(226 232 240);
 }
 
 a {
@@ -20,4 +22,168 @@ section {
 ::selection {
   background: rgba(20, 123, 62, 0.35);
   color: white;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes floatSlow {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.98);
+  }
+  50% {
+    transform: translate3d(12px, -18px, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(0.98);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes progressFill {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.dynamic-phrase {
+  background-image: linear-gradient(120deg, #ffe0b2, #f16921, #147b3e);
+  background-size: 200% 200%;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: gradientFlow 12s ease-in-out infinite;
+}
+
+.animate-fade {
+  animation: fadeInUp 0.7s ease forwards;
+}
+
+.motion-marquee {
+  animation: marqueeScroll 28s linear infinite;
+}
+
+.motion-marquee:hover {
+  animation-play-state: paused;
+}
+
+.progress-bar {
+  background-image: linear-gradient(90deg, rgba(20, 123, 62, 0.35), rgba(241, 105, 33, 0.6));
+  transform: translateX(-100%);
+  animation: progressFill 6s linear forwards;
+}
+
+.animate-float-slow {
+  animation: floatSlow 18s ease-in-out infinite;
+}
+
+.hero-gradient-overlay {
+  position: absolute;
+  left: 50%;
+  top: -40%;
+  width: 140%;
+  height: 70%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at top, rgba(20, 123, 62, 0.28), transparent 70%);
+  filter: blur(160px);
+  opacity: 0.55;
+  animation: gradientFlow 22s ease-in-out infinite, pulseGlow 18s ease-in-out infinite;
+}
+
+.hero-gradient-overlay--bottom {
+  top: auto;
+  bottom: -45%;
+  height: 65%;
+  background: radial-gradient(circle at bottom, rgba(241, 105, 33, 0.25), transparent 70%);
+  animation-delay: -6s;
+}
+
+.hero-background-orb {
+  position: absolute;
+  top: 18%;
+  left: 12%;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 30% 30%, rgba(20, 123, 62, 0.22), transparent 70%);
+  filter: blur(80px);
+  animation: floatSlow 20s ease-in-out infinite;
+}
+
+.hero-background-orb--secondary {
+  top: auto;
+  bottom: 10%;
+  left: auto;
+  right: 12%;
+  width: 20rem;
+  height: 20rem;
+  background: radial-gradient(circle at 70% 70%, rgba(4, 106, 56, 0.2), transparent 75%);
+  animation-duration: 24s;
+  animation-delay: -8s;
+}
+
+.hero-dynamic-orb {
+  position: absolute;
+  top: 8%;
+  right: 6%;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 40% 40%, rgba(20, 123, 62, 0.28), transparent 70%);
+  filter: blur(140px);
+  opacity: 0.7;
+  animation: floatSlow 18s ease-in-out infinite;
+}
+
+.hero-dynamic-orb--secondary {
+  top: auto;
+  bottom: 6%;
+  right: auto;
+  left: 4%;
+  width: 18rem;
+  height: 18rem;
+  background: radial-gradient(circle at 60% 60%, rgba(241, 105, 33, 0.22), transparent 70%);
+  animation-duration: 20s;
+  animation-delay: -5s;
 }

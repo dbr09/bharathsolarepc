@@ -3,6 +3,21 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
+import {
+  ArrowIcon,
+  CalendarIcon,
+  CheckIcon,
+  CompassIcon,
+  FactoryIcon,
+  GridIcon,
+  MailIcon,
+  MapPinIcon,
+  PhoneIcon,
+  ShieldIcon,
+  SparkIcon,
+  SunIcon,
+} from "../icons";
+
 export const valueProps = [
   {
     title: "Design-led Engineering",
@@ -128,10 +143,10 @@ export function ValueHighlightsSection() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Why Bharath Solar EPC</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
             Everything you need to own and run dependable solar assets
           </h2>
-          <p className="mt-3 text-slate-600">
+          <p className="mt-3 text-slate-300">
             From feasibility to lifetime performance, our multi-disciplinary team covers electrical, structural and financial diligence so you always know what to expect.
           </p>
         </div>
@@ -139,14 +154,14 @@ export function ValueHighlightsSection() {
           {valueProps.map((item) => (
             <div
               key={item.title}
-              className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:bg-slate-50"
+              className="group relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/80 p-6 transition duration-300 hover:-translate-y-1 hover:border-slate-600 hover:bg-slate-950"
             >
               <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#147B3E]/15 text-[#147B3E]">
                 <item.icon className="h-5 w-5" />
               </span>
-              <h3 className="text-xl font-semibold text-slate-900">{item.title}</h3>
-              <p className="mt-3 text-sm text-slate-600">{item.description}</p>
-              <span className="mt-6 inline-flex items-center text-sm font-semibold text-slate-700">
+              <h3 className="text-xl font-semibold text-white">{item.title}</h3>
+              <p className="mt-3 text-sm text-slate-300">{item.description}</p>
+              <span className="mt-6 inline-flex items-center text-sm font-semibold text-slate-300">
                 Learn more
                 <ArrowIcon className="ml-2 h-4 w-4" />
               </span>
@@ -165,11 +180,11 @@ export function CalculatorSection() {
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Plan your plant</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Solar sizing calculator</h2>
-            <p className="mt-3 text-slate-600">
+            <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Solar sizing calculator</h2>
+            <p className="mt-3 text-slate-300">
               1 kW of rooftop solar in Telangana generates about <strong>150 units</strong> per month. Enter your electricity usage and tariff to estimate system size, space requirement and payback.
             </p>
-            <ul className="mt-6 space-y-3 text-sm text-slate-600">
+            <ul className="mt-6 space-y-3 text-sm text-slate-300">
               <li className="flex items-start gap-3">
                 <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Tailored proposals include module layout, structure details and financial model.
               </li>
@@ -221,28 +236,28 @@ function Calculator() {
   }, [tariff, unitsMonth]);
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/70">
+    <div className="rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-xl shadow-slate-950/50">
       <form className="space-y-4">
         <div>
-          <label htmlFor="units" className="text-sm font-semibold text-slate-700">
+          <label htmlFor="units" className="text-sm font-semibold text-slate-300">
             Monthly electricity usage (units)
           </label>
           <input
             id="units"
             value={unitsMonth}
             onChange={(event) => setUnitsMonth(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+            className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900/80 px-4 py-3 text-base text-white placeholder:text-slate-300 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
           />
         </div>
         <div>
-          <label htmlFor="tariff" className="text-sm font-semibold text-slate-700">
+          <label htmlFor="tariff" className="text-sm font-semibold text-slate-300">
             Average tariff (₹/unit)
           </label>
           <input
             id="tariff"
             value={tariff}
             onChange={(event) => setTariff(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+            className="mt-2 w-full rounded-2xl border border-slate-700 bg-slate-900/80 px-4 py-3 text-base text-white placeholder:text-slate-300 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
           />
         </div>
       </form>
@@ -263,8 +278,8 @@ function Calculator() {
 function ResultRow({ label, value }) {
   return (
     <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-center">
-      <span className="text-slate-500">{label}</span>
-      <span className="font-semibold text-slate-900">{value}</span>
+      <span className="text-slate-300">{label}</span>
+      <span className="font-semibold text-white">{value}</span>
     </div>
   );
 }
@@ -275,27 +290,27 @@ export function SolutionsSection() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Solutions</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Tailored EPC engagements for every segment</h2>
-          <p className="mt-3 text-slate-600">
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Tailored EPC engagements for every segment</h2>
+          <p className="mt-3 text-slate-300">
             Choose the engagement that fits your load profile, roof architecture and financial goals. Every project receives design, supply, installation and long-term support under one roof.
           </p>
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {solutions.map((solution) => (
-            <div key={solution.name} className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div key={solution.name} className="flex h-full flex-col rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-lg shadow-slate-950/40">
               <span className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F16921]/15 text-[#F16921]">
                 <solution.icon className="h-5 w-5" />
               </span>
-              <h3 className="text-xl font-semibold text-slate-900">{solution.name}</h3>
-              <p className="mt-3 text-sm text-slate-600">{solution.summary}</p>
-              <ul className="mt-6 space-y-2 text-sm text-slate-600">
+              <h3 className="text-xl font-semibold text-white">{solution.name}</h3>
+              <p className="mt-3 text-sm text-slate-300">{solution.summary}</p>
+              <ul className="mt-6 space-y-2 text-sm text-slate-300">
                 {solution.bullets.map((bullet) => (
                   <li key={bullet} className="flex items-start gap-2">
                     <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> {bullet}
                   </li>
                 ))}
               </ul>
-              <Link href={solution.href} className="mt-8 inline-flex items-center text-sm font-semibold text-slate-700 hover:text-slate-900">
+              <Link href={solution.href} className="mt-8 inline-flex items-center text-sm font-semibold text-slate-300 hover:text-white">
                 Explore details <ArrowIcon className="ml-2 h-4 w-4" />
               </Link>
             </div>
@@ -312,10 +327,10 @@ export function ProcessSection() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="max-w-3xl">
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">How we work</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
             A proven EPC playbook from discovery to performance
           </h2>
-          <p className="mt-3 text-slate-600">
+          <p className="mt-3 text-slate-300">
             Our cross-functional teams run a transparent process with weekly updates, shared documentation and quality gates so you always know the status of your solar asset.
           </p>
         </div>
@@ -323,15 +338,15 @@ export function ProcessSection() {
           {steps.map((step, index) => (
             <li
               key={step.title}
-              className="group relative rounded-3xl border border-slate-200 bg-white p-6 transition duration-300 hover:border-slate-300 hover:bg-slate-50"
+              className="group relative rounded-3xl border border-slate-800 bg-slate-900/80 p-6 transition duration-300 hover:border-slate-600 hover:bg-slate-950"
             >
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Step {index + 1}</span>
-                  <h3 className="mt-2 text-2xl font-semibold text-slate-900">{step.title}</h3>
-                  <p className="mt-3 text-sm text-slate-600">{step.description}</p>
+                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300">Step {index + 1}</span>
+                  <h3 className="mt-2 text-2xl font-semibold text-white">{step.title}</h3>
+                  <p className="mt-3 text-sm text-slate-300">{step.description}</p>
                 </div>
-                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">{step.duration}</span>
+                <span className="rounded-full bg-slate-800/80 px-3 py-1 text-xs font-semibold text-slate-200">{step.duration}</span>
               </div>
             </li>
           ))}
@@ -348,25 +363,25 @@ export function ProjectsHighlightsSection() {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
             <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Proven track record</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Highlighted installations</h2>
-            <p className="mt-3 text-slate-600">
+            <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Highlighted installations</h2>
+            <p className="mt-3 text-slate-300">
               A glimpse into the industries and homes that trust us with their energy transition. Detailed case studies and references are available on request.
             </p>
           </div>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-400 hover:text-slate-900"
+            className="inline-flex items-center gap-2 rounded-full border border-slate-600 px-4 py-2 text-sm font-semibold text-slate-300 hover:border-slate-500 hover:text-white"
           >
             View complete list <ArrowIcon className="h-4 w-4" />
           </Link>
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {caseStudies.map((item) => (
-            <article key={item.title} className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
-              <p className="mt-4 text-2xl font-bold text-slate-900">{item.metric}</p>
-              <p className="mt-3 text-sm text-slate-600">{item.detail}</p>
-              <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-slate-700">
+            <article key={item.title} className="flex h-full flex-col rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-sm">
+              <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+              <p className="mt-4 text-2xl font-bold text-white">{item.metric}</p>
+              <p className="mt-3 text-sm text-slate-300">{item.detail}</p>
+              <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-slate-300">
                 Performance verified <SparkIcon className="h-4 w-4" />
               </div>
             </article>
@@ -383,13 +398,13 @@ export function TestimonialsFaqSection() {
       <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Client confidence</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Voices from our partners</h2>
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Voices from our partners</h2>
           <div className="mt-6 space-y-6">
             {testimonials.map((testimonial) => (
-              <figure key={testimonial.name} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-                <blockquote className="text-base text-slate-700">“{testimonial.quote}”</blockquote>
-                <figcaption className="mt-4 text-sm font-semibold text-slate-900">
-                  {testimonial.name} <span className="block text-xs font-normal text-slate-500">{testimonial.role}</span>
+              <figure key={testimonial.name} className="rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-sm">
+                <blockquote className="text-base text-slate-300">“{testimonial.quote}”</blockquote>
+                <figcaption className="mt-4 text-sm font-semibold text-white">
+                  {testimonial.name} <span className="block text-xs font-normal text-slate-300">{testimonial.role}</span>
                 </figcaption>
               </figure>
             ))}
@@ -397,12 +412,12 @@ export function TestimonialsFaqSection() {
         </div>
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">FAQs</p>
-          <h2 className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">Frequently asked questions</h2>
+          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Frequently asked questions</h2>
           <div className="mt-6 space-y-4">
             {faqs.map((faq) => (
-              <details key={faq.question} className="group rounded-3xl border border-slate-200 bg-white p-5 text-sm text-slate-700 shadow-sm">
-                <summary className="cursor-pointer list-none font-semibold text-slate-900">{faq.question}</summary>
-                <p className="mt-3 text-sm text-slate-600">{faq.answer}</p>
+              <details key={faq.question} className="group rounded-3xl border border-slate-800 bg-slate-900/80 p-5 text-sm text-slate-300 shadow-sm">
+                <summary className="cursor-pointer list-none font-semibold text-white">{faq.question}</summary>
+                <p className="mt-3 text-sm text-slate-300">{faq.answer}</p>
               </details>
             ))}
           </div>
@@ -419,8 +434,8 @@ export function ContactSection() {
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-6">
             <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Start a conversation</p>
-            <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">Let’s design your next solar milestone</h2>
-            <p className="text-slate-600">
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">Let’s design your next solar milestone</h2>
+            <p className="text-slate-300">
               Share your site details, latest electricity bill and project goals. We’ll schedule a site visit, run generation simulations and send a proposal with ROI, subsidies and execution timelines.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -430,9 +445,9 @@ export function ContactSection() {
               <ContactCard icon={CalendarIcon} title="Site visits" detail="Scheduled within 48 hours" />
             </div>
           </div>
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 text-slate-900 shadow-xl">
-            <h3 className="text-2xl font-semibold text-slate-900">Request a customised proposal</h3>
-            <p className="mt-2 text-sm text-slate-600">
+          <div className="rounded-3xl border border-slate-800 bg-slate-900/80 p-8 text-white shadow-xl">
+            <h3 className="text-2xl font-semibold text-white">Request a customised proposal</h3>
+            <p className="mt-2 text-sm text-slate-300">
               We respond within one business day with next steps and required documents.
             </p>
             <form action="https://formsubmit.co/dbr@bharathsolarepc.com" method="POST" className="mt-6 grid gap-4">
@@ -442,24 +457,24 @@ export function ContactSection() {
                 name="name"
                 placeholder="Your name"
                 required
-                className="rounded-2xl border border-slate-200 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+                className="rounded-2xl border border-slate-800 px-4 py-3 text-base text-white placeholder:text-slate-300 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
               />
               <input
                 name="phone"
                 placeholder="Phone / WhatsApp"
                 required
-                className="rounded-2xl border border-slate-200 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+                className="rounded-2xl border border-slate-800 px-4 py-3 text-base text-white placeholder:text-slate-300 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
               />
               <input
                 name="city"
                 placeholder="City"
-                className="rounded-2xl border border-slate-200 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+                className="rounded-2xl border border-slate-800 px-4 py-3 text-base text-white placeholder:text-slate-300 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
               />
               <textarea
                 name="message"
                 placeholder="Share roof size, load profile or questions"
                 rows="4"
-                className="rounded-2xl border border-slate-200 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+                className="rounded-2xl border border-slate-800 px-4 py-3 text-base text-white placeholder:text-slate-300 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
               />
               <button
                 type="submit"
@@ -467,7 +482,7 @@ export function ContactSection() {
               >
                 Send request
               </button>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-300">
                 Prefer WhatsApp? Message us instantly at{" "}
                 <a
                   href="https://wa.me/918977310017?text=Hi%20Bharath,%20I%27d%20like%20a%20solar%20quote."
@@ -488,20 +503,20 @@ export function ContactSection() {
 
 function ContactCard({ icon: Icon, title, detail, href }) {
   const content = (
-    <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 text-left text-slate-700 shadow-sm">
-      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 text-slate-600">
+    <div className="flex items-center gap-3 rounded-2xl border border-slate-800 bg-slate-900/80 p-4 text-left text-slate-300 shadow-sm">
+      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-800/80 text-slate-200">
         <Icon className="h-5 w-5" />
       </span>
       <div>
-        <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{title}</p>
-        <p className="text-sm font-semibold text-slate-900">{detail}</p>
+        <p className="text-xs uppercase tracking-[0.2em] text-slate-300">{title}</p>
+        <p className="text-sm font-semibold text-white">{detail}</p>
       </div>
     </div>
   );
 
   if (href) {
     return (
-      <Link href={href} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#147B3E]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+      <Link href={href} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#147B3E]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
         {content}
       </Link>
     );
@@ -510,107 +525,3 @@ function ContactCard({ icon: Icon, title, detail, href }) {
   return content;
 }
 
-function ArrowIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
-    </svg>
-  );
-}
-
-function CheckIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5.5 12.5l3.5 3.5 9-9" />
-    </svg>
-  );
-}
-
-function SparkIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l1.8 5.5H19l-4.5 3.4L16.5 19 12 15.6 7.5 19l1.5-7.1L4 8.5h5.2L12 3z" />
-    </svg>
-  );
-}
-
-function ShieldIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l7 3v5c0 4.5-2.7 8.7-7 10-4.3-1.3-7-5.5-7-10V6l7-3z" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2.2 2.2L15 10.5" />
-    </svg>
-  );
-}
-
-function CompassIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <circle cx="12" cy="12" r="9" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15.5 8.5l-2 5-5 2 2-5 5-2z" />
-    </svg>
-  );
-}
-
-function SunIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <circle cx="12" cy="12" r="4" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-    </svg>
-  );
-}
-
-function FactoryIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 21V9l6 4V9l6 4V3h4v18H3z" />
-      <path d="M7 13h2v2H7zM13 13h2v2h-2zM7 17h2v2H7zM13 17h2v2h-2z" />
-    </svg>
-  );
-}
-
-function GridIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <rect x="3" y="3" width="7" height="7" rx="1.5" />
-      <rect x="14" y="3" width="7" height="7" rx="1.5" />
-      <rect x="3" y="14" width="7" height="7" rx="1.5" />
-      <rect x="14" y="14" width="7" height="7" rx="1.5" />
-    </svg>
-  );
-}
-
-function PhoneIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5.2 3h3.4L10.8 7.5 8.5 9.2c1.1 2.1 2.9 3.9 5 5l1.7-2.3L19 15.4v3.4c0 .9-.7 1.6-1.6 1.6A14.4 14.4 0 0 1 3 5.2C3 4.3 3.7 3.6 4.6 3.6H5.2z" />
-    </svg>
-  );
-}
-
-function MailIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="m22 7-10 6L2 7" />
-    </svg>
-  );
-}
-
-function MapPinIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z" />
-      <circle cx="12" cy="11" r="2.5" />
-    </svg>
-  );
-}
-
-function CalendarIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M7 3v3M17 3v3M4.5 9h15M6 5h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" />
-    </svg>
-  );
-}
