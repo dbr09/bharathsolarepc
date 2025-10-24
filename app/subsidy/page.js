@@ -40,12 +40,12 @@ export default function Subsidy() {
         <div className="mt-4 flex flex-wrap gap-3">
           <a
             href="https://wa.me/918977310017?text=Hi%20Bharath,%20please%20guide%20me%20on%20current%20rooftop%20subsidy%20for%20my%20home."
-            className="px-6 py-3 rounded-xl bg-[#147B3E] text-white font-semibold hover:opacity-90"
+            className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold shadow-lg shadow-blue-400/30 transition hover:bg-blue-700"
             target="_blank" rel="noopener noreferrer"
           >
             WhatsApp Us
           </a>
-          <Link href="/#contact" className="px-6 py-3 rounded-xl border border-zinc-300 hover:border-[#147B3E]">
+          <Link href="/#contact" className="px-6 py-3 rounded-xl border border-zinc-300 transition hover:border-blue-500 hover:text-blue-700">
             Get Free Quote
           </Link>
         </div>
