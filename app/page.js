@@ -969,13 +969,12 @@ function randomStep(value, variance) {
 }
 
 function createTrend(seed = 4.6, length = 12) {
-  const trend = [];
-  let current = seed;
-  for (let index = 0; index < length; index += 1) {
-    current = clamp(randomStep(current, 0.18), seed - 0.6, seed + 0.6);
-    trend.push(Number(current.toFixed(2)));
-  }
-  return trend;
+  return Array.from({ length }, (_, index) => {
+    const phase = index / Math.max(length - 1, 1);
+    const wave = Math.sin(phase * Math.PI * 1.6) * 0.35;
+    const value = clamp(seed + wave, seed - 0.45, seed + 0.45);
+    return Number(value.toFixed(2));
+  });
 }
 
 function buildInsights(planDelta, irradiance, availability, health) {
