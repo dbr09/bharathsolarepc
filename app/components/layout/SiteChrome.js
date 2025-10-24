@@ -31,7 +31,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 text-slate-700">
+      <div className="flex w-full max-w-6xl items-center justify-between px-6 py-4 text-slate-700">
         <Link href="/" className="flex items-center gap-3">
           <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-200/80 ring-1 ring-slate-200">
             <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
@@ -83,7 +83,7 @@ export function SiteHeader() {
 
       {open && (
         <div className="border-t border-slate-200 bg-white/95 md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-6 text-slate-700">
+          <div className="flex w-full max-w-6xl flex-col gap-5 px-6 py-6 text-slate-700">
             {navLinks.map((item) => (
               <Link
                 key={item.label}
