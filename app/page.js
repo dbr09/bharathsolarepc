@@ -275,42 +275,73 @@ function Hero({ scrollProgress }) {
 
         <div className="relative flex items-center justify-center">
           <div
-            className="relative w-full max-w-xl overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-white/10 via-slate-900/30 to-black/40 p-8 shadow-[0_45px_100px_-40px_rgba(16,185,129,0.75)]"
+            className="relative w-full max-w-xl overflow-hidden rounded-[32px] border border-white/10 bg-black/40 p-8 shadow-[0_45px_100px_-40px_rgba(16,185,129,0.65)]"
             style={{ transform: `perspective(1200px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)` }}
           >
-            <div className="pointer-events-none absolute inset-0 border border-white/10" aria-hidden />
-            <div className="pointer-events-none absolute inset-6 rounded-[28px] border border-white/5 opacity-40" aria-hidden />
-            <div className="flex items-center justify-between text-sm font-semibold text-emerald-200/80">
+            <div className="pointer-events-none absolute inset-0 rounded-[32px] border border-white/10" aria-hidden />
+            <div className="pointer-events-none absolute inset-[18px] rounded-[24px] border border-white/10 opacity-40" aria-hidden />
+            <div className="relative flex items-center justify-between text-sm font-semibold text-emerald-200/90">
               <span className="flex items-center gap-2">
                 <SparkIcon className="h-4 w-4" /> Real-time monitoring
               </span>
-              <span className="rounded-full bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-200">24/7</span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs uppercase tracking-[0.3em] text-emerald-100">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-300" aria-hidden /> Live
+              </span>
             </div>
-            <div className="mt-6 grid gap-4 text-slate-100">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-                <p className="text-sm text-slate-300">This week</p>
-                <p className="mt-1 text-3xl font-semibold">4.8 MWh generated</p>
-                <p className="text-sm text-emerald-300">+12% vs. weather-adjusted forecast</p>
+            <div className="relative mt-6 space-y-5 text-slate-100">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Today&apos;s generation</p>
+                <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
+                  <div>
+                    <p className="text-4xl font-semibold leading-none">4.8 MWh</p>
+                    <p className="mt-2 text-sm text-emerald-200">+12% vs plan</p>
+                  </div>
+                  <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-slate-300">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Irradiance</span>
+                      <span className="text-sm font-semibold text-slate-100">92% optimal</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500">Availability</span>
+                      <span className="text-sm font-semibold text-slate-100">100%</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-                <p className="text-sm text-slate-300">Carbon avoided</p>
-                <p className="mt-1 text-3xl font-semibold">3.9 tCO₂e</p>
-                <p className="text-sm text-slate-300">Equivalent to planting 176 mature trees</p>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Health score</p>
+                  <p className="mt-3 text-3xl font-semibold">98%</p>
+                  <p className="mt-2 text-sm text-slate-300">All inverters are online and dispatch ready.</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Carbon avoided</p>
+                  <p className="mt-3 text-3xl font-semibold">3.9 tCO₂e</p>
+                  <p className="mt-2 text-sm text-slate-300">Equal to planting 176 mature trees this week.</p>
+                </div>
               </div>
-            </div>
-            <div className="mt-6 rounded-2xl border border-emerald-400/40 bg-emerald-400/15 p-4 text-sm text-emerald-100">
-              <p className="font-semibold">Dedicated performance desk</p>
-              <p className="opacity-80">
-                Get alerts before your DISCOM bill does. Our engineers review dashboards daily and dispatch crews before yield drops.
-              </p>
+              <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-5 text-sm text-emerald-100">
+                <p className="font-semibold">Performance desk on watch</p>
+                <p className="mt-1 opacity-80">
+                  Engineers review every anomaly, push insights to WhatsApp, and dispatch crews before yield dips.
+                </p>
+              </div>
+              <ul className="grid gap-3 text-xs text-slate-300">
+                {["Voltage harmony across strings", "No ticket breaches in the last 30 days", "Last on-site audit: 6 days ago"].map((item) => (
+                  <li key={item} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/40 px-4 py-3">
+                    <span className="inline-flex h-2 w-2 rounded-full bg-emerald-300" aria-hidden />
+                    <span className="text-sm text-slate-200">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div
-              className="pointer-events-none absolute -right-12 -top-12 hidden h-32 w-32 rounded-3xl border border-white/10 bg-white/10 backdrop-blur-xl sm:block"
+              className="pointer-events-none absolute -right-12 -top-12 hidden h-32 w-32 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl sm:block"
               style={{ transform: `translate3d(${floatingShiftX * 0.25}px, ${floatingShiftY * 0.25}px, 0)` }}
             >
               <Image src="/globe.svg" alt="Solar network" fill className="p-6 opacity-80" />
             </div>
-            <div className="pointer-events-none absolute -left-10 bottom-12 hidden h-24 w-24 rounded-full bg-emerald-400/25 blur-3xl sm:block" aria-hidden />
+            <div className="pointer-events-none absolute -left-10 bottom-12 hidden h-24 w-24 rounded-full bg-emerald-400/20 blur-3xl sm:block" aria-hidden />
           </div>
         </div>
       </div>
