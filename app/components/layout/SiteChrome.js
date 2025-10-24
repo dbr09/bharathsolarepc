@@ -34,7 +34,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 text-slate-200">
         <Link href="/" className="flex items-center gap-3">
-          <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-slate-900 shadow-[0_25px_50px_-12px_rgba(15,118,110,0.45)] ring-1 ring-white/10">
+          <span className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(15,118,110,0.45)] ring-1 ring-white/30">
             <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
           </span>
           <div className="hidden sm:block">
