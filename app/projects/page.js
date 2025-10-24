@@ -1,3 +1,5 @@
+import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
+import WhatsAppFloat from "../components/WhatsAppFloat";
 import ProjectExplorer from "./ProjectExplorer";
 
 export const metadata = {
@@ -312,5 +314,38 @@ const PROJECTS = [
 ];
 
 export default function ProjectsPage() {
-  return <ProjectExplorer projects={PROJECTS} />;
+  return (
+    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 opacity-70"
+        style={{
+          background:
+            "radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.18), transparent 55%), radial-gradient(circle at 80% 30%, rgba(16, 185, 129, 0.14), transparent 60%)",
+        }}
+      />
+      <BackgroundDecorations />
+      <SiteHeader />
+
+      <section className="relative z-10 px-6 pb-8 pt-28 sm:pt-32 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-emerald-300/80">Project portfolio</p>
+          <h1 className="mt-4 text-4xl font-bold leading-tight text-slate-50 sm:text-5xl">
+            Empowering India with clean solar energy
+          </h1>
+          <p className="mt-4 max-w-3xl text-lg text-slate-300">
+            Explore our marquee installations with filters for sector, capacity and delivery timeline, then switch
+            views to dive into detailed performance data.
+          </p>
+        </div>
+      </section>
+
+      <div className="relative z-10 pb-24">
+        <ProjectExplorer projects={PROJECTS} />
+      </div>
+
+      <SiteFooter />
+      <WhatsAppFloat />
+    </main>
+  );
 }

@@ -178,7 +178,7 @@ export default function ProjectExplorer({ projects }) {
   };
 
   return (
-    <main className="relative mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 pb-24 pt-16 lg:px-8 lg:pt-20">
+    <section className="relative mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 pb-24 pt-16 lg:px-8 lg:pt-20">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -left-40 top-0 h-80 w-80 rounded-full bg-sky-500/20 blur-3xl" aria-hidden />
         <div className="absolute bottom-10 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-emerald-500/15 blur-3xl" aria-hidden />
@@ -485,6 +485,6 @@ export default function ProjectExplorer({ projects }) {
           </p>
         </section>
       )}
-    </main>
+    </section>
   );
 }
