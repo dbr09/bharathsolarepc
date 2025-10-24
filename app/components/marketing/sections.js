@@ -247,12 +247,12 @@ export function ValueHighlightsSection() {
   const active = valueProps[activeIndex];
 
   return (
-    <section className="relative py-16 md:py-24">
+    <section className="relative py-14 sm:py-16 md:py-24">
       <div className="pointer-events-none absolute inset-x-0 top-12 h-64 bg-gradient-to-r from-emerald-400/15 via-transparent to-sky-400/15 blur-3xl" aria-hidden />
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="grid gap-8 sm:gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div
-            className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/6 p-8 shadow-[0_45px_120px_-60px_rgba(56,189,248,0.65)] backdrop-blur-xl"
+            className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_45px_120px_-60px_rgba(56,189,248,0.65)] backdrop-blur-xl sm:p-8"
             onPointerMove={(event) => {
               const rect = event.currentTarget.getBoundingClientRect();
               const x = ((event.clientX - rect.left) / rect.width) * 100;
@@ -274,18 +274,18 @@ export function ValueHighlightsSection() {
                 <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl md:text-[2.6rem]">
                   Everything you need to own and run dependable solar assets
                 </h2>
-                <p className="mt-4 text-base leading-relaxed text-slate-200/90">
+                <p className="mt-4 text-sm leading-relaxed text-slate-200/90 sm:text-base">
                   From feasibility to lifetime performance, our multi-disciplinary team covers electrical, structural and financial diligence so you always know what to expect.
                 </p>
               </div>
-              <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-6 shadow-inner shadow-emerald-500/10 backdrop-blur">
+              <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-5 shadow-inner shadow-emerald-500/10 backdrop-blur sm:p-6">
                 <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Now spotlighting</p>
                 <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
                   <div className="max-w-xl">
-                    <h3 className="text-2xl font-semibold text-white sm:text-3xl">{active.title}</h3>
-                    <p className="mt-3 text-base leading-relaxed text-slate-200/80">{active.spotlight}</p>
+                    <h3 className="text-xl font-semibold text-white sm:text-3xl">{active.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-200/80 sm:text-base">{active.spotlight}</p>
                   </div>
-                  <span className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-white/10 text-emerald-300 shadow-[0_12px_30px_-18px_rgba(16,185,129,0.9)]">
+                  <span className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-white/10 text-emerald-300 shadow-[0_12px_30px_-18px_rgba(16,185,129,0.9)] sm:h-12 sm:w-12">
                     <active.icon className="h-5 w-5" />
                   </span>
                 </div>
@@ -313,7 +313,7 @@ export function ValueHighlightsSection() {
                   onMouseEnter={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
                   onClick={() => setActiveIndex(index)}
-                  className={`group relative overflow-hidden rounded-3xl border px-6 py-6 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                  className={`group relative overflow-hidden rounded-3xl border px-5 py-5 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-6 sm:py-6 ${
                     isActive
                       ? "border-white/40 bg-white/10 shadow-[0_30px_80px_-50px_rgba(56,189,248,0.9)]"
                       : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
@@ -327,11 +327,11 @@ export function ValueHighlightsSection() {
                     }`}
                   />
                   <div className="relative z-10 flex items-start gap-4">
-                    <span className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[#147B3E]/15 text-[#147B3E]">
+                    <span className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-[#147B3E]/15 text-[#147B3E] sm:h-12 sm:w-12">
                       <item.icon className="h-5 w-5" />
                     </span>
                     <div>
-                      <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+                      <h3 className="text-base font-semibold text-white sm:text-lg">{item.title}</h3>
                       <p className="mt-3 text-sm leading-relaxed text-slate-200/90">{item.description}</p>
                       <span className="mt-4 inline-flex items-center text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-slate-400">
                         Explore
@@ -351,18 +351,18 @@ export function ValueHighlightsSection() {
 
 export function CalculatorSection() {
   return (
-    <section className="relative py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+    <section className="relative py-14 sm:py-16 md:py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="grid gap-8 sm:gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="space-y-6">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Plan your plant</p>
               <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Solar sizing calculator</h2>
-              <p className="mt-4 text-base leading-relaxed text-slate-200/90">
+              <p className="mt-4 text-sm leading-relaxed text-slate-200/90 sm:text-base">
                 1 kW of rooftop solar in Telangana generates about <strong>150 units</strong> per month. Dial in your consumption profile and tariff band to instantly view the ideal system size, investment and payback.
               </p>
             </div>
-            <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-6 shadow-inner">
+            <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-5 shadow-inner sm:p-6">
               <p className="text-xs uppercase tracking-[0.35em] text-slate-400">How to use</p>
               <ul className="mt-4 space-y-3 text-sm leading-relaxed text-slate-200/90">
                 <li className="flex items-start gap-3">
@@ -449,7 +449,7 @@ function Calculator() {
   const tariffValue = Number.parseFloat(tariff) || 0;
 
   return (
-    <div className="space-y-6 rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_40px_110px_-55px_rgba(16,185,129,0.65)] backdrop-blur-xl">
+    <div className="space-y-6 rounded-3xl border border-white/10 bg-white/6 p-5 shadow-[0_40px_110px_-55px_rgba(16,185,129,0.65)] backdrop-blur-xl sm:p-6">
       <form className="space-y-5">
         <div>
           <label htmlFor="units" className="text-sm font-semibold text-slate-200">
@@ -461,7 +461,7 @@ function Calculator() {
             inputMode="numeric"
             value={unitsMonth}
             onChange={(event) => setUnitsMonth(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+            className="mt-2 w-full rounded-2xl border border-white/20 bg-white/5 px-3 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40 sm:px-4"
           />
           <input
             type="range"
@@ -505,7 +505,7 @@ function Calculator() {
             step="0.1"
             value={tariff}
             onChange={(event) => setTariff(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+            className="mt-2 w-full rounded-2xl border border-white/20 bg-white/5 px-3 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40 sm:px-4"
           />
           <input
             type="range"
@@ -591,14 +591,14 @@ export function SolutionsSection() {
   const active = solutions[activeIndex];
 
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="grid gap-8 sm:gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="space-y-6">
             <div>
               <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Solutions</p>
               <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Tailored EPC engagements for every segment</h2>
-              <p className="mt-3 text-slate-300">
+              <p className="mt-3 text-sm text-slate-300 sm:text-base">
                 Choose the engagement that fits your load profile, roof architecture and financial goals. Every project receives design, supply, installation and long-term support under one roof.
               </p>
             </div>
@@ -626,7 +626,7 @@ export function SolutionsSection() {
                 Scope & experience
               </button>
             </div>
-            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_35px_90px_-55px_rgba(245,158,11,0.4)]">
+            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-5 shadow-[0_35px_90px_-55px_rgba(245,158,11,0.4)] sm:p-6">
               <span
                 aria-hidden
                 className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${active.accent} opacity-40`}
@@ -637,11 +637,11 @@ export function SolutionsSection() {
                     <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Currently exploring</p>
                     <h3 className="mt-2 text-2xl font-semibold text-white sm:text-3xl">{active.name}</h3>
                   </div>
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-[#F16921]">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-[#F16921] sm:h-12 sm:w-12">
                     <active.icon className="h-5 w-5" />
                   </span>
                 </div>
-                <p className="text-base leading-relaxed text-slate-200/90">{active.detail}</p>
+                <p className="text-sm leading-relaxed text-slate-200/90 sm:text-base">{active.detail}</p>
                 {viewMode === "impact" ? (
                   <div className="grid gap-4 sm:grid-cols-3">
                     {active.stats.map((stat) => (
@@ -682,7 +682,7 @@ export function SolutionsSection() {
                   onMouseEnter={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
                   onClick={() => setActiveIndex(index)}
-                  className={`group relative overflow-hidden rounded-3xl border px-6 py-6 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                  className={`group relative overflow-hidden rounded-3xl border px-5 py-5 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-6 sm:py-6 ${
                     isActive
                       ? "border-white/40 bg-white/10 shadow-[0_30px_80px_-50px_rgba(245,158,11,0.65)]"
                       : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
@@ -697,13 +697,13 @@ export function SolutionsSection() {
                   />
                   <div className="relative z-10 space-y-4">
                     <div className="flex items-center justify-between gap-4">
-                      <span className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[#F16921]/15 text-[#F16921]">
+                      <span className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-[#F16921]/15 text-[#F16921] sm:h-12 sm:w-12">
                         <solution.icon className="h-5 w-5" />
                       </span>
                       <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">{solution.stats[0].label}</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white">{solution.name}</h3>
+                      <h3 className="text-base font-semibold text-white sm:text-lg">{solution.name}</h3>
                       <p className="mt-3 text-sm leading-relaxed text-slate-200/90">{solution.summary}</p>
                     </div>
                     <ul className="space-y-2 text-xs text-slate-200/80">
@@ -730,28 +730,28 @@ export function SolutionsSection() {
 
 export function ProcessSection() {
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">How we work</p>
           <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
             A proven EPC playbook from discovery to performance
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-slate-200/90">
+          <p className="mt-4 text-sm leading-relaxed text-slate-200/90 sm:text-base">
             Our cross-functional teams run a transparent process with weekly updates, shared documentation and quality gates so you always know the status of your solar asset.
           </p>
         </div>
-        <ol className="mt-12 space-y-6">
+        <ol className="mt-10 space-y-5 sm:mt-12 sm:space-y-6">
           {steps.map((step, index) => (
             <li
               key={step.title}
-              className="group relative rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:border-white/20 hover:bg-white/10"
+              className="group relative rounded-3xl border border-white/10 bg-white/5 p-5 transition duration-300 hover:border-white/20 hover:bg-white/10 sm:p-6"
             >
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Step {index + 1}</span>
-                  <h3 className="mt-2 text-2xl font-semibold text-white">{step.title}</h3>
-              <p className="mt-4 text-sm leading-relaxed text-slate-200/90">{step.description}</p>
+                  <h3 className="mt-2 text-xl font-semibold text-white sm:text-2xl">{step.title}</h3>
+                  <p className="mt-4 text-sm leading-relaxed text-slate-200/90">{step.description}</p>
                 </div>
                 <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-300">{step.duration}</span>
               </div>
@@ -783,13 +783,13 @@ export function ProjectsHighlightsSection() {
   const accent = accentVariants[activeIndex % accentVariants.length];
 
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-6">
           <div className="max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Proven track record</p>
             <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Highlighted installations</h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-200/90">
+            <p className="mt-4 text-sm leading-relaxed text-slate-200/90 sm:text-base">
               A glimpse into the industries and homes that trust us with their energy transition. Use the carousel to surface the projects most relevant to you.
             </p>
           </div>
@@ -800,8 +800,8 @@ export function ProjectsHighlightsSection() {
             View complete list <ArrowIcon className="h-4 w-4" />
           </Link>
         </div>
-        <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <article className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 shadow-[0_40px_90px_-55px_rgba(6,182,212,0.45)]">
+        <div className="mt-8 grid gap-6 sm:mt-10 sm:gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+          <article className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_40px_90px_-55px_rgba(6,182,212,0.45)] sm:p-8">
             <span aria-hidden className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${accent} opacity-60`} />
             <div className="relative z-10 space-y-6">
               <div className="flex flex-wrap items-start justify-between gap-4">
@@ -814,7 +814,7 @@ export function ProjectsHighlightsSection() {
                 </span>
               </div>
               <p className="text-lg font-semibold text-white">{active.metric}</p>
-              <p className="text-base leading-relaxed text-slate-200/90">{active.detail}</p>
+              <p className="text-sm leading-relaxed text-slate-200/90 sm:text-base">{active.detail}</p>
               <div className="grid gap-3 sm:grid-cols-3">
                 {active.impact.map((item) => (
                   <div key={item} className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs uppercase tracking-[0.3em] text-slate-400">
@@ -833,7 +833,7 @@ export function ProjectsHighlightsSection() {
               />
             </div>
           </article>
-          <div className="grid gap-4">
+          <div className="grid gap-3 sm:gap-4">
             {caseStudies.map((item, index) => {
               const isActive = index === activeIndex;
               return (
@@ -843,7 +843,7 @@ export function ProjectsHighlightsSection() {
                   onMouseEnter={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
                   onClick={() => setActiveIndex(index)}
-                  className={`group relative flex w-full flex-col rounded-3xl border px-6 py-5 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                  className={`group relative flex w-full flex-col rounded-3xl border px-5 py-4 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-6 sm:py-5 ${
                     isActive
                       ? "border-white/40 bg-white/10 shadow-[0_25px_80px_-55px_rgba(6,182,212,0.55)]"
                       : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
@@ -909,14 +909,14 @@ export function TestimonialsFaqSection() {
   const active = testimonials[activeIndex];
 
   return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[1.05fr_0.95fr]">
+    <section className="py-14 sm:py-16 md:py-20">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 sm:gap-12 sm:px-6 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="space-y-6">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Client confidence</p>
             <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Voices from our partners</h2>
           </div>
-          <figure className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/6 p-8 shadow-[0_40px_110px_-55px_rgba(129,140,248,0.5)] backdrop-blur-xl">
+          <figure className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_40px_110px_-55px_rgba(129,140,248,0.5)] backdrop-blur-xl sm:p-8">
             <span aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/20 via-transparent to-emerald-400/20 opacity-60" />
             <div className="relative z-10 space-y-6">
               <div className="flex flex-wrap items-center justify-between gap-4">
@@ -927,7 +927,7 @@ export function TestimonialsFaqSection() {
                 </div>
                 <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-emerald-200">{active.rating}</span>
               </div>
-              <blockquote className="text-xl leading-relaxed text-slate-100">“{active.quote}”</blockquote>
+              <blockquote className="text-lg leading-relaxed text-slate-100 sm:text-xl">“{active.quote}”</blockquote>
               <div className="flex items-center gap-4">
                 {testimonials.map((item, index) => {
                   const isActive = index === activeIndex;
@@ -961,9 +961,9 @@ export function TestimonialsFaqSection() {
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">FAQs</p>
           <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Frequently asked questions</h2>
-          <div className="mt-6 space-y-4">
+          <div className="mt-6 space-y-3 sm:space-y-4">
             {faqs.map((faq) => (
-              <details key={faq.question} className="group rounded-3xl border border-white/10 bg-white/5 p-5 text-sm text-slate-200 shadow-sm">
+              <details key={faq.question} className="group rounded-3xl border border-white/10 bg-white/5 p-4 text-sm text-slate-200 shadow-sm sm:p-5">
                 <summary className="cursor-pointer list-none font-semibold text-white">{faq.question}</summary>
                 <p className="mt-4 text-sm leading-relaxed text-slate-200/90">{faq.answer}</p>
               </details>
@@ -980,13 +980,13 @@ export function ContactSection() {
   const active = contactJourney[activeStage];
 
   return (
-    <section className="py-24">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+    <section className="py-20 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="grid gap-8 sm:gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-6">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Start a conversation</p>
             <h2 className="text-3xl font-bold text-white sm:text-4xl">Let’s design your next solar milestone</h2>
-            <p className="text-base leading-relaxed text-slate-200/90">
+            <p className="text-sm leading-relaxed text-slate-200/90 sm:text-base">
               Share your site details, latest electricity bill and project goals. We’ll schedule a site visit, run generation simulations and send a proposal with ROI, subsidies and execution timelines.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -996,7 +996,7 @@ export function ContactSection() {
               <ContactCard icon={CalendarIcon} title="Site visits" detail="Scheduled within 48 hours" />
             </div>
           </div>
-          <div className="rounded-3xl border border-white/10 bg-white/6 p-8 text-white shadow-[0_40px_110px_-55px_rgba(34,197,94,0.55)] backdrop-blur-xl">
+          <div className="rounded-3xl border border-white/10 bg-white/6 p-6 text-white shadow-[0_40px_110px_-55px_rgba(34,197,94,0.55)] backdrop-blur-xl sm:p-8">
             <h3 className="text-2xl font-semibold text-white">Request a customised proposal</h3>
             <p className="mt-3 text-sm leading-relaxed text-slate-200/90">
               We respond within one business day with next steps and required documents.
@@ -1008,28 +1008,28 @@ export function ContactSection() {
                 name="name"
                 placeholder="Your name"
                 required
-                className="rounded-2xl border border-white/10 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+                className="rounded-2xl border border-white/10 px-3 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40 sm:px-4"
               />
               <input
                 name="phone"
                 placeholder="Phone / WhatsApp"
                 required
-                className="rounded-2xl border border-white/10 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+                className="rounded-2xl border border-white/10 px-3 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40 sm:px-4"
               />
               <input
                 name="city"
                 placeholder="City"
-                className="rounded-2xl border border-white/10 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+                className="rounded-2xl border border-white/10 px-3 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40 sm:px-4"
               />
               <textarea
                 name="message"
                 placeholder="Share roof size, load profile or questions"
                 rows="4"
-                className="rounded-2xl border border-white/10 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+                className="rounded-2xl border border-white/10 px-3 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40 sm:px-4"
               />
               <button
                 type="submit"
-                className="rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-300 px-6 py-3 text-sm font-semibold text-slate-950 shadow-[0_25px_60px_-30px_rgba(16,185,129,0.6)] transition hover:scale-105"
+                className="rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-300 px-5 py-3 text-sm font-semibold text-slate-950 shadow-[0_25px_60px_-30px_rgba(16,185,129,0.6)] transition hover:scale-105 sm:px-6"
               >
                 Send request
               </button>

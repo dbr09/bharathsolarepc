@@ -64,7 +64,7 @@ export function SiteHeader() {
           style={{ transform: `scaleX(${Math.max(progress, 0.03)})` }}
         />
       </div>
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 text-slate-100">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 text-slate-100 sm:px-6">
         <Link href="/" className="relative flex items-center gap-3">
           <span className="glow-border relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(15,118,110,0.45)] ring-1 ring-white/30">
             <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
@@ -143,7 +143,7 @@ export function SiteHeader() {
 
       {open && (
         <div className="border-t border-white/10 bg-slate-950/95 backdrop-blur md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-6 text-slate-100">
+          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-6 text-slate-100 sm:px-6">
             {navLinks.map((item) => {
               const isActive =
                 pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
@@ -193,7 +193,7 @@ export function SiteFooter() {
   return (
     <footer className="relative mt-24 border-t border-white/10 bg-slate-950/70 py-12 backdrop-blur">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-300/30 to-transparent" aria-hidden />
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 text-sm text-slate-400 md:flex-row md:items-start md:justify-between">
+      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 text-sm text-slate-400 sm:px-6 md:flex-row md:items-start md:justify-between">
         <div className="max-w-sm space-y-3">
           <p className="text-xs uppercase tracking-[0.3em] text-emerald-300/80">Bharath Solar EPC</p>
           <p className="text-2xl font-semibold text-white">Designing experiences that make solar feel inevitable.</p>
@@ -236,7 +236,7 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
-      <div className="mx-auto mt-10 flex max-w-6xl flex-col items-start gap-3 px-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto mt-10 flex max-w-6xl flex-col items-start gap-3 px-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <p>© {year} Bharath Solar EPC. All rights reserved.</p>
         <div className="flex flex-wrap gap-4">
           <span>Privacy</span>
