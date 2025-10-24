@@ -80,7 +80,7 @@ function Hero() {
             MNRE empanelled • Tier-1 components • EPC & O&M
           </div>
           <h1
-            className="mt-6 bg-gradient-to-r from-[#FF671F] via-white to-[#046A38] bg-clip-text text-4xl font-extrabold leading-tight text-transparent drop-shadow-[0_1px_1px_rgba(15,23,42,0.25)] sm:text-5xl lg:text-6xl"
+            className="mt-6 text-4xl font-extrabold leading-tight text-slate-900 drop-shadow-[0_1px_1px_rgba(15,23,42,0.25)] sm:text-5xl lg:text-6xl"
           >
             Empowering India with clean solar energy
           </h1>

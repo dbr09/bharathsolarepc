@@ -38,7 +38,6 @@ export function SiteHeader() {
           </span>
           <div className="hidden sm:block">
             <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Bharath Solar EPC</p>
-            <p className="text-lg font-semibold text-slate-900">Energy that pays for itself</p>
           </div>
         </Link>
 
