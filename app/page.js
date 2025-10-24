@@ -170,7 +170,7 @@ function Hero({ scrollProgress }) {
           </div>
           <h1 className="max-w-2xl text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
             <span className="bg-gradient-to-r from-emerald-300 via-white to-amber-200 bg-clip-text text-transparent">
-              Empowering India with immersive solar experiences
+              Empowering India with clean solar energy
             </span>
           </h1>
           <p className="max-w-xl text-lg text-slate-300">
