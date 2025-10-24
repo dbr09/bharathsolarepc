@@ -1,65 +1,351 @@
-export const metadata = { title: "Our Projects — Bharath Solar EPC" };
+import { BackgroundDecorations, SiteFooter, SiteHeader } from "../components/layout/SiteChrome";
+import WhatsAppFloat from "../components/WhatsAppFloat";
+import ProjectExplorer from "./ProjectExplorer";
 
-const DATA = [
-  { name: "Regenesis Industries Pvt Ltd, Bommalaramaram", size: "300 kW", year: "2018" },
-  { name: "Regenesis Industries Pvt Ltd, Bommalaramaram", size: "600 kW", year: "2022" },
-  { name: "Salvo Explosives & Chemicals Pvt Ltd, Ankireddy Palli", size: "500 kW", year: "2020" },
-  { name: "Salvo Explosives & Chemicals Pvt Ltd, Ankireddy Palli", size: "50 kW",  year: "2020" },
-  { name: "Ideal Industrial Explosives Ltd, Chityala", size: "250 kW", year: "2019" },
-  { name: "Ideal Industrial Explosives Ltd, Chityala", size: "160 kW", year: "2022" },
-  { name: "Ideal Industrial Explosives Ltd, Kothagudem", size: "60 kW",  year: "2023" },
-  { name: "JV Poultry Farms", size: "100 kW", year: "2023" },
-  { name: "Valigonda, Nalgonda Dist", size: "100 kW", year: "2024" },
-  { name: "Nithisha Poultry Farms, Gandicheruvu", size: "100 kW", year: "2024" },
-  { name: "Tulasi Hospitals, ECIL Cross Roads", size: "120 kW", year: "2018" },
-  { name: "Samskruti College of Engineering, Ghatkesar", size: "70 kW", year: "2017" },
-  { name: "Sri Indu Engineering College, Mangalapalli", size: "50 kW", year: "2019" },
-  { name: "Radhika Multi Speciality Hospital, Balapur", size: "40 kW", year: "2020" },
-  { name: "Nightingale Hospital", size: "30 kW", year: "2016" },
-  { name: "Kavya Medicare, Balapur", size: "10 kW", year: "2020" },
-  { name: "Hotel Ridhika Inn, Suryapet", size: "40 kW", year: "2022" },
-  { name: "Darwin Ayur Pharma, Vijayawada", size: "40 kW", year: "2020" },
-  { name: "Ratna Hospital, IS Sadan", size: "20 kW", year: "2017" },
-  { name: "Srinivasa Junior College, IS Sadan", size: "20 kW", year: "2019" },
-  { name: "Different Customers (On-grid) — 5 Nos", size: "10 kW each", year: "2016–Till Date" },
-  { name: "Different Customers (Off-grid) — 80 Nos", size: "1 kW each", year: "2017–Till Date" },
-  { name: "Different Customers — 134 Nos", size: "2 kW each", year: "2015–Till Date" },
-  { name: "Different Customers — 58 Nos", size: "3 kW each", year: "2015–Till Date" },
-  { name: "Different Customers — 26 Nos", size: "5 kW each", year: "2016–Till Date" },
+export const metadata = {
+  title: "Our Projects — Bharath Solar EPC",
+  description:
+    "Explore Bharath Solar EPC's marquee installations across industrial, healthcare, education and commercial partners in an interactive showcase.",
+};
+
+const CURRENT_YEAR = new Date().getFullYear();
+
+const PROJECTS = [
+  {
+    client: "Regenesis Industries Pvt Ltd",
+    location: "Bommalaramaram",
+    sector: "Industrial Manufacturing",
+    capacityKw: 300,
+    count: 1,
+    capacityLabel: "300 kW rooftop",
+    timeline: "Commissioned 2018",
+    yearStart: 2018,
+    yearEnd: 2018,
+    tags: ["regenesis", "bommalaramaram", "industrial"],
+  },
+  {
+    client: "Regenesis Industries Pvt Ltd",
+    location: "Bommalaramaram",
+    sector: "Industrial Manufacturing",
+    capacityKw: 600,
+    count: 1,
+    capacityLabel: "600 kW rooftop",
+    timeline: "Commissioned 2022",
+    yearStart: 2022,
+    yearEnd: 2022,
+    tags: ["regenesis", "bommalaramaram", "expansion"],
+  },
+  {
+    client: "Salvo Explosives & Chemicals Pvt Ltd",
+    location: "Ankireddy Palli",
+    sector: "Industrial Manufacturing",
+    capacityKw: 500,
+    count: 1,
+    capacityLabel: "500 kW rooftop",
+    timeline: "Commissioned 2020",
+    yearStart: 2020,
+    yearEnd: 2020,
+    tags: ["salvo", "explosives"],
+  },
+  {
+    client: "Salvo Explosives & Chemicals Pvt Ltd",
+    location: "Ankireddy Palli",
+    sector: "Industrial Manufacturing",
+    capacityKw: 50,
+    count: 1,
+    capacityLabel: "50 kW rooftop",
+    timeline: "Commissioned 2020",
+    yearStart: 2020,
+    yearEnd: 2020,
+    tags: ["salvo", "expansion", "modular"],
+  },
+  {
+    client: "Ideal Industrial Explosives Ltd",
+    location: "Chityala",
+    sector: "Industrial Manufacturing",
+    capacityKw: 250,
+    count: 1,
+    capacityLabel: "250 kW rooftop",
+    timeline: "Commissioned 2019",
+    yearStart: 2019,
+    yearEnd: 2019,
+    tags: ["ideal", "chityala"],
+  },
+  {
+    client: "Ideal Industrial Explosives Ltd",
+    location: "Chityala",
+    sector: "Industrial Manufacturing",
+    capacityKw: 160,
+    count: 1,
+    capacityLabel: "160 kW rooftop",
+    timeline: "Commissioned 2022",
+    yearStart: 2022,
+    yearEnd: 2022,
+    tags: ["ideal", "chityala", "upgrade"],
+  },
+  {
+    client: "Ideal Industrial Explosives Ltd",
+    location: "Kothagudem",
+    sector: "Industrial Manufacturing",
+    capacityKw: 60,
+    count: 1,
+    capacityLabel: "60 kW rooftop",
+    timeline: "Commissioned 2023",
+    yearStart: 2023,
+    yearEnd: 2023,
+    tags: ["ideal", "kothagudem"],
+  },
+  {
+    client: "JV Poultry Farms",
+    location: "Telangana",
+    sector: "Agri & Food Processing",
+    capacityKw: 100,
+    count: 1,
+    capacityLabel: "100 kW ground mount",
+    timeline: "Commissioned 2023",
+    yearStart: 2023,
+    yearEnd: 2023,
+    tags: ["poultry", "agriculture"],
+  },
+  {
+    client: "Valigonda Community Solar",
+    location: "Nalgonda District",
+    sector: "Community & Public",
+    capacityKw: 100,
+    count: 1,
+    capacityLabel: "100 kW distributed",
+    timeline: "Commissioned 2024",
+    yearStart: 2024,
+    yearEnd: 2024,
+    tags: ["valigonda", "nalgonda"],
+  },
+  {
+    client: "Nithisha Poultry Farms",
+    location: "Gandicheruvu",
+    sector: "Agri & Food Processing",
+    capacityKw: 100,
+    count: 1,
+    capacityLabel: "100 kW rooftop",
+    timeline: "Commissioned 2024",
+    yearStart: 2024,
+    yearEnd: 2024,
+    tags: ["poultry", "gandicheruvu"],
+  },
+  {
+    client: "Tulasi Hospitals",
+    location: "ECIL Cross Roads",
+    sector: "Healthcare",
+    capacityKw: 120,
+    count: 1,
+    capacityLabel: "120 kW rooftop",
+    timeline: "Commissioned 2018",
+    yearStart: 2018,
+    yearEnd: 2018,
+    tags: ["hospital", "ecil"],
+  },
+  {
+    client: "Samskruti College of Engineering",
+    location: "Ghatkesar",
+    sector: "Education",
+    capacityKw: 70,
+    count: 1,
+    capacityLabel: "70 kW rooftop",
+    timeline: "Commissioned 2017",
+    yearStart: 2017,
+    yearEnd: 2017,
+    tags: ["college", "ghatkesar"],
+  },
+  {
+    client: "Sri Indu Engineering College",
+    location: "Mangalpalli",
+    sector: "Education",
+    capacityKw: 50,
+    count: 1,
+    capacityLabel: "50 kW rooftop",
+    timeline: "Commissioned 2019",
+    yearStart: 2019,
+    yearEnd: 2019,
+    tags: ["college", "mangalpalli"],
+  },
+  {
+    client: "Radhika Multi Speciality Hospital",
+    location: "Balapur",
+    sector: "Healthcare",
+    capacityKw: 40,
+    count: 1,
+    capacityLabel: "40 kW rooftop",
+    timeline: "Commissioned 2020",
+    yearStart: 2020,
+    yearEnd: 2020,
+    tags: ["hospital", "balapur"],
+  },
+  {
+    client: "Nightingale Hospital",
+    location: "Telangana",
+    sector: "Healthcare",
+    capacityKw: 30,
+    count: 1,
+    capacityLabel: "30 kW rooftop",
+    timeline: "Commissioned 2016",
+    yearStart: 2016,
+    yearEnd: 2016,
+    tags: ["hospital"],
+  },
+  {
+    client: "Kavya Medicare",
+    location: "Balapur",
+    sector: "Healthcare",
+    capacityKw: 10,
+    count: 1,
+    capacityLabel: "10 kW rooftop",
+    timeline: "Commissioned 2020",
+    yearStart: 2020,
+    yearEnd: 2020,
+    tags: ["clinic", "balapur"],
+  },
+  {
+    client: "Hotel Ridhika Inn",
+    location: "Suryapet",
+    sector: "Hospitality",
+    capacityKw: 40,
+    count: 1,
+    capacityLabel: "40 kW rooftop",
+    timeline: "Commissioned 2022",
+    yearStart: 2022,
+    yearEnd: 2022,
+    tags: ["hotel", "suryapet"],
+  },
+  {
+    client: "Darwin Ayur Pharma",
+    location: "Vijayawada",
+    sector: "Life Sciences & Pharma",
+    capacityKw: 40,
+    count: 1,
+    capacityLabel: "40 kW rooftop",
+    timeline: "Commissioned 2020",
+    yearStart: 2020,
+    yearEnd: 2020,
+    tags: ["pharma", "vijayawada"],
+  },
+  {
+    client: "Ratna Hospital",
+    location: "IS Sadan",
+    sector: "Healthcare",
+    capacityKw: 20,
+    count: 1,
+    capacityLabel: "20 kW rooftop",
+    timeline: "Commissioned 2017",
+    yearStart: 2017,
+    yearEnd: 2017,
+    tags: ["hospital", "is sadan"],
+  },
+  {
+    client: "Srinivasa Junior College",
+    location: "IS Sadan",
+    sector: "Education",
+    capacityKw: 20,
+    count: 1,
+    capacityLabel: "20 kW rooftop",
+    timeline: "Commissioned 2019",
+    yearStart: 2019,
+    yearEnd: 2019,
+    tags: ["college", "is sadan"],
+  },
+  {
+    client: "Distributed On-Grid Customers",
+    location: "Across Telangana",
+    sector: "Residential & MSME",
+    capacityKw: 10,
+    count: 5,
+    capacityLabel: "5 × 10 kW on-grid systems",
+    timeline: "2016 – Till Date",
+    yearStart: 2016,
+    yearEnd: CURRENT_YEAR,
+    tags: ["distributed", "on-grid"],
+  },
+  {
+    client: "Distributed Off-Grid Customers",
+    location: "Across Telangana",
+    sector: "Rural & Off-grid",
+    capacityKw: 1,
+    count: 80,
+    capacityLabel: "80 × 1 kW off-grid systems",
+    timeline: "2017 – Till Date",
+    yearStart: 2017,
+    yearEnd: CURRENT_YEAR,
+    tags: ["off-grid", "rural"],
+  },
+  {
+    client: "Residential Customers",
+    location: "Across Telangana",
+    sector: "Residential & MSME",
+    capacityKw: 2,
+    count: 134,
+    capacityLabel: "134 × 2 kW systems",
+    timeline: "2015 – Till Date",
+    yearStart: 2015,
+    yearEnd: CURRENT_YEAR,
+    tags: ["residential", "distributed"],
+  },
+  {
+    client: "Small Commercial Customers",
+    location: "Across Telangana",
+    sector: "Commercial & Retail",
+    capacityKw: 3,
+    count: 58,
+    capacityLabel: "58 × 3 kW systems",
+    timeline: "2015 – Till Date",
+    yearStart: 2015,
+    yearEnd: CURRENT_YEAR,
+    tags: ["commercial", "distributed"],
+  },
+  {
+    client: "Growing SME Customers",
+    location: "Across Telangana",
+    sector: "Commercial & Retail",
+    capacityKw: 5,
+    count: 26,
+    capacityLabel: "26 × 5 kW systems",
+    timeline: "2016 – Till Date",
+    yearStart: 2016,
+    yearEnd: CURRENT_YEAR,
+    tags: ["sme", "distributed"],
+  },
 ];
 
-export default function Projects() {
+export default function ProjectsPage() {
   return (
-    <main className="mx-auto max-w-7xl px-6 py-14 bg-white text-black text-lg">
-      <h1 className="text-4xl font-extrabold">Our Projects</h1>
-      <p className="mt-3 text-zinc-700">Selected references. Photos available on request.</p>
+    <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 opacity-70"
+        style={{
+          background:
+            "radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.18), transparent 55%), radial-gradient(circle at 80% 30%, rgba(16, 185, 129, 0.14), transparent 60%)",
+        }}
+      />
+      <BackgroundDecorations />
+      <SiteHeader />
 
-      <div className="mt-8 overflow-x-auto rounded-2xl border border-zinc-200">
-        <table className="min-w-full text-base">
-          <thead className="bg-zinc-50">
-            <tr className="text-left">
-              <th className="p-4 font-semibold">#</th>
-              <th className="p-4 font-semibold">Name of Customer</th>
-              <th className="p-4 font-semibold">Solar Plant Details</th>
-              <th className="p-4 font-semibold">Year</th>
-            </tr>
-          </thead>
-          <tbody>
-            {DATA.map((r, i) => (
-              <tr key={i} className="border-t odd:bg-white even:bg-zinc-50">
-                <td className="p-4">{i + 1}</td>
-                <td className="p-4">{r.name}</td>
-                <td className="p-4">{r.size}</td>
-                <td className="p-4">{r.year}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <section className="relative z-10 px-6 pb-8 pt-28 sm:pt-32 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-emerald-300/80">Project portfolio</p>
+          <h1 className="mt-4 text-4xl font-bold leading-tight text-slate-50 sm:text-5xl">
+            Empowering India with clean solar energy
+          </h1>
+          <p className="mt-4 max-w-3xl text-lg text-slate-300">
+            Explore our marquee installations with filters for sector, capacity and delivery timeline, then switch
+            views to dive into detailed performance data.
+          </p>
+        </div>
+      </section>
+
+      <div className="relative z-10 pb-24">
+        <ProjectExplorer projects={PROJECTS} />
       </div>
 
-      <p className="mt-6 text-zinc-800 font-medium">
-        In collaboration with <span className="font-bold">SUVAHIK</span>.
-      </p>
+      <SiteFooter />
+      <WhatsAppFloat />
     </main>
   );
 }

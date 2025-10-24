@@ -1,12 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
+  --brand-emerald: #22c55e;
+  --brand-sky: #38bdf8;
+  --brand-amber: #fbbf24;
+  --surface: rgba(148, 163, 184, 0.06);
+  --surface-strong: rgba(148, 163, 184, 0.18);
+  --glow-primary: rgba(241, 105, 33, 0.35);
+  --glow-secondary: rgba(20, 123, 62, 0.35);
+  --stroke: rgba(255, 255, 255, 0.1);
 }
 
 body {
   font-family: var(--font-sans, "Inter", "Helvetica Neue", Arial, sans-serif);
   line-height: 1.6;
+  background-color: #020617;
+  background-image: radial-gradient(circle at 10% 10%, rgba(59, 130, 246, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 0%, rgba(250, 204, 21, 0.16), transparent 50%),
+    radial-gradient(circle at 0% 80%, rgba(34, 197, 94, 0.14), transparent 45%);
+  background-attachment: fixed;
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -18,6 +32,134 @@ section {
 }
 
 ::selection {
-  background: rgba(20, 123, 62, 0.35);
+  background: rgba(34, 197, 94, 0.6);
   color: white;
+}
+
+.aurora-layer {
+  position: absolute;
+  inset: -30% -25%;
+  background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.3), transparent 60%),
+    radial-gradient(circle at 80% 10%, rgba(34, 197, 94, 0.28), transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(251, 191, 36, 0.24), transparent 55%);
+  filter: blur(60px);
+  opacity: 0.75;
+  animation: auroraShift 16s ease-in-out infinite alternate;
+}
+
+.aurora-layer[data-variant="emerald"] {
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  animation-delay: -8s;
+  background: radial-gradient(circle at 15% 80%, rgba(16, 185, 129, 0.45), transparent 55%),
+    radial-gradient(circle at 70% 25%, rgba(96, 165, 250, 0.32), transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.26), transparent 60%);
+}
+
+.aurora-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.6), transparent 70%);
+  opacity: 0.35;
+}
+
+.backdrop-orb {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, transparent 70%);
+  animation: orbPulse 14s ease-in-out infinite;
+}
+
+.backdrop-orb[data-variant="emerald"] {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.26) 0%, transparent 70%);
+}
+
+.backdrop-orb[data-variant="amber"] {
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.22) 0%, transparent 70%);
+}
+
+.glass-panel {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 45px -30px rgba(15, 118, 110, 0.65);
+  backdrop-filter: blur(24px);
+}
+
+.glow-border {
+  position: relative;
+}
+
+.glow-border::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(34, 197, 94, 0.55), rgba(56, 189, 248, 0.35), rgba(251, 191, 36, 0.5));
+  opacity: 0.6;
+  filter: blur(12px);
+  z-index: -1;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 24s linear infinite;
+}
+
+.marquee-track[data-direction="reverse"] {
+  animation-direction: reverse;
+  animation-duration: 28s;
+}
+
+.tag-pill {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(148, 163, 184, 0.08));
+  box-shadow: 0 18px 35px -28px rgba(56, 189, 248, 0.6);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.6), rgba(34, 197, 94, 0.6));
+  border-radius: 9999px;
+}
+
+@keyframes orbPulse {
+  0%,
+  100% {
+    transform: scale(0.9) translate3d(0, 0, 0);
+    opacity: 0.75;
+  }
+  45% {
+    transform: scale(1.2) translate3d(0, -4%, 0);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.05) translate3d(2%, 2%, 0);
+    opacity: 0.92;
+  }
+}
+
+@keyframes auroraShift {
+  0% {
+    transform: translate3d(-4%, -2%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, 3%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(-3%, 4%, 0) scale(0.98);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
