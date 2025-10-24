@@ -13,6 +13,8 @@ const heroStats = [
   { label: "Average Client Payback", value: "3.2 yrs" },
 ];
 
+const heroBadges = ["Tier-1 modules", "Smart O&M", "Finance-ready"];
+
 const sectionCards = [
   {
     title: "Solar solutions",
@@ -64,6 +66,48 @@ const sectionCards = [
   },
 ];
 
+const marqueeItems = [
+  {
+    title: "Hospitals & pharma",
+    description: "Sterile rooftops with HVAC resilience and EMI compliance.",
+  },
+  {
+    title: "Manufacturing",
+    description: "High-span sheds, lightweight structures and DG sync upgrades.",
+  },
+  {
+    title: "Institutions",
+    description: "Auditorium shading, net-metering approvals and smart kiosks.",
+  },
+  {
+    title: "Premium residences",
+    description: "Design-led pergolas, battery-ready wiring and EV-ready circuits.",
+  },
+];
+
+const caseStudyMilestones = [
+  {
+    label: "Feasibility",
+    detail: "Digital twin of the campus, load profiling and ROI narrative in 4 days.",
+    status: "complete",
+  },
+  {
+    label: "Engineering",
+    detail: "PE-stamped designs, wind tunnel validation and tier-1 BOM within 10 days.",
+    status: "complete",
+  },
+  {
+    label: "Execution",
+    detail: "Zero-shutdown installation with night-time crane operations and QA sign-offs.",
+    status: "active",
+  },
+  {
+    label: "Handover",
+    detail: "Performance dashboards, O&M playbooks and DISCOM coordination done for you.",
+    status: "upcoming",
+  },
+];
+
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -106,7 +150,9 @@ export default function Home() {
       <BackgroundDecorations />
       <SiteHeader />
       <Hero scrollProgress={scrollProgress} />
+      <PartnerMarquee />
       <SectionDirectory scrollProgress={scrollProgress} />
+      <CaseStudySpotlight />
       <PaymentsTeaser />
       <ProjectsHighlightsSection />
       <SiteFooter />
@@ -153,19 +199,26 @@ function Hero({ scrollProgress }) {
       onPointerLeave={handlePointerLeave}
       className="relative overflow-hidden pb-24 pt-24 sm:pt-28"
     >
-      <div className="absolute inset-0 -z-10">
+      <div className="pointer-events-none absolute inset-0 -z-10">
         <div
-          className="absolute left-1/2 top-[-18%] h-[720px] w-[720px] -translate-x-1/2 rounded-full bg-emerald-500/15 blur-3xl transition-transform duration-700"
+          className="absolute left-1/2 top-[-18%] h-[720px] w-[720px] -translate-x-1/2 rounded-full bg-emerald-500/20 blur-3xl transition-transform duration-700"
           style={{ transform: `translate3d(${floatingShiftX}px, ${floatingShiftY}px, 0)` }}
         />
         <div
-          className="absolute left-[8%] top-[28%] h-80 w-80 rounded-full bg-sky-500/10 blur-3xl transition-transform duration-700"
+          className="absolute left-[8%] top-[28%] h-80 w-80 rounded-full bg-sky-500/20 blur-3xl transition-transform duration-700"
           style={{ transform: `translate3d(${floatingShiftX * 0.4}px, ${floatingShiftY * -0.2}px, 0)` }}
         />
+        <div
+          className="absolute right-[10%] top-[12%] h-56 w-56 rounded-full bg-amber-400/30 blur-[120px]"
+          style={{ transform: `translate3d(${floatingShiftX * -0.2}px, ${floatingShiftY * 0.4}px, 0)` }}
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(15,23,42,0.6)_0%,rgba(2,6,23,0.2)_50%,transparent_85%)]" />
+        <div className="absolute inset-x-10 top-1/2 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-60" />
+        <div className="absolute inset-x-0 bottom-8 h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent" />
       </div>
       <div className="mx-auto grid max-w-6xl items-center gap-16 px-6 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="space-y-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-1.5 text-xs font-semibold uppercase tracking-[0.4em] text-slate-200">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-1.5 text-xs font-semibold uppercase tracking-[0.4em] text-slate-200 shadow-[0_25px_45px_-28px_rgba(16,185,129,0.6)]">
             MNRE empanelled • Tier-1 components • EPC & O&M
           </div>
           <h1 className="max-w-2xl text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
@@ -177,6 +230,13 @@ function Hero({ scrollProgress }) {
             We design, build and maintain high-performance solar PV plants across Telangana, Andhra Pradesh and pan-India.
             Slide through the experience, explore the section that matters to you and feel the momentum of a future-ready EPC partner.
           </p>
+          <div className="flex flex-wrap gap-3">
+            {heroBadges.map((badge) => (
+              <span key={badge} className="tag-pill inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" /> {badge}
+              </span>
+            ))}
+          </div>
           <div className="flex flex-wrap gap-4">
             <Link
               href="/calculator"
@@ -197,14 +257,17 @@ function Hero({ scrollProgress }) {
             {heroStats.map((stat) => (
               <div
                 key={stat.label}
-                className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 shadow-[0_20px_50px_-32px_rgba(148,163,184,0.8)]"
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 shadow-[0_20px_50px_-32px_rgba(148,163,184,0.8)]"
               >
                 <div
-                  className="absolute inset-0 opacity-0 transition-opacity duration-500 hover:opacity-100"
+                  className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   style={{ background: "linear-gradient(135deg, rgba(56,189,248,0.25), rgba(16,185,129,0.25))" }}
                 />
-                <dd className="relative text-2xl font-semibold text-white">{stat.value}</dd>
-                <dt className="relative text-sm text-slate-300">{stat.label}</dt>
+                <div className="relative flex items-start justify-between">
+                  <dd className="text-2xl font-semibold text-white">{stat.value}</dd>
+                  <span className="mt-1 inline-flex h-2 w-6 rounded-full bg-gradient-to-r from-emerald-300 to-sky-400 opacity-70" />
+                </div>
+                <dt className="relative mt-2 text-sm text-slate-300">{stat.label}</dt>
               </div>
             ))}
           </dl>
@@ -215,6 +278,8 @@ function Hero({ scrollProgress }) {
             className="relative w-full max-w-xl overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-white/10 via-slate-900/30 to-black/40 p-8 shadow-[0_45px_100px_-40px_rgba(16,185,129,0.75)]"
             style={{ transform: `perspective(1200px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)` }}
           >
+            <div className="pointer-events-none absolute inset-0 border border-white/10" aria-hidden />
+            <div className="pointer-events-none absolute inset-6 rounded-[28px] border border-white/5 opacity-40" aria-hidden />
             <div className="flex items-center justify-between text-sm font-semibold text-emerald-200/80">
               <span className="flex items-center gap-2">
                 <SparkIcon className="h-4 w-4" /> Real-time monitoring
@@ -240,11 +305,12 @@ function Hero({ scrollProgress }) {
               </p>
             </div>
             <div
-              className="pointer-events-none absolute -right-10 -top-10 hidden h-32 w-32 rounded-3xl border border-white/10 bg-white/10 backdrop-blur-xl sm:block"
+              className="pointer-events-none absolute -right-12 -top-12 hidden h-32 w-32 rounded-3xl border border-white/10 bg-white/10 backdrop-blur-xl sm:block"
               style={{ transform: `translate3d(${floatingShiftX * 0.25}px, ${floatingShiftY * 0.25}px, 0)` }}
             >
               <Image src="/globe.svg" alt="Solar network" fill className="p-6 opacity-80" />
             </div>
+            <div className="pointer-events-none absolute -left-10 bottom-12 hidden h-24 w-24 rounded-full bg-emerald-400/25 blur-3xl sm:block" aria-hidden />
           </div>
         </div>
       </div>
@@ -287,6 +353,143 @@ function SectionDirectory({ scrollProgress }) {
               </Link>
             );
           })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PartnerMarquee() {
+  const duplicated = [...marqueeItems, ...marqueeItems];
+
+  return (
+    <section className="py-16 md:py-20">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-white/5 p-8 shadow-[0_45px_120px_-50px_rgba(56,189,248,0.55)] md:p-12">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.2),_transparent_65%)] opacity-80" aria-hidden />
+          <div className="pointer-events-none absolute inset-0 border border-white/10" aria-hidden />
+          <div className="relative flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-2xl space-y-3">
+              <p className="text-xs uppercase tracking-[0.35em] text-sky-300/80">Trusted by teams that demand uptime</p>
+              <h2 className="text-3xl font-semibold text-white sm:text-4xl">Industrial-grade design with lifestyle-grade finish</h2>
+              <p className="text-slate-300">From smart hospitals and precision factories to premium homes, our experiential EPC blends performance engineering with immersive storytelling.</p>
+            </div>
+            <Link
+              href="/projects"
+              className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-100 transition hover:border-white/30 hover:bg-white/10"
+            >
+              Explore projects
+              <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" />
+            </Link>
+          </div>
+          <div className="relative mt-10 overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/40">
+            <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-slate-950/90 to-transparent" aria-hidden />
+            <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-slate-950/90 to-transparent" aria-hidden />
+            <div className="marquee-track gap-8 px-6 py-5">
+              {duplicated.map((item, index) => (
+                <div key={`${item.title}-${index}`} className="flex min-w-[220px] flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-4">
+                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-300/80">{item.title}</span>
+                  <span className="text-sm text-slate-200">{item.description}</span>
+                </div>
+              ))}
+            </div>
+            <div className="marquee-track gap-8 px-6 py-5" data-direction="reverse">
+              {duplicated.map((item, index) => (
+                <div key={`reverse-${item.title}-${index}`} className="flex min-w-[220px] flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-4">
+                  <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-300/90">{item.title}</span>
+                  <span className="text-sm text-slate-400">{item.description}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CaseStudySpotlight() {
+  const statusStyles = {
+    complete: "border-emerald-400/40 bg-emerald-400/10 text-emerald-100",
+    active: "border-sky-400/40 bg-sky-400/10 text-sky-100",
+    upcoming: "border-white/10 bg-white/5 text-slate-200",
+  };
+
+  return (
+    <section className="py-20 md:py-24">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-gradient-to-br from-white/10 via-slate-900/30 to-slate-950/60 p-10 shadow-[0_55px_140px_-60px_rgba(16,185,129,0.75)]">
+          <div className="pointer-events-none absolute inset-0 border border-white/10" aria-hidden />
+          <div className="pointer-events-none absolute inset-6 rounded-[28px] border border-white/5 opacity-40" aria-hidden />
+          <div className="pointer-events-none absolute -right-12 top-10 h-64 w-64 rounded-full bg-emerald-400/20 blur-3xl" aria-hidden />
+          <div className="relative space-y-6">
+            <p className="text-xs uppercase tracking-[0.35em] text-emerald-300/80">Spotlight case study</p>
+            <h2 className="text-3xl font-semibold text-white sm:text-4xl">Pharma campus powering critical loads round the clock</h2>
+            <p className="max-w-2xl text-slate-200">
+              A 650 kWp rooftop and carport system for a Hyderabad-based pharmaceutical major integrates rapid shutdown, sterile zone routing and predictive maintenance for zero disruptions.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Capacity</p>
+                <p className="mt-2 text-2xl font-semibold text-white">650 kWp rooftop</p>
+                <p className="text-sm text-emerald-300">+18% yield vs baseline</p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Carbon savings</p>
+                <p className="mt-2 text-2xl font-semibold text-white">812 tCO₂e</p>
+                <p className="text-sm text-slate-300">Equivalent to 37,000 trees</p>
+              </div>
+            </div>
+            <div className="relative mt-6 overflow-hidden rounded-[28px] border border-white/10 bg-white/5 p-6">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-200">
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
+                  <SparkIcon className="h-4 w-4" /> Digital twin validated
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
+                  <SparkIcon className="h-4 w-4" /> GMP compliant routing
+                </span>
+              </div>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm text-slate-200">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Payback</p>
+                  <p className="mt-1 text-xl font-semibold text-white">3.1 years</p>
+                  <p className="text-xs text-emerald-300">Locked financing with SBI</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm text-slate-200">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Availability</p>
+                  <p className="mt-1 text-xl font-semibold text-white">99.4%</p>
+                  <p className="text-xs text-slate-300">24/7 command centre monitoring</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="relative flex flex-col gap-6 rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-[0_45px_120px_-50px_rgba(14,116,144,0.55)]">
+          <div className="absolute inset-y-10 left-6 w-px bg-gradient-to-b from-emerald-400/60 via-sky-400/40 to-transparent" aria-hidden />
+          <p className="text-xs uppercase tracking-[0.35em] text-slate-300">Quality gates</p>
+          <div className="flex flex-col gap-5">
+            {caseStudyMilestones.map((milestone) => (
+              <div key={milestone.label} className={`relative rounded-2xl border p-5 transition ${statusStyles[milestone.status]}`}>
+                <div className="absolute left-[-22px] top-5 h-3 w-3 rounded-full border border-white/20 bg-white/40 shadow-[0_0_0_4px_rgba(30,41,59,0.85)]" />
+                <p className="text-sm font-semibold uppercase tracking-[0.3em]">{milestone.label}</p>
+                <p className="mt-2 text-sm leading-relaxed">{milestone.detail}</p>
+                {milestone.status === "active" ? (
+                  <span className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white">
+                    In progress
+                  </span>
+                ) : null}
+                {milestone.status === "upcoming" ? (
+                  <span className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
+                    Next
+                  </span>
+                ) : null}
+              </div>
+            ))}
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-5 text-sm text-slate-200">
+            <p className="font-semibold text-white">“Commissioned in 41 days with zero downtime”</p>
+            <p className="mt-2 text-sm text-slate-300">Facilities Head, Medlife Pharmaceuticals</p>
+          </div>
         </div>
       </div>
     </section>
