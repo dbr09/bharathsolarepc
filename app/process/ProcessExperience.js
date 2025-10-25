@@ -254,7 +254,10 @@ export default function ProcessExperience() {
     .reduce((acc, phase) => acc + phase.computedWeeks, 0);
 
   const timelineProgress = totalWeeks
-    ? Math.round(((elapsedWeeksBeforePhase + selectedPhase?.computedWeeks / 2) / totalWeeks) * 100)
+    ? Math.min(
+        100,
+        Math.round(((elapsedWeeksBeforePhase + selectedPhase?.computedWeeks) / totalWeeks) * 100),
+      )
     : 0;
 
   const activeStream = collaborationStreams.find((stream) => stream.id === activeStreamId);
