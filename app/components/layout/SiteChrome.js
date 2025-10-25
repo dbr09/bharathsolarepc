@@ -156,7 +156,6 @@ export function SiteHeader() {
               </a>
             </span>
             <span className="hidden h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.75)] sm:block" aria-hidden />
-            <span className="text-[0.7rem] tracking-[0.42em] text-emerald-200/80">Talk today</span>
           </div>
           <Link
             href="/contact"
