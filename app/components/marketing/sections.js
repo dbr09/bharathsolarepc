@@ -459,30 +459,67 @@ function Calculator() {
     [],
   );
 
-  const { kwRounded, generation, roofArea, monthlySavings, capex, payback, effectiveTariff, hasInput } = useMemo(() => {
+  const {
+    kwRounded,
+    generation,
+    roofArea,
+    monthlySavings,
+    annualSavings,
+    lifetimeSavings,
+    capex,
+    payback,
+    effectiveTariff,
+    slabBreakdown,
+    fixedCharge,
+    monthlyBill,
+    postSolarBill,
+    solarContribution,
+    carbonOffset,
+    simpleReturn,
+    hasInput,
+  } = useMemo(() => {
     const units = Number.parseFloat(unitsMonth) || 0;
     const unitsPerKwMonth = 150;
     const roofSqftPerKw = 100;
     const capexPerKw = 55000;
-
+    
     const kw = units > 0 ? units / unitsPerKwMonth : 0;
     const kwRoundedValue = kw > 0 ? Math.max(1, Math.round(kw * 10) / 10) : 0;
     const generationValue = kwRoundedValue * unitsPerKwMonth;
     const roof = kwRoundedValue * roofSqftPerKw;
-    const { effectiveRate } = calculateTariff(units, tariff);
-    const savings = Math.min(units, generationValue) * effectiveRate;
+    const { effectiveRate, breakdown, fixedCharge: tierFixedCharge, totalCharge } = calculateTariff(units, tariff);
+    const slabUnitsCovered = Math.min(units, generationValue);
+    const monthlyBillValue = totalCharge + tierFixedCharge;
+    const postSolarUnits = Math.max(units - generationValue, 0);
+    const postSolarCharge = postSolarUnits * effectiveRate;
+    const postSolarBillValue = postSolarCharge + tierFixedCharge;
+    const savings = monthlyBillValue - postSolarBillValue;
     const capexValue = kwRoundedValue * capexPerKw;
     const annualSavings = savings * 12;
     const paybackValue = savings > 0 ? capexValue / annualSavings : 0;
+    const lifetimeYears = 25;
+    const lifetimeSavingsValue = annualSavings * lifetimeYears;
+    const solarContributionValue = units > 0 ? (slabUnitsCovered / units) * 100 : 0;
+    const carbonOffsetValue = generationValue * 12 * 0.82 * 0.001; // tonnes of CO₂ avoided annually
+    const simpleReturnValue = capexValue > 0 ? (annualSavings / capexValue) * 100 : 0;
 
     return {
       kwRounded: kwRoundedValue,
       generation: generationValue,
       roofArea: roof,
       monthlySavings: savings,
+      annualSavings,
+      lifetimeSavings: lifetimeSavingsValue,
       capex: capexValue,
       payback: paybackValue,
       effectiveTariff: effectiveRate,
+      slabBreakdown: breakdown,
+      fixedCharge: tierFixedCharge,
+      monthlyBill: monthlyBillValue,
+      postSolarBill: postSolarBillValue,
+      solarContribution: solarContributionValue,
+      carbonOffset: carbonOffsetValue,
+      simpleReturn: simpleReturnValue,
       hasInput: units > 0,
     };
   }, [tariff, unitsMonth]);
@@ -522,6 +559,47 @@ function Calculator() {
       label: "Roof space",
       value: hasInput ? `${roofArea.toLocaleString()} sq.ft` : "—",
       helper: "Usable shadow-free area",
+    },
+  ];
+
+  const billStats = [
+    {
+      label: "Current DISCOM bill",
+      value: hasInput ? `₹${Math.round(monthlyBill).toLocaleString()}` : "—",
+      helper: hasInput ? `Includes ₹${Math.round(fixedCharge).toLocaleString()}/month fixed charges` : undefined,
+    },
+    {
+      label: "Post-solar bill",
+      value: hasInput ? `₹${Math.max(0, Math.round(postSolarBill)).toLocaleString()}` : "—",
+      helper: hasInput ? "After solar generation offsets your usage" : undefined,
+    },
+    {
+      label: "Solar contribution",
+      value: hasInput ? `${Math.min(100, solarContribution).toFixed(0)}%` : "—",
+      helper: "Share of your monthly units covered",
+    },
+  ];
+
+  const outlookStats = [
+    {
+      label: "Annual savings",
+      value: hasInput ? `₹${Math.round(annualSavings).toLocaleString()}` : "—",
+      helper: "12-month reduction in power bills",
+    },
+    {
+      label: "25-yr savings",
+      value: hasInput ? `₹${Math.round(lifetimeSavings).toLocaleString()}` : "—",
+      helper: "Assuming 25-year asset life",
+    },
+    {
+      label: "Annual CO₂ offset",
+      value: hasInput ? `${carbonOffset.toFixed(1)} tonnes` : "—",
+      helper: "Based on 0.82 kg/unit grid factor",
+    },
+    {
+      label: "Simple return",
+      value: hasInput && simpleReturn > 0 ? `${simpleReturn.toFixed(0)}%` : "—",
+      helper: "Annual savings ÷ project cost",
     },
   ];
 
@@ -579,8 +657,68 @@ function Calculator() {
         ))}
       </div>
 
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {billStats.map((stat) => (
+          <SummaryStat key={stat.label} {...stat} />
+        ))}
+      </div>
+
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {outlookStats.map((stat) => (
+          <SummaryStat key={stat.label} {...stat} />
+        ))}
+      </div>
+
+      <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Tariff breakdown</p>
+            <p className="text-sm text-slate-200/80">{activeTariff?.label}</p>
+          </div>
+          {hasInput ? (
+            <p className="text-sm font-semibold text-white">
+              DISCOM bill: ₹{Math.round(monthlyBill).toLocaleString()} / month
+            </p>
+          ) : null}
+        </div>
+        {hasInput && slabBreakdown.length > 0 ? (
+          <div className="mt-4 overflow-hidden rounded-xl border border-white/10">
+            <table className="min-w-full divide-y divide-white/10 text-sm text-slate-200/90">
+              <thead className="bg-white/5 text-xs uppercase tracking-[0.3em] text-slate-400">
+                <tr>
+                  <th className="px-4 py-3 text-left">Slab</th>
+                  <th className="px-4 py-3 text-right">Units</th>
+                  <th className="px-4 py-3 text-right">Rate (₹)</th>
+                  <th className="px-4 py-3 text-right">Amount (₹)</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {slabBreakdown.map((slab) => (
+                  <tr key={slab.label}>
+                    <td className="px-4 py-3">{slab.label}</td>
+                    <td className="px-4 py-3 text-right">{slab.units.toLocaleString()}</td>
+                    <td className="px-4 py-3 text-right">{slab.rate.toFixed(2)}</td>
+                    <td className="px-4 py-3 text-right">{Math.round(slab.amount).toLocaleString()}</td>
+                  </tr>
+                ))}
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-white">Fixed charges</td>
+                  <td className="px-4 py-3 text-right">—</td>
+                  <td className="px-4 py-3 text-right">—</td>
+                  <td className="px-4 py-3 text-right">{Math.round(fixedCharge).toLocaleString()}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="mt-4 text-sm text-slate-300/80">
+            Enter your monthly consumption to view the slab-wise TSNPDCL energy charge breakdown and fixed charges.
+          </p>
+        )}
+      </div>
+
       <p className="mt-6 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200/90">
-        Share your latest bill and roof details with our team to receive a detailed design and commercial proposal.
+        Share your latest bill and roof details with our team to receive a detailed design, financial model and commercial proposal tailored to your site.
       </p>
     </div>
   );
