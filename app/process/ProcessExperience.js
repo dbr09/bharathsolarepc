@@ -96,7 +96,7 @@ const processPhases = [
   {
     id: "operations",
     name: "Operations & Optimisation",
-    baseWeeks: 12,
+    baseWeeks: 8,
     objective:
       "Stabilise generation, monitor analytics, and implement optimisations for lifetime returns.",
     activities: [
@@ -221,7 +221,7 @@ export default function ProcessExperience() {
   const [activeReadinessId, setActiveReadinessId] = useState(readinessCheckpoints[0].id);
 
   const phasesWithDurations = useMemo(() => {
-    const scale = Math.sqrt(systemSize / 250);
+    const scale = Math.pow(systemSize / 250, 0.22);
     const phases = [];
     let cursor = 0;
 
