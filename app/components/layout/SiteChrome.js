@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const navLinks = [
   { label: "Overview", href: "/" },
@@ -11,7 +11,6 @@ export const navLinks = [
   { label: "Calculator", href: "/calculator" },
   { label: "Process", href: "/process" },
   { label: "Projects", href: "/projects" },
-  { label: "Testimonials", href: "/testimonials" },
   { label: "Payments", href: "/payments" },
   { label: "Contact", href: "/contact" },
 ];
@@ -32,9 +31,44 @@ export function BackgroundDecorations() {
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const headerRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [headerHeight, setHeaderHeight] = useState(72);
+
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return undefined;
+    }
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = open ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const updateHeight = () => {
+      if (!headerRef.current) return;
+      setHeaderHeight(headerRef.current.getBoundingClientRect().height);
+    };
+
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, []);
+
+  useEffect(() => {
+    if (!headerRef.current) return;
+    setHeaderHeight(headerRef.current.getBoundingClientRect().height);
+  }, [open]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,14 +85,18 @@ export function SiteHeader() {
 
   return (
     <header
+      ref={headerRef}
       className={`group sticky top-0 z-40 border-b transition-all duration-500 ${
         scrolled
           ? "border-white/10 bg-slate-950/80 shadow-[0_24px_65px_-40px_rgba(15,118,110,0.8)] backdrop-blur-xl"
           : "border-transparent"
       }`}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/70 to-slate-950/35 opacity-95 transition-opacity duration-500 group-hover:opacity-100" aria-hidden />
-      <div className="absolute inset-x-0 top-0 h-0.5 overflow-hidden bg-white/10" aria-hidden>
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/70 to-slate-950/35 opacity-95 transition-opacity duration-500 group-hover:opacity-100"
+        aria-hidden
+      />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-0.5 overflow-hidden bg-white/10" aria-hidden>
         <span
           className="block h-full origin-left bg-gradient-to-r from-emerald-400 via-sky-400 to-amber-300 transition-transform duration-500"
           style={{ transform: `scaleX(${Math.max(progress, 0.03)})` }}
@@ -66,12 +104,19 @@ export function SiteHeader() {
       </div>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 text-slate-100">
         <Link href="/" className="relative flex items-center gap-3">
-          <span className="glow-border relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(15,118,110,0.45)] ring-1 ring-white/30">
-            <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
+          <span className="glow-border relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(15,118,110,0.45)] ring-1 ring-white/30 sm:h-12 sm:w-12">
+            <Image
+              src="/logo.png"
+              alt="Bharath Solar EPC"
+              fill
+              className="object-contain p-1"
+              priority
+              sizes="(min-width: 640px) 48px, 44px"
+            />
           </span>
-          <div className="hidden sm:block">
-            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-slate-300/90">Bharath Solar EPC</p>
-            <p className="mt-1 hidden text-sm text-slate-300 sm:block">Clean energy architecture for industries, institutions & homes</p>
+          <div className="flex flex-col leading-tight text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-white sm:text-xs sm:tracking-[0.32em]">
+            <span className="whitespace-nowrap">Bharath</span>
+            <span className="whitespace-nowrap">Solar EPC</span>
           </div>
         </Link>
 
@@ -101,24 +146,23 @@ export function SiteHeader() {
 
         <div className="hidden items-center gap-3 md:flex">
           <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-300/80">
-            <span className="hidden sm:inline-flex items-center gap-2 text-[0.85rem] normal-case tracking-normal text-slate-100">
-              <PhoneIcon className="h-4 w-4 text-emerald-300" />
+            <span className="hidden sm:inline-flex items-center gap-2 text-[0.85rem] normal-case tracking-normal text-white">
+              <PhoneIcon className="h-4 w-4 text-emerald-200" />
               <a
                 href="tel:+918977310017"
-                className="font-semibold text-slate-100 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className="font-semibold text-white drop-shadow-[0_0_8px_rgba(15,118,110,0.45)] whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
                 +91 89773 10017
               </a>
             </span>
             <span className="hidden h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.75)] sm:block" aria-hidden />
-            <span className="text-[0.7rem] tracking-[0.42em] text-emerald-200/80">Talk today</span>
           </div>
           <Link
             href="/contact"
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
-            <span className="relative z-10">Talk to an expert</span>
-            <span className="relative z-10 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
+            <span className="relative z-10 whitespace-nowrap">Talk to an expert</span>
+            <span className="relative z-10 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/20">
               <ArrowIcon className="h-3 w-3" />
             </span>
             <span className="absolute inset-0 translate-x-[-120%] bg-white/25 transition duration-500 group-hover:translate-x-[120%]" />
@@ -142,43 +186,53 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-white/10 bg-slate-950/95 backdrop-blur md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-6 text-slate-100">
-            {navLinks.map((item) => {
-              const isActive =
-                pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`rounded-xl border border-white/5 px-4 py-3 text-base font-medium transition hover:border-white/20 hover:bg-white/5 ${
-                    isActive ? "bg-white/5 text-white" : "text-slate-300"
-                  }`}
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-            <a
-              href="tel:+918977310017"
-              className="inline-flex items-center gap-3 whitespace-nowrap rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-base font-semibold text-white"
-              onClick={() => setOpen(false)}
-            >
-              <PhoneIcon className="h-4 w-4" /> +91 89773 10017
-            </a>
-            <Link
-              href="/contact"
-              className="inline-flex w-full justify-center rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_18px_40px_-18px_rgba(16,185,129,0.7)]"
-              onClick={() => setOpen(false)}
-            >
-              Talk to an expert
-            </Link>
+        <div className="md:hidden">
+          <div
+            className="fixed inset-x-0 bottom-0 z-30 bg-slate-950/80 backdrop-blur-sm"
+            style={{ top: headerHeight }}
+            aria-hidden
+          />
+          <div
+            className="fixed inset-x-0 bottom-0 z-40 overflow-y-auto border-t border-white/10 bg-slate-950/95"
+            style={{ top: headerHeight }}
+          >
+            <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-6 pb-10 text-slate-100">
+              {navLinks.map((item) => {
+                const isActive =
+                  pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className={`rounded-xl border border-white/5 px-4 py-3 text-base font-medium transition hover:border-white/20 hover:bg-white/5 ${
+                      isActive ? "bg-white/5 text-white" : "text-slate-300"
+                    }`}
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+              <a
+                href="tel:+918977310017"
+                className="inline-flex items-center gap-3 whitespace-nowrap rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-base font-semibold text-white"
+                onClick={() => setOpen(false)}
+              >
+                <PhoneIcon className="h-4 w-4" /> +91 89773 10017
+              </a>
+              <Link
+                href="/contact"
+                className="inline-flex w-full justify-center rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-[0_18px_40px_-18px_rgba(16,185,129,0.7)]"
+                onClick={() => setOpen(false)}
+              >
+                Talk to an expert
+              </Link>
+            </div>
           </div>
         </div>
       )}
 
-      <div className="absolute bottom-0 left-0 h-[1.5px] w-full overflow-hidden" aria-hidden>
+      <div className="pointer-events-none absolute bottom-0 left-0 h-[1.5px] w-full overflow-hidden" aria-hidden>
         <span
           className="block h-full origin-left scale-x-0 bg-gradient-to-r from-emerald-400 via-sky-400 to-amber-400 transition-transform duration-500"
           style={{ transform: `scaleX(${Math.max(progress, 0)})` }}

@@ -9,9 +9,9 @@ export default function WhatsAppFloat() {
       href={whatsappLink}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-full bg-[#25D366] px-5 py-3 text-white shadow-2xl shadow-[#25D366]/40 ring-1 ring-white/30 transition-transform duration-200 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366]"
+      className="fixed bottom-4 right-4 z-50 flex items-center gap-2.5 rounded-full bg-[#25D366] px-4 py-2.5 text-white shadow-2xl shadow-[#25D366]/40 ring-1 ring-white/30 transition-transform duration-200 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25D366] sm:bottom-6 sm:right-6 sm:gap-3 sm:px-5 sm:py-3"
     >
-      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15">
+      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 sm:h-9 sm:w-9">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
