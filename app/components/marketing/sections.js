@@ -529,6 +529,9 @@ function Calculator() {
   const interactiveFieldClasses =
     "w-full rounded-2xl border border-[#34d399]/30 bg-gradient-to-r from-[#103524]/70 via-[#0b2218]/70 to-[#103524]/70 px-4 py-3 text-base text-white shadow-[0_25px_65px_-35px_rgba(16,185,129,0.9)] transition hover:border-[#34d399]/70 focus:border-[#147B3E] focus:outline-none focus:ring-4 focus:ring-[#147B3E]/35 focus:ring-offset-2 focus:ring-offset-slate-950 placeholder:text-emerald-200/70";
 
+  const editableUnitsFieldClasses =
+    "relative w-full overflow-hidden rounded-3xl border-2 border-emerald-400/80 bg-[#0f1c17] px-5 py-4 text-lg font-semibold text-white shadow-[0_35px_85px_-45px_rgba(52,211,153,0.95)] transition focus:border-white focus:outline-none focus:ring-4 focus:ring-emerald-400/60 focus:ring-offset-2 focus:ring-offset-slate-950 placeholder:text-emerald-200/80";
+
   return (
     <div className="rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_40px_110px_-55px_rgba(16,185,129,0.65)] backdrop-blur-xl">
       <div className="space-y-3">
@@ -541,20 +544,34 @@ function Calculator() {
       </div>
 
       <form className="mt-6 grid gap-6 lg:grid-cols-2">
-        <div className="space-y-2">
-          <label htmlFor="units" className="text-sm font-semibold text-slate-200">
-            Monthly electricity usage (units)
-          </label>
-          <input
-            id="units"
-            type="number"
-            inputMode="numeric"
-            value={unitsMonth}
-            onChange={(event) => setUnitsMonth(event.target.value)}
-            className={interactiveFieldClasses}
-            placeholder="e.g. 850"
-            min={0}
-          />
+        <div className="space-y-3">
+          <div className="flex items-center justify-between gap-3">
+            <label htmlFor="units" className="text-sm font-semibold text-slate-200">
+              Monthly electricity usage (units)
+            </label>
+            <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-200">
+              Editable
+            </span>
+          </div>
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-0 rounded-[26px] border border-emerald-300/40 shadow-[0_0_45px_-10px_rgba(52,211,153,0.85)]" />
+            <input
+              id="units"
+              type="number"
+              inputMode="numeric"
+              value={unitsMonth}
+              onChange={(event) => setUnitsMonth(event.target.value)}
+              className={editableUnitsFieldClasses}
+              placeholder="Enter your units here"
+              min={0}
+            />
+            <div className="pointer-events-none absolute -top-3 left-6 rounded-full bg-emerald-400 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-950 shadow-lg">
+              Tap to adjust
+            </div>
+          </div>
+          <p className="text-xs font-semibold text-emerald-200/90">
+            Enter your units here to personalise the system size, roof space, and savings estimates.
+          </p>
         </div>
         <div className="space-y-2">
           <label htmlFor="tariff" className="text-sm font-semibold text-slate-200">
