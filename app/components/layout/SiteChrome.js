@@ -113,13 +113,6 @@ export function SiteHeader() {
             <span className="hidden h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.75)] sm:block" aria-hidden />
             <span className="text-[0.7rem] tracking-[0.42em] text-emerald-200/90">Talk today</span>
           </div>
-          <Link
-            href="/contact"
-            className="group relative inline-flex items-center overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-5 py-2 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-          >
-            <span className="relative z-10">Talk to an expert</span>
-            <span className="absolute inset-0 translate-x-[-120%] bg-white/25 transition duration-500 group-hover:translate-x-[120%]" />
-          </Link>
         </div>
 
         <button
@@ -164,13 +157,6 @@ export function SiteHeader() {
             >
               <PhoneIcon className="h-4 w-4" /> +91 89773 10017
             </a>
-            <Link
-              href="/contact"
-              className="inline-flex w-full justify-center rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_18px_40px_-18px_rgba(16,185,129,0.7)]"
-              onClick={() => setOpen(false)}
-            >
-              Talk to an expert
-            </Link>
           </div>
         </div>
       )}
