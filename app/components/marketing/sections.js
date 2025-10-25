@@ -322,10 +322,26 @@ export function CalculatorSection() {
 
 const DEFAULT_TARIFF_KEY = "domestic";
 
+function roundToPaise(value) {
+  return Math.round((Number(value) + Number.EPSILON) * 100) / 100;
+}
+
+function formatCurrency(amount) {
+  if (!Number.isFinite(amount)) return "—";
+  const rounded = roundToPaise(amount);
+  const hasPaise = Math.abs(rounded - Math.round(rounded)) > 1e-6;
+  return rounded.toLocaleString("en-IN", {
+    minimumFractionDigits: hasPaise ? 2 : 0,
+    maximumFractionDigits: hasPaise ? 2 : 0,
+  });
+}
+
 const tariffStructures = {
   domestic: {
     label: "LT Cat-I(A) Domestic",
     description: "Telescopic slabs for residential consumers",
+    customerCharge: 20,
+    electricityDutyRate: 0.06,
     tiers: [
       {
         maxUnits: 100,
@@ -337,9 +353,10 @@ const tariffStructures = {
       },
       {
         maxUnits: Infinity,
-        fixedCharge: 60,
+        fixedCharge: 90,
         slabs: [
-          { upto: 100, rate: 3.1, label: "0-100 units" },
+          { upto: 50, rate: 3, label: "0-50 units" },
+          { upto: 100, rate: 3.1, label: "51-100 units" },
           { upto: 200, rate: 4.5, label: "101-200 units" },
           { upto: 300, rate: 6, label: "201-300 units" },
           { upto: 400, rate: 6.9, label: "301-400 units" },
@@ -412,6 +429,12 @@ function calculateTariff(units, tariffKey) {
       effectiveRate: 0,
       breakdown: [],
       fixedCharge: 0,
+      customerCharge: 0,
+      electricityDuty: 0,
+      dutyRate: 0,
+      subtotal: 0,
+      roundedTotal: 0,
+      roundingAdjustment: 0,
       label: structure?.label ?? "",
       description: structure?.description ?? "",
     };
@@ -453,12 +476,26 @@ function calculateTariff(units, tariffKey) {
   }
 
   const effectiveRate = totalCharge / units;
+  const energyCharges = roundToPaise(totalCharge);
+  const dutyRate = structure.electricityDutyRate ?? 0;
+  const electricityDuty = roundToPaise(energyCharges * dutyRate);
+  const customerCharge = structure.customerCharge ?? 0;
+  const fixedCharge = tier.fixedCharge ?? 0;
+  const subtotal = roundToPaise(energyCharges + fixedCharge + customerCharge + electricityDuty);
+  const roundedTotal = Math.round(subtotal);
+  const roundingAdjustment = roundToPaise(roundedTotal - subtotal);
 
   return {
-    totalCharge,
+    totalCharge: energyCharges,
     effectiveRate,
     breakdown,
-    fixedCharge: tier.fixedCharge,
+    fixedCharge,
+    customerCharge,
+    electricityDuty,
+    dutyRate,
+    subtotal,
+    roundedTotal,
+    roundingAdjustment,
     label: structure.label,
     description: structure.description,
   };
@@ -468,7 +505,22 @@ function Calculator() {
   const [unitsMonth, setUnitsMonth] = useState("600");
   const activeTariff = tariffStructures[DEFAULT_TARIFF_KEY];
 
-  const { kwRounded, generation, roofArea, slabBreakdown, fixedCharge, monthlyBill, carbonOffset, hasInput } = useMemo(() => {
+  const {
+    kwRounded,
+    generation,
+    roofArea,
+    slabBreakdown,
+    fixedCharge,
+    customerCharge,
+    electricityDuty,
+    dutyRate,
+    monthlyBill,
+    monthlyBillBeforeRound,
+    roundingAdjustment,
+    energyCharges,
+    carbonOffset,
+    hasInput,
+  } = useMemo(() => {
     const units = Number.parseFloat(unitsMonth) || 0;
     const unitsPerKwMonth = 150;
     const roofSqftPerKw = 100;
@@ -477,8 +529,18 @@ function Calculator() {
     const kwRoundedValue = kw > 0 ? Math.max(1, Math.round(kw * 10) / 10) : 0;
     const generationValue = kwRoundedValue * unitsPerKwMonth;
     const roof = kwRoundedValue * roofSqftPerKw;
-    const { breakdown, fixedCharge: tierFixedCharge, totalCharge } = calculateTariff(units, DEFAULT_TARIFF_KEY);
-    const monthlyBillValue = totalCharge + tierFixedCharge;
+    const {
+      breakdown,
+      fixedCharge: tierFixedCharge,
+      totalCharge,
+      customerCharge: customerChargeValue,
+      electricityDuty: electricityDutyValue,
+      dutyRate: dutyRateValue,
+      subtotal,
+      roundedTotal,
+      roundingAdjustment: roundingAdjustmentValue,
+    } = calculateTariff(units, DEFAULT_TARIFF_KEY);
+    const monthlyBillValue = roundedTotal;
     const carbonOffsetValue = generationValue * 12 * 0.82 * 0.001; // tonnes of CO₂ avoided annually
 
     return {
@@ -487,7 +549,13 @@ function Calculator() {
       roofArea: roof,
       slabBreakdown: breakdown,
       fixedCharge: tierFixedCharge,
+      customerCharge: customerChargeValue,
+      electricityDuty: electricityDutyValue,
+      dutyRate: dutyRateValue,
       monthlyBill: monthlyBillValue,
+      monthlyBillBeforeRound: subtotal,
+      roundingAdjustment: roundingAdjustmentValue,
+      energyCharges: totalCharge,
       carbonOffset: carbonOffsetValue,
       hasInput: units > 0,
     };
@@ -515,6 +583,9 @@ function Calculator() {
       helper: "Based on 0.82 kg/unit grid factor",
     },
   ];
+
+  const showRoundingAdjustment = Math.abs(roundingAdjustment) > 0.001;
+  const dutyPercentage = Math.round(dutyRate * 100);
 
   const editableUnitsFieldClasses =
     "relative w-full overflow-hidden rounded-3xl border-2 border-emerald-400/80 bg-[#0f1c17] px-5 py-4 text-lg font-semibold text-white shadow-[0_35px_85px_-45px_rgba(52,211,153,0.95)] transition focus:border-white focus:outline-none focus:ring-4 focus:ring-emerald-400/60 focus:ring-offset-2 focus:ring-offset-slate-950 placeholder:text-emerald-200/80";
@@ -567,11 +638,18 @@ function Calculator() {
             <div className="relative z-10 space-y-2">
               <p className="text-xs uppercase tracking-[0.3em] text-emerald-200/80">Total payable</p>
               <p className="text-3xl font-bold text-white">
-                {hasInput ? `₹${Math.round(monthlyBill).toLocaleString()}` : "—"}
+                {hasInput ? `₹${formatCurrency(monthlyBill)}` : "—"}
                 <span className="ml-2 text-sm font-semibold text-emerald-200/80">per month</span>
               </p>
+              {hasInput ? (
+                <p className="text-xs font-medium text-emerald-100/80">
+                  Before round-off: ₹{formatCurrency(monthlyBillBeforeRound)}
+                </p>
+              ) : null}
               <p className="text-xs text-slate-300/80">
-                Includes TSNPDCL domestic energy slabs and fixed charges.
+                Includes TSNPDCL domestic slabs, ₹{formatCurrency(fixedCharge)} fixed charge, ₹{formatCurrency(customerCharge)}
+                {" "}
+                customer charge and {dutyRate ? `${dutyPercentage}% electricity duty` : "electricity duty"}.
               </p>
             </div>
           </div>
@@ -593,11 +671,11 @@ function Calculator() {
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Tariff breakdown</p>
             <p className="text-sm text-slate-200/80">{activeTariff?.label}</p>
           </div>
-          {hasInput ? (
-            <p className="text-sm font-semibold text-white">
-              DISCOM bill: ₹{Math.round(monthlyBill).toLocaleString()} / month
-            </p>
-          ) : null}
+            {hasInput ? (
+              <p className="text-sm font-semibold text-white">
+                DISCOM bill: ₹{formatCurrency(monthlyBill)} / month
+              </p>
+            ) : null}
         </div>
         {hasInput && slabBreakdown.length > 0 ? (
           <div className="mt-4 overflow-hidden rounded-xl border border-white/10">
@@ -616,14 +694,54 @@ function Calculator() {
                     <td className="px-4 py-3">{slab.label}</td>
                     <td className="px-4 py-3 text-right">{slab.units.toLocaleString()}</td>
                     <td className="px-4 py-3 text-right">{slab.rate.toFixed(2)}</td>
-                    <td className="px-4 py-3 text-right">{Math.round(slab.amount).toLocaleString()}</td>
+                    <td className="px-4 py-3 text-right">₹{formatCurrency(slab.amount)}</td>
                   </tr>
                 ))}
+                <tr className="bg-white/5">
+                  <td className="px-4 py-3 font-semibold text-white">Energy charges total</td>
+                  <td className="px-4 py-3 text-right">—</td>
+                  <td className="px-4 py-3 text-right">—</td>
+                  <td className="px-4 py-3 text-right">₹{formatCurrency(energyCharges)}</td>
+                </tr>
                 <tr>
                   <td className="px-4 py-3 font-semibold text-white">Fixed charges</td>
                   <td className="px-4 py-3 text-right">—</td>
                   <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">{Math.round(fixedCharge).toLocaleString()}</td>
+                  <td className="px-4 py-3 text-right">₹{formatCurrency(fixedCharge)}</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-white">Customer charges</td>
+                  <td className="px-4 py-3 text-right">—</td>
+                  <td className="px-4 py-3 text-right">—</td>
+                  <td className="px-4 py-3 text-right">₹{formatCurrency(customerCharge)}</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-white">
+                    {dutyRate ? `Electricity duty (${dutyPercentage}%)` : "Electricity duty"}
+                  </td>
+                  <td className="px-4 py-3 text-right">—</td>
+                  <td className="px-4 py-3 text-right">—</td>
+                  <td className="px-4 py-3 text-right">₹{formatCurrency(electricityDuty)}</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-semibold text-white">Bill before round-off</td>
+                  <td className="px-4 py-3 text-right">—</td>
+                  <td className="px-4 py-3 text-right">—</td>
+                  <td className="px-4 py-3 text-right">₹{formatCurrency(monthlyBillBeforeRound)}</td>
+                </tr>
+                {showRoundingAdjustment ? (
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-white">Round-off adjustment</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">₹{formatCurrency(roundingAdjustment)}</td>
+                  </tr>
+                ) : null}
+                <tr className="bg-emerald-500/10 font-semibold text-white">
+                  <td className="px-4 py-3">Net amount payable</td>
+                  <td className="px-4 py-3 text-right">—</td>
+                  <td className="px-4 py-3 text-right">—</td>
+                  <td className="px-4 py-3 text-right">₹{formatCurrency(monthlyBill)}</td>
                 </tr>
               </tbody>
             </table>
