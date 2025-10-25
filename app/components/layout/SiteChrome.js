@@ -115,12 +115,9 @@ export function SiteHeader() {
           </div>
           <Link
             href="/contact"
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-5 py-2 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            className="group relative inline-flex items-center overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-5 py-2 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             <span className="relative z-10">Talk to an expert</span>
-            <span className="relative z-10 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
-              <ArrowIcon className="h-3 w-3" />
-            </span>
             <span className="absolute inset-0 translate-x-[-120%] bg-white/25 transition duration-500 group-hover:translate-x-[120%]" />
           </Link>
         </div>
@@ -252,14 +249,6 @@ function PhoneIcon({ className }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M4 5.5C4 4.12 5.12 3 6.5 3h1.02c.62 0 1.16.38 1.37.96l1.05 2.8a1.5 1.5 0 01-.54 1.73l-1.12.82a12.1 12.1 0 005.89 5.89l.82-1.12a1.5 1.5 0 011.73-.54l2.8 1.05c.58.21.96.75.96 1.37V17.5c0 1.38-1.12 2.5-2.5 2.5H17C10.37 20 4 13.63 4 7z" />
-    </svg>
-  );
-}
-
-function ArrowIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
     </svg>
   );
 }
