@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const navLinks = [
   { label: "Overview", href: "/" },
@@ -32,9 +32,44 @@ export function BackgroundDecorations() {
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const headerRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [headerHeight, setHeaderHeight] = useState(72);
+
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return undefined;
+    }
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = open ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const updateHeight = () => {
+      if (!headerRef.current) return;
+      setHeaderHeight(headerRef.current.getBoundingClientRect().height);
+    };
+
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    return () => window.removeEventListener("resize", updateHeight);
+  }, []);
+
+  useEffect(() => {
+    if (!headerRef.current) return;
+    setHeaderHeight(headerRef.current.getBoundingClientRect().height);
+  }, [open]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,6 +86,7 @@ export function SiteHeader() {
 
   return (
     <header
+      ref={headerRef}
       className={`group sticky top-0 z-40 border-b transition-all duration-500 ${
         scrolled
           ? "border-white/10 bg-slate-950/80 shadow-[0_24px_65px_-40px_rgba(15,118,110,0.8)] backdrop-blur-xl"
@@ -145,38 +181,48 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-white/10 bg-slate-950/95 backdrop-blur md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-6 text-slate-100">
-            {navLinks.map((item) => {
-              const isActive =
-                pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`rounded-xl border border-white/5 px-4 py-3 text-base font-medium transition hover:border-white/20 hover:bg-white/5 ${
-                    isActive ? "bg-white/5 text-white" : "text-slate-300"
-                  }`}
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-            <a
-              href="tel:+918977310017"
-              className="inline-flex items-center gap-3 whitespace-nowrap rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-base font-semibold text-white"
-              onClick={() => setOpen(false)}
-            >
-              <PhoneIcon className="h-4 w-4" /> +91 89773 10017
-            </a>
-            <Link
-              href="/contact"
-              className="inline-flex w-full justify-center rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_18px_40px_-18px_rgba(16,185,129,0.7)]"
-              onClick={() => setOpen(false)}
-            >
-              Talk to an expert
-            </Link>
+        <div className="md:hidden">
+          <div
+            className="fixed inset-x-0 bottom-0 z-30 bg-slate-950/80 backdrop-blur-sm"
+            style={{ top: headerHeight }}
+            aria-hidden
+          />
+          <div
+            className="fixed inset-x-0 bottom-0 z-40 overflow-y-auto border-t border-white/10 bg-slate-950/95"
+            style={{ top: headerHeight }}
+          >
+            <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-6 pb-10 text-slate-100">
+              {navLinks.map((item) => {
+                const isActive =
+                  pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className={`rounded-xl border border-white/5 px-4 py-3 text-base font-medium transition hover:border-white/20 hover:bg-white/5 ${
+                      isActive ? "bg-white/5 text-white" : "text-slate-300"
+                    }`}
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+              <a
+                href="tel:+918977310017"
+                className="inline-flex items-center gap-3 whitespace-nowrap rounded-xl border border-white/5 bg-white/5 px-4 py-3 text-base font-semibold text-white"
+                onClick={() => setOpen(false)}
+              >
+                <PhoneIcon className="h-4 w-4" /> +91 89773 10017
+              </a>
+              <Link
+                href="/contact"
+                className="inline-flex w-full justify-center rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_18px_40px_-18px_rgba(16,185,129,0.7)]"
+                onClick={() => setOpen(false)}
+              >
+                Talk to an expert
+              </Link>
+            </div>
           </div>
         </div>
       )}
