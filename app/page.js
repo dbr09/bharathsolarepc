@@ -78,57 +78,12 @@ const marqueeItems = [
 ];
 
 const LIVE_SNAPSHOT_INTERVAL_MS = 4800;
-const CASE_STUDY_CYCLE_MS = 6800;
 
-const caseStudyMilestones = [
-  {
-    label: "Feasibility",
-    detail: "Digital twin of the campus, load profiling and ROI narrative in 4 days.",
-    status: "complete",
-    owner: "Solutions lab",
-    duration: "4 days",
-    insights: [
-      "Digital twin ready within 96 hours",
-      "Load flow flagged two circuits for reinforcement",
-      "Financial story circulated to leadership for go-ahead",
-    ],
-  },
-  {
-    label: "Engineering",
-    detail: "PE-stamped designs, wind tunnel validation and tier-1 BOM within 10 days.",
-    status: "complete",
-    owner: "Engineering desk",
-    duration: "10 days",
-    insights: [
-      "Structural checks cleared with 1.8 safety factor",
-      "Wind tunnel validation completed with action log",
-      "Tier-1 BOM locked with warranty trackers",
-    ],
-  },
-  {
-    label: "Execution",
-    detail: "Zero-shutdown installation with night-time crane operations and QA sign-offs.",
-    status: "active",
-    owner: "Project delivery",
-    duration: "21 days",
-    insights: [
-      "Night crane slots reserved to avoid production loss",
-      "Sterile zone cable trays sealed and audited",
-      "QA punch list cleared stage-by-stage",
-    ],
-  },
-  {
-    label: "Handover",
-    detail: "Performance dashboards, O&M playbooks and DISCOM coordination done for you.",
-    status: "upcoming",
-    owner: "Performance desk",
-    duration: "Go-live week",
-    insights: [
-      "Live dashboards configured with alert routing",
-      "DISCOM net-metering file submitted",
-      "O&M sprint calendar shared with client team",
-    ],
-  },
+const caseStudyHighlights = [
+  "Digital twin and ROI model cleared stakeholder reviews in under 4 days",
+  "Night-time crane slots reserved so production stayed online",
+  "Sterile zone cable trays sealed and audited for GMP compliance",
+  "QA punch list resolved stage-by-stage with client sign-off",
 ];
 
 export default function Home() {
@@ -498,102 +453,9 @@ function PartnerMarquee() {
 }
 
 function CaseStudySpotlight() {
-  const statusStyles = {
-    complete: "border-emerald-400/40 bg-emerald-400/10 text-emerald-100",
-    active: "border-sky-400/40 bg-sky-400/10 text-sky-100",
-    upcoming: "border-white/10 bg-white/5 text-slate-200",
-  };
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [stageProgress, setStageProgress] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const pauseTimeoutRef = useRef(null);
-  const activeMilestone = caseStudyMilestones[activeIndex];
-  const progressThroughTimeline = ((activeIndex + stageProgress) / caseStudyMilestones.length) * 100;
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setPrefersReducedMotion(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
-
-  useEffect(() => {
-    if (paused || prefersReducedMotion) return undefined;
-    let animationFrame = 0;
-    let lastTimestamp;
-
-    const step = (timestamp) => {
-      if (!lastTimestamp) lastTimestamp = timestamp;
-      const delta = timestamp - lastTimestamp;
-      lastTimestamp = timestamp;
-
-      setStageProgress((prev) => {
-        const next = prev + delta / CASE_STUDY_CYCLE_MS;
-        if (next >= 1) {
-          setActiveIndex((current) => (current + 1) % caseStudyMilestones.length);
-          return 0;
-        }
-        return next;
-      });
-
-      animationFrame = window.requestAnimationFrame(step);
-    };
-
-    animationFrame = window.requestAnimationFrame(step);
-
-    return () => window.cancelAnimationFrame(animationFrame);
-  }, [paused, prefersReducedMotion]);
-
-  useEffect(
-    () => () => {
-      if (pauseTimeoutRef.current) window.clearTimeout(pauseTimeoutRef.current);
-    },
-    []
-  );
-
-  const handleUserPause = useCallback(() => {
-    if (prefersReducedMotion) return;
-    setPaused(true);
-    if (pauseTimeoutRef.current) window.clearTimeout(pauseTimeoutRef.current);
-    pauseTimeoutRef.current = window.setTimeout(() => setPaused(false), 10000);
-  }, [prefersReducedMotion]);
-
-  const handleResume = useCallback(() => {
-    if (pauseTimeoutRef.current) {
-      window.clearTimeout(pauseTimeoutRef.current);
-      pauseTimeoutRef.current = null;
-    }
-    if (!prefersReducedMotion) setPaused(false);
-  }, [prefersReducedMotion]);
-
-  const handleActivate = useCallback(
-    (index, shouldPause = false) => {
-      setActiveIndex(index);
-      setStageProgress(0);
-      if (shouldPause) handleUserPause();
-    },
-    [handleUserPause]
-  );
-
-  const handleMilestoneKeyDown = useCallback(
-    (event, index) => {
-      if (event.key === "ArrowDown" || event.key === "ArrowRight") {
-        event.preventDefault();
-        handleActivate((index + 1) % caseStudyMilestones.length, true);
-      } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
-        event.preventDefault();
-        handleActivate((index - 1 + caseStudyMilestones.length) % caseStudyMilestones.length, true);
-      }
-    },
-    [handleActivate]
-  );
-
   return (
     <section className="py-16 sm:py-20 md:py-24">
-      <div className="site-container grid gap-8 sm:gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+      <div className="site-container">
         <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-gradient-to-br from-white/10 via-slate-900/30 to-slate-950/60 p-6 shadow-[0_55px_140px_-60px_rgba(16,185,129,0.75)] sm:rounded-[36px] sm:p-8 lg:p-10">
           <div className="pointer-events-none absolute inset-0 border border-white/10" aria-hidden />
           <div className="pointer-events-none absolute inset-4 rounded-[24px] border border-white/5 opacity-40 sm:inset-6 sm:rounded-[28px]" aria-hidden />
@@ -630,105 +492,20 @@ function CaseStudySpotlight() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div
-          className="relative flex flex-col gap-5 rounded-[28px] border border-white/10 bg-white/5 p-6 shadow-[0_45px_120px_-50px_rgba(14,116,144,0.55)] sm:gap-6 sm:rounded-[32px] sm:p-8"
-          onMouseLeave={handleResume}
-        >
-          <div className="flex items-center gap-4">
-            <p className="text-xs uppercase tracking-[0.35em] text-slate-300">Quality gates</p>
-            <div className="flex flex-1 items-center gap-3">
-              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-emerald-300 via-sky-400 to-amber-300"
-                  style={{ width: `${progressThroughTimeline}%` }}
-                />
+            <div className="space-y-4 rounded-[24px] border border-white/10 bg-slate-950/60 p-5 text-sm text-slate-200 sm:rounded-[28px] sm:p-6">
+              <p className="text-xs uppercase tracking-[0.35em] text-emerald-300/80">Project highlights</p>
+              <ul className="space-y-2.5 text-sm text-slate-200/85">
+                {caseStudyHighlights.map((point) => (
+                  <li key={point} className="flex items-start gap-3">
+                    <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-emerald-300" aria-hidden />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="rounded-2xl border border-white/10 bg-slate-900/50 p-5 text-sm text-slate-200">
+                <p className="font-semibold text-white">“Commissioned in 41 days with zero downtime”</p>
+                <p className="mt-2 text-sm text-slate-300">Facilities Head, Medlife Pharmaceuticals</p>
               </div>
-              <span className="text-xs text-slate-400">{`${activeIndex + 1}/${caseStudyMilestones.length}`}</span>
-            </div>
-          </div>
-          <div className="relative mt-2 flex flex-col gap-3 sm:gap-4">
-            <div className="absolute left-[10px] top-3 bottom-3 w-px bg-gradient-to-b from-emerald-400/60 via-sky-400/40 to-transparent" aria-hidden />
-            {caseStudyMilestones.map((milestone, index) => {
-              const isActive = index === activeIndex;
-              return (
-                <button
-                  key={milestone.label}
-                  type="button"
-                  onMouseEnter={() => handleActivate(index, true)}
-                  onFocus={() => handleActivate(index, true)}
-                  onClick={() => handleActivate(index, true)}
-                  onKeyDown={(event) => handleMilestoneKeyDown(event, index)}
-                  className={`relative overflow-hidden rounded-2xl border p-3 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:p-4 ${statusStyles[milestone.status]} ${isActive ? "shadow-[0_25px_60px_-35px_rgba(56,189,248,0.65)]" : ""}`}
-                  aria-pressed={isActive}
-                >
-                  <span
-                    className={`absolute left-[-22px] top-5 h-3 w-3 rounded-full border border-white/20 shadow-[0_0_0_4px_rgba(30,41,59,0.85)] ${isActive ? "bg-emerald-300" : "bg-white/40"}`}
-                    aria-hidden
-                  />
-                  {isActive ? (
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-400/15 via-sky-400/15 to-transparent opacity-90" aria-hidden />
-                  ) : null}
-                  <div className="relative flex items-center justify-between gap-2.5">
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-100 sm:text-sm">{milestone.label}</p>
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-200/80">{milestone.duration}</span>
-                  </div>
-                  <p className="relative mt-1.5 text-sm leading-relaxed text-slate-100/90">{milestone.detail}</p>
-                  {isActive ? (
-                    <div className="relative mt-4 h-1 overflow-hidden rounded-full bg-white/10">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-emerald-300 via-sky-400 to-amber-300"
-                        style={{ width: `${Math.min(stageProgress * 100, 100)}%` }}
-                      />
-                    </div>
-                  ) : null}
-                  {milestone.status === "upcoming" ? (
-                    <span className="relative mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
-                      Next
-                    </span>
-                  ) : null}
-                  {milestone.status === "active" && !prefersReducedMotion ? (
-                    <span className="relative mt-3 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white">
-                      In progress
-                    </span>
-                  ) : null}
-                </button>
-              );
-            })}
-          </div>
-          <div className="rounded-[24px] border border-white/10 bg-slate-950/60 p-5 text-sm text-slate-200 sm:rounded-[28px] sm:p-6">
-            <p className="text-xs uppercase tracking-[0.35em] text-emerald-300/80">Stage insights</p>
-            <h3 className="mt-3 text-xl font-semibold text-white">{activeMilestone.label}</h3>
-            <p className="mt-2 text-sm text-slate-200/90">{activeMilestone.detail}</p>
-            <dl className="mt-4 grid gap-3 sm:grid-cols-2">
-              <div>
-                <dt className="text-[10px] uppercase tracking-[0.3em] text-slate-500">Stage lead</dt>
-                <dd className="text-sm font-semibold text-white">{activeMilestone.owner}</dd>
-              </div>
-              <div>
-                <dt className="text-[10px] uppercase tracking-[0.3em] text-slate-500">Duration</dt>
-                <dd className="text-sm font-semibold text-white">{activeMilestone.duration}</dd>
-              </div>
-            </dl>
-            <ul className="mt-4 space-y-2.5 text-sm text-slate-200/85">
-              {activeMilestone.insights.map((point) => (
-                <li key={point} className="flex items-start gap-3">
-                  <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-emerald-300" aria-hidden />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-            <button
-              type="button"
-              onClick={() => handleActivate((activeIndex + 1) % caseStudyMilestones.length, true)}
-              className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-100 transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-            >
-              Advance timeline <ArrowIcon className="h-3.5 w-3.5" />
-            </button>
-            <div className="mt-5 rounded-2xl border border-white/10 bg-slate-900/50 p-5 text-sm text-slate-200">
-              <p className="font-semibold text-white">“Commissioned in 41 days with zero downtime”</p>
-              <p className="mt-2 text-sm text-slate-300">Facilities Head, Medlife Pharmaceuticals</p>
             </div>
           </div>
         </div>
@@ -736,6 +513,7 @@ function CaseStudySpotlight() {
     </section>
   );
 }
+
 
 function PaymentsTeaser() {
   const [hovered, setHovered] = useState(false);
