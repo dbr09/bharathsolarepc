@@ -342,9 +342,134 @@ export function CalculatorSection() {
   );
 }
 
+const tariffStructures = {
+  domestic: {
+    label: "LT Cat-I(A) Domestic",
+    description: "Telescopic slabs for residential consumers",
+    tiers: [
+      {
+        maxUnits: 100,
+        fixedCharge: 10,
+        slabs: [
+          { upto: 50, rate: 3.1, label: "0-50 units" },
+          { upto: 100, rate: 4.9, label: "51-100 units" },
+        ],
+      },
+      {
+        maxUnits: 200,
+        fixedCharge: 30,
+        slabs: [
+          { upto: 100, rate: 5.1, label: "0-100 units" },
+          { upto: 200, rate: 7.2, label: "101-200 units" },
+        ],
+      },
+      {
+        maxUnits: Infinity,
+        fixedCharge: 50,
+        slabs: [
+          { upto: 100, rate: 6.8, label: "0-100 units" },
+          { upto: 200, rate: 8.2, label: "101-200 units" },
+          { upto: 300, rate: 9.5, label: "201-300 units" },
+          { upto: Infinity, rate: 10, label: "Above 300 units" },
+        ],
+      },
+    ],
+  },
+  commercial: {
+    label: "LT Cat-II(A) Commercial",
+    description: "General commercial establishments",
+    tiers: [
+      {
+        maxUnits: 50,
+        fixedCharge: 70,
+        slabs: [{ upto: 50, rate: 7, label: "0-50 units" }],
+      },
+      {
+        maxUnits: Infinity,
+        fixedCharge: 90,
+        slabs: [
+          { upto: 50, rate: 8.5, label: "0-50 units" },
+          { upto: Infinity, rate: 9.5, label: "Above 50 units" },
+        ],
+      },
+    ],
+  },
+  advertisement: {
+    label: "LT Cat-VII Advertisement & Hoardings",
+    description: "Dedicated supply for signage and hoardings",
+    tiers: [
+      {
+        maxUnits: Infinity,
+        fixedCharge: 125,
+        slabs: [{ upto: Infinity, rate: 15, label: "All units" }],
+      },
+    ],
+  },
+};
+
+function calculateTariff(units, tariffKey) {
+  const structure = tariffStructures[tariffKey];
+  if (!structure || units <= 0) {
+    return {
+      totalCharge: 0,
+      effectiveRate: 0,
+      breakdown: [],
+      fixedCharge: 0,
+      label: structure?.label ?? "",
+      description: structure?.description ?? "",
+    };
+  }
+
+  const tier = structure.tiers.find((option) => units <= option.maxUnits) ?? structure.tiers[structure.tiers.length - 1];
+  const breakdown = [];
+  let remaining = units;
+  let consumed = 0;
+  let totalCharge = 0;
+
+  for (const slab of tier.slabs) {
+    if (remaining <= 0) break;
+
+    const cumulativeLimit = slab.upto;
+    const slabCap = cumulativeLimit === Infinity ? Infinity : cumulativeLimit - consumed;
+    if (slabCap <= 0) {
+      consumed = cumulativeLimit === Infinity ? consumed : cumulativeLimit;
+      continue;
+    }
+
+    const slabUnits = Math.min(remaining, slabCap);
+    if (slabUnits <= 0) {
+      consumed = cumulativeLimit === Infinity ? consumed : cumulativeLimit;
+      continue;
+    }
+
+    const amount = slabUnits * slab.rate;
+    breakdown.push({
+      label: slab.label,
+      units: slabUnits,
+      rate: slab.rate,
+      amount,
+    });
+
+    totalCharge += amount;
+    remaining -= slabUnits;
+    consumed += slabUnits;
+  }
+
+  const effectiveRate = totalCharge / units;
+
+  return {
+    totalCharge,
+    effectiveRate,
+    breakdown,
+    fixedCharge: tier.fixedCharge,
+    label: structure.label,
+    description: structure.description,
+  };
+}
+
 function Calculator() {
   const [unitsMonth, setUnitsMonth] = useState("600");
-  const [tariff, setTariff] = useState("8.5");
+  const [tariff, setTariff] = useState("domestic");
 
   const unitPresets = [
     { label: "2 BHK apartment", value: 300 },
@@ -353,16 +478,32 @@ function Calculator() {
     { label: "Manufacturing shed", value: 2500 },
   ];
 
-  const tariffPresets = [
-    { label: "Domestic", value: 6.5 },
-    { label: "Commercial", value: 8.5 },
-    { label: "HT/Industrial", value: 11 },
-  ];
+  const tariffPresets = Object.entries(tariffStructures).map(([value, details]) => ({
+    value,
+    label: details.label,
+    description: details.description,
+  }));
 
-  const { kwRounded, generation, roofArea, monthlySavings, annualSavings, capex, payback, co2Offset, projections, hasInput } =
+  const {
+    kwRounded,
+    generation,
+    roofArea,
+    monthlySavings,
+    annualSavings,
+    capex,
+    payback,
+    co2Offset,
+    projections,
+    hasInput,
+    effectiveTariff,
+    energyBill,
+    tariffBreakdown,
+    fixedCharge,
+    tariffLabel,
+    tariffDescription,
+  } =
     useMemo(() => {
       const units = Number.parseFloat(unitsMonth) || 0;
-      const rate = Number.parseFloat(tariff) || 0;
       const unitsPerKwMonth = 150;
       const roofSqftPerKw = 100;
       const capexPerKw = 55000;
@@ -371,7 +512,15 @@ function Calculator() {
       const kwRoundedValue = kw > 0 ? Math.max(1, Math.round(kw * 10) / 10) : 0;
       const generationValue = kwRoundedValue * unitsPerKwMonth;
       const roof = kwRoundedValue * roofSqftPerKw;
-      const savings = Math.min(units, generationValue) * rate;
+      const {
+        effectiveRate,
+        totalCharge,
+        breakdown,
+        fixedCharge: monthlyFixedCharge,
+        label,
+        description,
+      } = calculateTariff(units, tariff);
+      const savings = Math.min(units, generationValue) * effectiveRate;
       const annualSavingsValue = savings * 12;
       const capexValue = kwRoundedValue * capexPerKw;
       const paybackValue = savings > 0 ? capexValue / annualSavingsValue : 0;
@@ -400,11 +549,16 @@ function Calculator() {
         co2Offset: co2Annual,
         projections: projectionData,
         hasInput: units > 0,
+        effectiveTariff: effectiveRate,
+        energyBill: totalCharge,
+        tariffBreakdown: breakdown,
+        fixedCharge: monthlyFixedCharge,
+        tariffLabel: label,
+        tariffDescription: description,
       };
     }, [tariff, unitsMonth]);
 
   const unitsValue = Number.parseFloat(unitsMonth) || 0;
-  const tariffValue = Number.parseFloat(tariff) || 0;
 
   return (
     <div className="space-y-6 rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_40px_110px_-55px_rgba(16,185,129,0.65)] backdrop-blur-xl">
@@ -453,47 +607,29 @@ function Calculator() {
           </div>
         </div>
         <div>
-          <label htmlFor="tariff" className="text-sm font-semibold text-slate-200">
-            Average tariff (₹/unit)
-          </label>
-          <input
-            id="tariff"
-            type="number"
-            inputMode="decimal"
-            step="0.1"
-            value={tariff}
-            onChange={(event) => setTariff(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
-          />
-          <input
-            type="range"
-            min="5"
-            max="14"
-            step="0.1"
-            value={Math.min(Math.max(tariffValue, 5), 14)}
-            onChange={(event) => setTariff(event.target.value)}
-            className="mt-4 w-full accent-emerald-400"
-            aria-label="Average tariff slider"
-          />
-          <div className="mt-2 flex justify-between text-[10px] uppercase tracking-[0.3em] text-slate-500">
-            <span>₹5</span>
-            <span>₹14</span>
-          </div>
+          <span className="text-sm font-semibold text-slate-200">Tariff category</span>
+          <p className="mt-2 text-xs text-slate-400">Rates per TSNPDCL schedule effective 1 Nov 2024.</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            {tariffPresets.map((preset) => (
-              <button
-                key={preset.label}
-                type="button"
-                onClick={() => setTariff(String(preset.value))}
-                className={`rounded-full border px-3 py-1 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                  Math.abs(tariffValue - preset.value) < 0.01
-                    ? "border-emerald-300 bg-emerald-500/20 text-emerald-100"
-                    : "border-white/10 bg-transparent text-slate-300 hover:border-white/20 hover:text-white"
-                }`}
-              >
-                {preset.label}
-              </button>
-            ))}
+            {tariffPresets.map((preset) => {
+              const isActive = tariff === preset.value;
+              return (
+                <button
+                  key={preset.value}
+                  type="button"
+                  onClick={() => setTariff(preset.value)}
+                  className={`rounded-full border px-3 py-1 text-left text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                    isActive
+                      ? "border-emerald-300 bg-emerald-500/20 text-emerald-100"
+                      : "border-white/10 bg-transparent text-slate-300 hover:border-white/20 hover:text-white"
+                  }`}
+                >
+                  <span className="block">{preset.label}</span>
+                  <span className="mt-0.5 block text-[10px] font-normal uppercase tracking-[0.3em] text-slate-400">
+                    {preset.description}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </form>
@@ -503,10 +639,46 @@ function Calculator() {
         <ResultRow label="Expected monthly generation" value={hasInput ? `${generation.toLocaleString()} units` : "—"} />
         <ResultRow label="Roof space required" value={hasInput ? `${roofArea.toLocaleString()} sq.ft` : "—"} />
         <ResultRow label="Estimated monthly savings" value={hasInput ? `₹${Math.round(monthlySavings).toLocaleString()}` : "—"} />
+        <ResultRow
+          label="Effective energy tariff"
+          value={hasInput && effectiveTariff > 0 ? `₹${effectiveTariff.toFixed(2)}/unit` : "—"}
+        />
+        <ResultRow
+          label="DISCOM energy bill"
+          value={hasInput ? `₹${Math.round(energyBill).toLocaleString()}` : "—"}
+        />
         <ResultRow label="Estimated project cost" value={hasInput ? `₹${Math.round(capex).toLocaleString()}` : "—"} />
         <ResultRow label="Simple payback" value={hasInput && payback > 0 ? `${payback.toFixed(1)} years` : "—"} />
         <ResultRow label="Annual CO₂ offset" value={hasInput ? `${co2Offset.toFixed(1)} tonnes` : "—"} />
       </div>
+
+      {hasInput ? (
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Tariff breakdown</p>
+          <h3 className="mt-2 text-lg font-semibold text-white">{tariffLabel}</h3>
+          {tariffDescription ? <p className="mt-1 text-sm text-slate-300/80">{tariffDescription}</p> : null}
+          <ul className="mt-4 space-y-3 text-sm text-slate-200/90">
+            {tariffBreakdown.map((item) => (
+              <li key={item.label} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{item.label}</p>
+                  <p className="mt-1 text-sm text-white">
+                    {item.units.toLocaleString()} units × ₹{item.rate.toFixed(2)}
+                  </p>
+                </div>
+                <span className="text-sm font-semibold text-white">₹{Math.round(item.amount).toLocaleString()}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-4 flex items-center justify-between text-sm font-semibold text-white">
+            <span>Total energy charge</span>
+            <span>₹{Math.round(energyBill).toLocaleString()}</span>
+          </div>
+          <p className="mt-2 text-xs text-slate-400">
+            Fixed charge: ₹{fixedCharge} per kW of connected load (not included in savings).
+          </p>
+        </div>
+      ) : null}
 
       <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/15 via-transparent to-emerald-500/10 p-6">
         <p className="text-xs uppercase tracking-[0.35em] text-emerald-200">Savings projection</p>
