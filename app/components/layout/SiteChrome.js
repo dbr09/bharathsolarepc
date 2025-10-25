@@ -100,22 +100,22 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-3 md:ml-auto md:flex">
-          <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-300/80">
-            <span className="hidden sm:inline-flex items-center gap-2 text-[0.85rem] normal-case tracking-normal text-slate-100">
+          <div className="flex items-center gap-3 rounded-full border border-white/15 bg-slate-950/70 px-5 py-2 text-xs uppercase tracking-[0.3em] text-slate-200/90 shadow-[0_12px_35px_-20px_rgba(15,118,110,0.75)] backdrop-blur">
+            <span className="inline-flex items-center gap-2 text-[0.9rem] normal-case tracking-normal text-white">
               <PhoneIcon className="h-4 w-4 text-emerald-300" />
               <a
                 href="tel:+918977310017"
-                className="font-semibold text-slate-100 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className="font-semibold text-white whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
                 +91 89773 10017
               </a>
             </span>
             <span className="hidden h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.75)] sm:block" aria-hidden />
-            <span className="text-[0.7rem] tracking-[0.42em] text-emerald-200/80">Talk today</span>
+            <span className="text-[0.7rem] tracking-[0.42em] text-emerald-200/90">Talk today</span>
           </div>
           <Link
             href="/contact"
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-5 py-2 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             <span className="relative z-10">Talk to an expert</span>
             <span className="relative z-10 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
