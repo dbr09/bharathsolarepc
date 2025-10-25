@@ -79,13 +79,6 @@ const marqueeItems = [
 
 const LIVE_SNAPSHOT_INTERVAL_MS = 4800;
 
-const caseStudyHighlights = [
-  "Digital twin and ROI model cleared stakeholder reviews in under 4 days",
-  "Night-time crane slots reserved so production stayed online",
-  "Sterile zone cable trays sealed and audited for GMP compliance",
-  "QA punch list resolved stage-by-stage with client sign-off",
-];
-
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -130,7 +123,6 @@ export default function Home() {
       <Hero scrollProgress={scrollProgress} />
       <PartnerMarquee />
       <SectionDirectory scrollProgress={scrollProgress} />
-      <CaseStudySpotlight />
       <PaymentsTeaser />
       <ProjectsHighlightsSection />
       <SiteFooter />
@@ -451,69 +443,6 @@ function PartnerMarquee() {
     </section>
   );
 }
-
-function CaseStudySpotlight() {
-  return (
-    <section className="py-16 sm:py-20 md:py-24">
-      <div className="site-container">
-        <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-gradient-to-br from-white/10 via-slate-900/30 to-slate-950/60 p-6 shadow-[0_55px_140px_-60px_rgba(16,185,129,0.75)] sm:rounded-[36px] sm:p-8 lg:p-10">
-          <div className="pointer-events-none absolute inset-0 border border-white/10" aria-hidden />
-          <div className="pointer-events-none absolute inset-4 rounded-[24px] border border-white/5 opacity-40 sm:inset-6 sm:rounded-[28px]" aria-hidden />
-          <div className="pointer-events-none absolute -right-16 top-6 h-44 w-44 rounded-full bg-emerald-400/20 blur-3xl sm:-right-12 sm:top-10 sm:h-56 sm:w-56 lg:h-64 lg:w-64" aria-hidden />
-          <div className="relative space-y-5 sm:space-y-6">
-            <p className="text-xs uppercase tracking-[0.35em] text-emerald-300/80">Spotlight case study</p>
-            <h2 className="text-3xl font-semibold text-white sm:text-4xl">Pharma campus powering critical loads round the clock</h2>
-            <p className="max-w-2xl text-sm text-slate-200 sm:text-base">
-              A 650 kWp rooftop and carport system for a Hyderabad-based pharmaceutical major integrates rapid shutdown, sterile zone routing and predictive maintenance for zero disruptions.
-            </p>
-            <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
-                <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Capacity</p>
-                <p className="mt-2 text-2xl font-semibold text-white">650 kWp rooftop</p>
-                <p className="text-sm text-emerald-300">+18% yield vs baseline</p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5">
-                <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Carbon savings</p>
-                <p className="mt-2 text-2xl font-semibold text-white">812 tCO₂e</p>
-                <p className="text-sm text-slate-300">Equivalent to 37,000 trees</p>
-              </div>
-            </div>
-            <div className="relative mt-5 overflow-hidden rounded-[24px] border border-white/10 bg-white/5 p-5 sm:rounded-[28px]">
-              <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
-                <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm text-slate-200">
-                  <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Payback</p>
-                  <p className="mt-1 text-xl font-semibold text-white">3.1 years</p>
-                  <p className="text-xs text-emerald-300">Locked financing with SBI</p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm text-slate-200">
-                  <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Availability</p>
-                  <p className="mt-1 text-xl font-semibold text-white">99.4%</p>
-                  <p className="text-xs text-slate-300">24/7 command centre monitoring</p>
-                </div>
-              </div>
-            </div>
-            <div className="space-y-4 rounded-[24px] border border-white/10 bg-slate-950/60 p-5 text-sm text-slate-200 sm:rounded-[28px] sm:p-6">
-              <p className="text-xs uppercase tracking-[0.35em] text-emerald-300/80">Project highlights</p>
-              <ul className="space-y-2.5 text-sm text-slate-200/85">
-                {caseStudyHighlights.map((point) => (
-                  <li key={point} className="flex items-start gap-3">
-                    <span className="mt-1 inline-flex h-2 w-2 rounded-full bg-emerald-300" aria-hidden />
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="rounded-2xl border border-white/10 bg-slate-900/50 p-5 text-sm text-slate-200">
-                <p className="font-semibold text-white">“Commissioned in 41 days with zero downtime”</p>
-                <p className="mt-2 text-sm text-slate-300">Facilities Head, Medlife Pharmaceuticals</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 
 function PaymentsTeaser() {
   const [hovered, setHovered] = useState(false);
