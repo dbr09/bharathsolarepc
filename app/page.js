@@ -656,7 +656,7 @@ function CaseStudySpotlight() {
               <span className="text-xs text-slate-400">{`${activeIndex + 1}/${caseStudyMilestones.length}`}</span>
             </div>
           </div>
-          <div className="relative mt-2 flex flex-col gap-4 sm:gap-5">
+          <div className="relative mt-2 flex flex-col gap-3 sm:gap-4">
             <div className="absolute left-[10px] top-3 bottom-3 w-px bg-gradient-to-b from-emerald-400/60 via-sky-400/40 to-transparent" aria-hidden />
             {caseStudyMilestones.map((milestone, index) => {
               const isActive = index === activeIndex;
@@ -668,7 +668,7 @@ function CaseStudySpotlight() {
                   onFocus={() => handleActivate(index, true)}
                   onClick={() => handleActivate(index, true)}
                   onKeyDown={(event) => handleMilestoneKeyDown(event, index)}
-                  className={`relative overflow-hidden rounded-2xl border p-4 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:p-5 ${statusStyles[milestone.status]} ${isActive ? "shadow-[0_25px_60px_-35px_rgba(56,189,248,0.65)]" : ""}`}
+                  className={`relative overflow-hidden rounded-2xl border p-3 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:p-4 ${statusStyles[milestone.status]} ${isActive ? "shadow-[0_25px_60px_-35px_rgba(56,189,248,0.65)]" : ""}`}
                   aria-pressed={isActive}
                 >
                   <span
@@ -678,11 +678,11 @@ function CaseStudySpotlight() {
                   {isActive ? (
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-400/15 via-sky-400/15 to-transparent opacity-90" aria-hidden />
                   ) : null}
-                  <div className="relative flex items-center justify-between gap-3">
+                  <div className="relative flex items-center justify-between gap-2.5">
                     <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-100 sm:text-sm">{milestone.label}</p>
-                    <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-200/80">{milestone.duration}</span>
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-200/80">{milestone.duration}</span>
                   </div>
-                  <p className="relative mt-2 text-sm leading-relaxed text-slate-100/90">{milestone.detail}</p>
+                  <p className="relative mt-1.5 text-sm leading-relaxed text-slate-100/90">{milestone.detail}</p>
                   {isActive ? (
                     <div className="relative mt-4 h-1 overflow-hidden rounded-full bg-white/10">
                       <div

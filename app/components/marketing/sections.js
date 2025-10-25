@@ -893,7 +893,7 @@ export function SolutionsSection() {
               </div>
             </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
             {solutions.map((solution, index) => {
               const isActive = index === activeIndex;
               return (
@@ -903,7 +903,7 @@ export function SolutionsSection() {
                   onMouseEnter={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
                   onClick={() => setActiveIndex(index)}
-                  className={`group relative overflow-hidden rounded-3xl border px-6 py-6 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                  className={`group relative overflow-hidden rounded-3xl border px-5 py-4 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                     isActive
                       ? "border-white/40 bg-white/10 shadow-[0_30px_80px_-50px_rgba(245,158,11,0.65)]"
                       : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
@@ -916,25 +916,25 @@ export function SolutionsSection() {
                       isActive ? "opacity-70" : "group-hover:opacity-40"
                     }`}
                   />
-                  <div className="relative z-10 space-y-4">
-                    <div className="flex items-center justify-between gap-4">
-                      <span className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[#F16921]/15 text-[#F16921]">
+                  <div className="relative z-10 space-y-3">
+                    <div className="flex items-center justify-between gap-3.5">
+                      <span className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-[#F16921]/15 text-[#F16921]">
                         <solution.icon className="h-5 w-5" />
                       </span>
                       <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">{solution.stats[0].label}</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white">{solution.name}</h3>
-                      <p className="mt-3 text-sm leading-relaxed text-slate-200/90">{solution.summary}</p>
+                      <h3 className="text-base font-semibold text-white">{solution.name}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-200/90">{solution.summary}</p>
                     </div>
-                    <ul className="space-y-2 text-xs text-slate-200/80">
+                    <ul className="space-y-1.5 text-xs text-slate-200/80">
                       {solution.bullets.map((bullet) => (
                         <li key={bullet} className="flex items-start gap-2">
                           <CheckIcon className="mt-1 h-3.5 w-3.5 text-[#147B3E]" /> {bullet}
                         </li>
                       ))}
                     </ul>
-                    <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
+                    <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-400">
                       <span>Tap to compare</span>
                       <ArrowIcon className="h-4 w-4" />
                     </div>
@@ -1054,7 +1054,7 @@ export function ProjectsHighlightsSection() {
               />
             </div>
           </article>
-          <div className="grid gap-4">
+          <div className="grid gap-3.5">
             {caseStudies.map((item, index) => {
               const isActive = index === activeIndex;
               return (
@@ -1064,7 +1064,7 @@ export function ProjectsHighlightsSection() {
                   onMouseEnter={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
                   onClick={() => setActiveIndex(index)}
-                  className={`group relative flex w-full flex-col rounded-3xl border px-6 py-5 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                  className={`group relative flex w-full flex-col rounded-3xl border px-5 py-4 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                     isActive
                       ? "border-white/40 bg-white/10 shadow-[0_25px_80px_-55px_rgba(6,182,212,0.55)]"
                       : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
@@ -1082,8 +1082,8 @@ export function ProjectsHighlightsSection() {
                       {index + 1}
                     </span>
                   </div>
-                  <p className="mt-3 text-xs leading-relaxed text-slate-200/80">{item.detail}</p>
-                  <span className="mt-4 inline-flex items-center text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">
+                  <p className="mt-2.5 text-xs leading-relaxed text-slate-200/80">{item.detail}</p>
+                  <span className="mt-3 inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
                     Review spotlight <ArrowIcon className="ml-2 h-3.5 w-3.5" />
                   </span>
                 </button>
