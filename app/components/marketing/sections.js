@@ -329,26 +329,19 @@ const tariffStructures = {
         maxUnits: 100,
         fixedCharge: 10,
         slabs: [
-          { upto: 50, rate: 3.1, label: "0-50 units" },
-          { upto: 100, rate: 4.9, label: "51-100 units" },
-        ],
-      },
-      {
-        maxUnits: 200,
-        fixedCharge: 30,
-        slabs: [
-          { upto: 100, rate: 5.1, label: "0-100 units" },
-          { upto: 200, rate: 7.2, label: "101-200 units" },
+          { upto: 50, rate: 3, label: "0-50 units" },
+          { upto: 100, rate: 3.1, label: "51-100 units" },
         ],
       },
       {
         maxUnits: Infinity,
-        fixedCharge: 50,
+        fixedCharge: 60,
         slabs: [
-          { upto: 100, rate: 6.8, label: "0-100 units" },
-          { upto: 200, rate: 8.2, label: "101-200 units" },
-          { upto: 300, rate: 9.5, label: "201-300 units" },
-          { upto: Infinity, rate: 10, label: "Above 300 units" },
+          { upto: 100, rate: 3.1, label: "0-100 units" },
+          { upto: 200, rate: 4.5, label: "101-200 units" },
+          { upto: 300, rate: 6, label: "201-300 units" },
+          { upto: 400, rate: 6.9, label: "301-400 units" },
+          { upto: Infinity, rate: 7.3, label: "Above 400 units" },
         ],
       },
     ],
@@ -360,14 +353,38 @@ const tariffStructures = {
       {
         maxUnits: 50,
         fixedCharge: 70,
-        slabs: [{ upto: 50, rate: 7, label: "0-50 units" }],
+        slabs: [{ upto: 50, rate: 7.5, label: "0-50 units" }],
+      },
+      {
+        maxUnits: 100,
+        fixedCharge: 80,
+        slabs: [{ upto: 100, rate: 8.5, label: "0-100 units" }],
+      },
+      {
+        maxUnits: 300,
+        fixedCharge: 85,
+        slabs: [
+          { upto: 100, rate: 8.5, label: "0-100 units" },
+          { upto: 300, rate: 9, label: "101-300 units" },
+        ],
+      },
+      {
+        maxUnits: 500,
+        fixedCharge: 90,
+        slabs: [
+          { upto: 100, rate: 8.5, label: "0-100 units" },
+          { upto: 300, rate: 9, label: "101-300 units" },
+          { upto: 500, rate: 9.5, label: "301-500 units" },
+        ],
       },
       {
         maxUnits: Infinity,
-        fixedCharge: 90,
+        fixedCharge: 95,
         slabs: [
-          { upto: 50, rate: 8.5, label: "0-50 units" },
-          { upto: Infinity, rate: 9.5, label: "Above 50 units" },
+          { upto: 100, rate: 8.5, label: "0-100 units" },
+          { upto: 300, rate: 9, label: "101-300 units" },
+          { upto: 500, rate: 9.5, label: "301-500 units" },
+          { upto: Infinity, rate: 10, label: "Above 500 units" },
         ],
       },
     ],
@@ -379,7 +396,7 @@ const tariffStructures = {
       {
         maxUnits: Infinity,
         fixedCharge: 125,
-        slabs: [{ upto: Infinity, rate: 15, label: "All units" }],
+        slabs: [{ upto: Infinity, rate: 12, label: "All units" }],
       },
     ],
   },
