@@ -309,34 +309,12 @@ export function ValueHighlightsSection() {
 
 export function CalculatorSection() {
   return (
-    <section className="relative py-16 md:py-20">
-      <div className="site-container">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="space-y-6">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Plan your plant</p>
-              <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Solar sizing calculator</h2>
-              <p className="mt-4 text-base leading-relaxed text-slate-200/90">
-                1 kW of rooftop solar in Telangana generates about <strong>150 units</strong> per month. Dial in your consumption profile and tariff band to instantly view the ideal system size, investment and payback.
-              </p>
-            </div>
-            <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-6 shadow-inner">
-              <p className="text-xs uppercase tracking-[0.35em] text-slate-400">How to use</p>
-              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-slate-200/90">
-                <li className="flex items-start gap-3">
-                  <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Start with a quick preset or drag the sliders to match your monthly bill and tariff slab.
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Review instant projections for capacity, capex, payback and long-term CO₂ savings.
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Share the results with us to receive a site-specific layout, shading analysis and financing options.
-                </li>
-              </ul>
-            </div>
-          </div>
-          <Calculator />
-        </div>
+    <section className="relative py-14 md:py-20">
+      <div className="site-container space-y-6">
+        <Calculator />
+        <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
+          Estimates assume 150 units per kW and Telangana irradiance averages.
+        </p>
       </div>
     </section>
   );
@@ -471,99 +449,94 @@ function Calculator() {
   const [unitsMonth, setUnitsMonth] = useState("600");
   const [tariff, setTariff] = useState("domestic");
 
-  const unitPresets = [
-    { label: "2 BHK apartment", value: 300 },
-    { label: "3 BHK / villa", value: 600 },
-    { label: "Small business", value: 1200 },
-    { label: "Manufacturing shed", value: 2500 },
+  const tariffOptions = useMemo(
+    () =>
+      Object.entries(tariffStructures).map(([value, details]) => ({
+        value,
+        label: details.label,
+        description: details.description,
+      })),
+    [],
+  );
+
+  const { kwRounded, generation, roofArea, monthlySavings, capex, payback, effectiveTariff, hasInput } = useMemo(() => {
+    const units = Number.parseFloat(unitsMonth) || 0;
+    const unitsPerKwMonth = 150;
+    const roofSqftPerKw = 100;
+    const capexPerKw = 55000;
+
+    const kw = units > 0 ? units / unitsPerKwMonth : 0;
+    const kwRoundedValue = kw > 0 ? Math.max(1, Math.round(kw * 10) / 10) : 0;
+    const generationValue = kwRoundedValue * unitsPerKwMonth;
+    const roof = kwRoundedValue * roofSqftPerKw;
+    const { effectiveRate } = calculateTariff(units, tariff);
+    const savings = Math.min(units, generationValue) * effectiveRate;
+    const capexValue = kwRoundedValue * capexPerKw;
+    const annualSavings = savings * 12;
+    const paybackValue = savings > 0 ? capexValue / annualSavings : 0;
+
+    return {
+      kwRounded: kwRoundedValue,
+      generation: generationValue,
+      roofArea: roof,
+      monthlySavings: savings,
+      capex: capexValue,
+      payback: paybackValue,
+      effectiveTariff: effectiveRate,
+      hasInput: units > 0,
+    };
+  }, [tariff, unitsMonth]);
+
+  const activeTariff = tariffOptions.find((option) => option.value === tariff);
+
+  const summaryStats = [
+    {
+      label: "System size",
+      value: hasInput ? `${kwRounded.toFixed(1)} kW` : "—",
+      helper: "Recommended plant capacity",
+    },
+    {
+      label: "Monthly generation",
+      value: hasInput ? `${generation.toLocaleString()} units` : "—",
+      helper: "Energy produced at site",
+    },
+    {
+      label: "Monthly savings",
+      value: hasInput ? `₹${Math.round(monthlySavings).toLocaleString()}` : "—",
+      helper:
+        hasInput && effectiveTariff > 0
+          ? `At ₹${effectiveTariff.toFixed(2)}/unit tariff`
+          : "Based on TSNPDCL slabs",
+    },
+    {
+      label: "Project cost",
+      value: hasInput ? `₹${Math.round(capex).toLocaleString()}` : "—",
+      helper: "Turnkey EPC estimate",
+    },
+    {
+      label: "Simple payback",
+      value: hasInput && payback > 0 ? `${payback.toFixed(1)} years` : "—",
+      helper: "Time to recover investment",
+    },
+    {
+      label: "Roof space",
+      value: hasInput ? `${roofArea.toLocaleString()} sq.ft` : "—",
+      helper: "Usable shadow-free area",
+    },
   ];
 
-  const tariffPresets = Object.entries(tariffStructures).map(([value, details]) => ({
-    value,
-    label: details.label,
-    description: details.description,
-  }));
-
-  const {
-    kwRounded,
-    generation,
-    roofArea,
-    monthlySavings,
-    annualSavings,
-    capex,
-    payback,
-    co2Offset,
-    projections,
-    hasInput,
-    effectiveTariff,
-    energyBill,
-    tariffBreakdown,
-    fixedCharge,
-    tariffLabel,
-    tariffDescription,
-  } =
-    useMemo(() => {
-      const units = Number.parseFloat(unitsMonth) || 0;
-      const unitsPerKwMonth = 150;
-      const roofSqftPerKw = 100;
-      const capexPerKw = 55000;
-
-      const kw = units > 0 ? units / unitsPerKwMonth : 0;
-      const kwRoundedValue = kw > 0 ? Math.max(1, Math.round(kw * 10) / 10) : 0;
-      const generationValue = kwRoundedValue * unitsPerKwMonth;
-      const roof = kwRoundedValue * roofSqftPerKw;
-      const {
-        effectiveRate,
-        totalCharge,
-        breakdown,
-        fixedCharge: monthlyFixedCharge,
-        label,
-        description,
-      } = calculateTariff(units, tariff);
-      const savings = Math.min(units, generationValue) * effectiveRate;
-      const annualSavingsValue = savings * 12;
-      const capexValue = kwRoundedValue * capexPerKw;
-      const paybackValue = savings > 0 ? capexValue / annualSavingsValue : 0;
-      const co2Annual = (Math.min(units, generationValue) * 0.82 * 12) / 1000;
-
-      const projectionYears = [1, 5, 10];
-      const maxProjection = Math.max(...projectionYears.map((year) => annualSavingsValue * year), 0);
-      const projectionData = projectionYears.map((year) => {
-        const total = annualSavingsValue * year;
-        return {
-          label: `${year} yr${year > 1 ? "s" : ""}`,
-          savings: total,
-          co2: co2Annual * year,
-          progress: maxProjection > 0 ? Math.round((total / maxProjection) * 100) : 0,
-        };
-      });
-
-      return {
-        kwRounded: kwRoundedValue,
-        generation: generationValue,
-        roofArea: roof,
-        monthlySavings: savings,
-        annualSavings: annualSavingsValue,
-        capex: capexValue,
-        payback: paybackValue,
-        co2Offset: co2Annual,
-        projections: projectionData,
-        hasInput: units > 0,
-        effectiveTariff: effectiveRate,
-        energyBill: totalCharge,
-        tariffBreakdown: breakdown,
-        fixedCharge: monthlyFixedCharge,
-        tariffLabel: label,
-        tariffDescription: description,
-      };
-    }, [tariff, unitsMonth]);
-
-  const unitsValue = Number.parseFloat(unitsMonth) || 0;
-
   return (
-    <div className="space-y-6 rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_40px_110px_-55px_rgba(16,185,129,0.65)] backdrop-blur-xl">
-      <form className="space-y-5">
-        <div>
+    <div className="rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_40px_110px_-55px_rgba(16,185,129,0.65)] backdrop-blur-xl">
+      <div className="space-y-3">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Plan your plant</p>
+        <h2 className="text-3xl font-bold text-white sm:text-4xl">Solar sizing calculator</h2>
+        <p className="text-sm leading-relaxed text-slate-200/90">
+          Enter your monthly electricity usage to view the ideal system size, budget and payback for your property.
+        </p>
+      </div>
+
+      <form className="mt-6 grid gap-6 lg:grid-cols-2">
+        <div className="space-y-2">
           <label htmlFor="units" className="text-sm font-semibold text-slate-200">
             Monthly electricity usage (units)
           </label>
@@ -573,144 +546,52 @@ function Calculator() {
             inputMode="numeric"
             value={unitsMonth}
             onChange={(event) => setUnitsMonth(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+            className="w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+            placeholder="e.g. 850"
+            min={0}
           />
-          <input
-            type="range"
-            min="100"
-            max="6000"
-            step="50"
-            value={Math.min(Math.max(unitsValue, 0), 6000)}
-            onChange={(event) => setUnitsMonth(event.target.value)}
-            className="mt-4 w-full accent-emerald-400"
-            aria-label="Monthly electricity usage slider"
-          />
-          <div className="mt-2 flex justify-between text-[10px] uppercase tracking-[0.3em] text-slate-500">
-            <span>100 units</span>
-            <span>6000 units</span>
-          </div>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {unitPresets.map((preset) => (
-              <button
-                key={preset.label}
-                type="button"
-                onClick={() => setUnitsMonth(String(preset.value))}
-                className={`rounded-full border px-3 py-1 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                  unitsValue === preset.value
-                    ? "border-emerald-300 bg-emerald-500/20 text-emerald-100"
-                    : "border-white/10 bg-transparent text-slate-300 hover:border-white/20 hover:text-white"
-                }`}
-              >
-                {preset.label}
-              </button>
-            ))}
-          </div>
         </div>
-        <div>
-          <span className="text-sm font-semibold text-slate-200">Tariff category</span>
-          <p className="mt-2 text-xs text-slate-400">Rates per TSNPDCL schedule effective 1 Nov 2024.</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {tariffPresets.map((preset) => {
-              const isActive = tariff === preset.value;
-              return (
-                <button
-                  key={preset.value}
-                  type="button"
-                  onClick={() => setTariff(preset.value)}
-                  className={`rounded-full border px-3 py-1 text-left text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                    isActive
-                      ? "border-emerald-300 bg-emerald-500/20 text-emerald-100"
-                      : "border-white/10 bg-transparent text-slate-300 hover:border-white/20 hover:text-white"
-                  }`}
-                >
-                  <span className="block">{preset.label}</span>
-                  <span className="mt-0.5 block text-[10px] font-normal uppercase tracking-[0.3em] text-slate-400">
-                    {preset.description}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+        <div className="space-y-2">
+          <label htmlFor="tariff" className="text-sm font-semibold text-slate-200">
+            Tariff category
+          </label>
+          <select
+            id="tariff"
+            value={tariff}
+            onChange={(event) => setTariff(event.target.value)}
+            className="w-full appearance-none rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-base text-white focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+          >
+            {tariffOptions.map((option) => (
+              <option key={option.value} value={option.value} className="bg-slate-900 text-white">
+                {option.label}
+              </option>
+            ))}
+          </select>
+          {activeTariff?.description ? (
+            <p className="text-xs text-slate-400">{activeTariff.description}</p>
+          ) : null}
         </div>
       </form>
 
-      <div className="space-y-4">
-        <ResultRow label="Recommended system size" value={hasInput ? `${kwRounded.toFixed(1)} kW` : "—"} />
-        <ResultRow label="Expected monthly generation" value={hasInput ? `${generation.toLocaleString()} units` : "—"} />
-        <ResultRow label="Roof space required" value={hasInput ? `${roofArea.toLocaleString()} sq.ft` : "—"} />
-        <ResultRow label="Estimated monthly savings" value={hasInput ? `₹${Math.round(monthlySavings).toLocaleString()}` : "—"} />
-        <ResultRow
-          label="Effective energy tariff"
-          value={hasInput && effectiveTariff > 0 ? `₹${effectiveTariff.toFixed(2)}/unit` : "—"}
-        />
-        <ResultRow
-          label="DISCOM energy bill"
-          value={hasInput ? `₹${Math.round(energyBill).toLocaleString()}` : "—"}
-        />
-        <ResultRow label="Estimated project cost" value={hasInput ? `₹${Math.round(capex).toLocaleString()}` : "—"} />
-        <ResultRow label="Simple payback" value={hasInput && payback > 0 ? `${payback.toFixed(1)} years` : "—"} />
-        <ResultRow label="Annual CO₂ offset" value={hasInput ? `${co2Offset.toFixed(1)} tonnes` : "—"} />
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {summaryStats.map((stat) => (
+          <SummaryStat key={stat.label} {...stat} />
+        ))}
       </div>
 
-      {hasInput ? (
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-          <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Tariff breakdown</p>
-          <h3 className="mt-2 text-lg font-semibold text-white">{tariffLabel}</h3>
-          {tariffDescription ? <p className="mt-1 text-sm text-slate-300/80">{tariffDescription}</p> : null}
-          <ul className="mt-4 space-y-3 text-sm text-slate-200/90">
-            {tariffBreakdown.map((item) => (
-              <li key={item.label} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{item.label}</p>
-                  <p className="mt-1 text-sm text-white">
-                    {item.units.toLocaleString()} units × ₹{item.rate.toFixed(2)}
-                  </p>
-                </div>
-                <span className="text-sm font-semibold text-white">₹{Math.round(item.amount).toLocaleString()}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-4 flex items-center justify-between text-sm font-semibold text-white">
-            <span>Total energy charge</span>
-            <span>₹{Math.round(energyBill).toLocaleString()}</span>
-          </div>
-          <p className="mt-2 text-xs text-slate-400">
-            Fixed charge: ₹{fixedCharge} per kW of connected load (not included in savings).
-          </p>
-        </div>
-      ) : null}
-
-      <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/15 via-transparent to-emerald-500/10 p-6">
-        <p className="text-xs uppercase tracking-[0.35em] text-emerald-200">Savings projection</p>
-        <div className="mt-5 grid gap-4 sm:grid-cols-3">
-          {projections.map((projection) => (
-            <div key={projection.label} className="rounded-2xl border border-white/10 bg-white/5 p-4 text-slate-200">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{projection.label}</p>
-              <div className="relative mt-4 h-20 overflow-hidden rounded-2xl bg-white/5">
-                <div
-                  className="absolute inset-x-1 bottom-1 rounded-t-2xl bg-gradient-to-t from-emerald-400/80 via-emerald-300/40 to-transparent"
-                  style={{ height: `${projection.progress}%` }}
-                />
-              </div>
-              <p className="mt-4 text-sm font-semibold text-white">
-                {hasInput ? `₹${Math.round(projection.savings).toLocaleString()}` : "—"}
-              </p>
-              <p className="text-xs text-emerald-200/80">
-                {hasInput ? `${projection.co2.toFixed(1)} t CO₂ avoided` : "Adjust inputs to view impact"}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <p className="mt-6 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200/90">
+        Share your latest bill and roof details with our team to receive a detailed design and commercial proposal.
+      </p>
     </div>
   );
 }
 
-function ResultRow({ label, value }) {
+function SummaryStat({ label, value, helper }) {
   return (
-    <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-center">
-      <span className="text-slate-300/80">{label}</span>
-      <span className="font-semibold text-white">{value}</span>
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+      <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{label}</p>
+      <p className="mt-3 text-lg font-semibold text-white">{value}</p>
+      {helper ? <p className="mt-1 text-xs text-slate-400/80">{helper}</p> : null}
     </div>
   );
 }
