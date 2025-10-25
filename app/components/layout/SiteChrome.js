@@ -104,14 +104,17 @@ export function SiteHeader() {
         />
       </div>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 text-slate-100">
-        <Link href="/" className="relative flex items-center gap-3">
-          <span className="glow-border relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(15,118,110,0.45)] ring-1 ring-white/30">
-            <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
+        <Link href="/" className="relative flex items-center">
+          <span className="relative block h-10 w-[148px] sm:h-12 sm:w-[196px]">
+            <Image
+              src="/logo.png"
+              alt="Bharath Solar EPC"
+              fill
+              className="object-contain"
+              priority
+              sizes="(min-width: 768px) 196px, 148px"
+            />
           </span>
-          <div className="hidden sm:block">
-            <p className="text-xs font-semibold uppercase tracking-[0.32em] text-slate-300/90">Bharath Solar EPC</p>
-            <p className="mt-1 hidden text-sm text-slate-300 sm:block">Clean energy architecture for industries, institutions & homes</p>
-          </div>
         </Link>
 
         <nav className="hidden items-center gap-3 md:flex">
