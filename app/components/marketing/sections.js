@@ -459,67 +459,27 @@ function Calculator() {
     [],
   );
 
-  const {
-    kwRounded,
-    generation,
-    roofArea,
-    monthlySavings,
-    annualSavings,
-    lifetimeSavings,
-    capex,
-    payback,
-    effectiveTariff,
-    slabBreakdown,
-    fixedCharge,
-    monthlyBill,
-    postSolarBill,
-    solarContribution,
-    carbonOffset,
-    simpleReturn,
-    hasInput,
-  } = useMemo(() => {
+  const { kwRounded, generation, roofArea, slabBreakdown, fixedCharge, monthlyBill, carbonOffset, hasInput } = useMemo(() => {
     const units = Number.parseFloat(unitsMonth) || 0;
     const unitsPerKwMonth = 150;
     const roofSqftPerKw = 100;
-    const capexPerKw = 55000;
-    
+
     const kw = units > 0 ? units / unitsPerKwMonth : 0;
     const kwRoundedValue = kw > 0 ? Math.max(1, Math.round(kw * 10) / 10) : 0;
     const generationValue = kwRoundedValue * unitsPerKwMonth;
     const roof = kwRoundedValue * roofSqftPerKw;
-    const { effectiveRate, breakdown, fixedCharge: tierFixedCharge, totalCharge } = calculateTariff(units, tariff);
-    const slabUnitsCovered = Math.min(units, generationValue);
+    const { breakdown, fixedCharge: tierFixedCharge, totalCharge } = calculateTariff(units, tariff);
     const monthlyBillValue = totalCharge + tierFixedCharge;
-    const postSolarUnits = Math.max(units - generationValue, 0);
-    const postSolarCharge = postSolarUnits * effectiveRate;
-    const postSolarBillValue = postSolarCharge + tierFixedCharge;
-    const savings = monthlyBillValue - postSolarBillValue;
-    const capexValue = kwRoundedValue * capexPerKw;
-    const annualSavings = savings * 12;
-    const paybackValue = savings > 0 ? capexValue / annualSavings : 0;
-    const lifetimeYears = 25;
-    const lifetimeSavingsValue = annualSavings * lifetimeYears;
-    const solarContributionValue = units > 0 ? (slabUnitsCovered / units) * 100 : 0;
     const carbonOffsetValue = generationValue * 12 * 0.82 * 0.001; // tonnes of CO₂ avoided annually
-    const simpleReturnValue = capexValue > 0 ? (annualSavings / capexValue) * 100 : 0;
 
     return {
       kwRounded: kwRoundedValue,
       generation: generationValue,
       roofArea: roof,
-      monthlySavings: savings,
-      annualSavings,
-      lifetimeSavings: lifetimeSavingsValue,
-      capex: capexValue,
-      payback: paybackValue,
-      effectiveTariff: effectiveRate,
       slabBreakdown: breakdown,
       fixedCharge: tierFixedCharge,
       monthlyBill: monthlyBillValue,
-      postSolarBill: postSolarBillValue,
-      solarContribution: solarContributionValue,
       carbonOffset: carbonOffsetValue,
-      simpleReturn: simpleReturnValue,
       hasInput: units > 0,
     };
   }, [tariff, unitsMonth]);
@@ -533,73 +493,19 @@ function Calculator() {
       helper: "Recommended plant capacity",
     },
     {
-      label: "Monthly generation",
-      value: hasInput ? `${generation.toLocaleString()} units` : "—",
-      helper: "Energy produced at site",
-    },
-    {
-      label: "Monthly savings",
-      value: hasInput ? `₹${Math.round(monthlySavings).toLocaleString()}` : "—",
-      helper:
-        hasInput && effectiveTariff > 0
-          ? `At ₹${effectiveTariff.toFixed(2)}/unit tariff`
-          : "Based on TSNPDCL slabs",
-    },
-    {
-      label: "Project cost",
-      value: hasInput ? `₹${Math.round(capex).toLocaleString()}` : "—",
-      helper: "Turnkey EPC estimate",
-    },
-    {
-      label: "Simple payback",
-      value: hasInput && payback > 0 ? `${payback.toFixed(1)} years` : "—",
-      helper: "Time to recover investment",
-    },
-    {
       label: "Roof space",
       value: hasInput ? `${roofArea.toLocaleString()} sq.ft` : "—",
       helper: "Usable shadow-free area",
     },
-  ];
-
-  const billStats = [
     {
-      label: "Current DISCOM bill",
-      value: hasInput ? `₹${Math.round(monthlyBill).toLocaleString()}` : "—",
-      helper: hasInput ? `Includes ₹${Math.round(fixedCharge).toLocaleString()}/month fixed charges` : undefined,
-    },
-    {
-      label: "Post-solar bill",
-      value: hasInput ? `₹${Math.max(0, Math.round(postSolarBill)).toLocaleString()}` : "—",
-      helper: hasInput ? "After solar generation offsets your usage" : undefined,
-    },
-    {
-      label: "Solar contribution",
-      value: hasInput ? `${Math.min(100, solarContribution).toFixed(0)}%` : "—",
-      helper: "Share of your monthly units covered",
-    },
-  ];
-
-  const outlookStats = [
-    {
-      label: "Annual savings",
-      value: hasInput ? `₹${Math.round(annualSavings).toLocaleString()}` : "—",
-      helper: "12-month reduction in power bills",
-    },
-    {
-      label: "25-yr savings",
-      value: hasInput ? `₹${Math.round(lifetimeSavings).toLocaleString()}` : "—",
-      helper: "Assuming 25-year asset life",
+      label: "Monthly generation",
+      value: hasInput ? `${generation.toLocaleString()} units` : "—",
+      helper: "Energy produced by the plant",
     },
     {
       label: "Annual CO₂ offset",
       value: hasInput ? `${carbonOffset.toFixed(1)} tonnes` : "—",
       helper: "Based on 0.82 kg/unit grid factor",
-    },
-    {
-      label: "Simple return",
-      value: hasInput && simpleReturn > 0 ? `${simpleReturn.toFixed(0)}%` : "—",
-      helper: "Annual savings ÷ project cost",
     },
   ];
 
@@ -609,7 +515,8 @@ function Calculator() {
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Plan your plant</p>
         <h2 className="text-3xl font-bold text-white sm:text-4xl">Solar sizing calculator</h2>
         <p className="text-sm leading-relaxed text-slate-200/90">
-          Enter your monthly electricity usage to view the ideal system size, budget and payback for your property.
+          Enter your monthly electricity usage to view the right system size, roof space required, expected generation and CO₂
+          savings.
         </p>
       </div>
 
@@ -651,20 +558,8 @@ function Calculator() {
         </div>
       </form>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {summaryStats.map((stat) => (
-          <SummaryStat key={stat.label} {...stat} />
-        ))}
-      </div>
-
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {billStats.map((stat) => (
-          <SummaryStat key={stat.label} {...stat} />
-        ))}
-      </div>
-
       <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {outlookStats.map((stat) => (
+        {summaryStats.map((stat) => (
           <SummaryStat key={stat.label} {...stat} />
         ))}
       </div>
