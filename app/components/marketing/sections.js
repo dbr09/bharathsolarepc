@@ -344,23 +344,12 @@ const tariffStructures = {
     electricityDutyRate: 0,
     tiers: [
       {
-        maxUnits: 100,
-        fixedCharge: 0,
-        label: "LT Cat-I(A) Domestic (≤100 units)",
-        description: "Applicable when monthly usage stays within 0-100 units",
-        slabs: [
-          { upto: 50, rate: 1.95, label: "0-50 units" },
-          { upto: 100, rate: 3.05, label: "51-100 units" },
-        ],
-      },
-      {
         maxUnits: 200,
         fixedCharge: 10,
-        label: "LT Cat-I(B)(i) Domestic (101-200 units)",
-        description: "Applies to domestic connections consuming 101-200 units",
+        label: "LT Cat-I(B)(i) Domestic (0-200 units)",
+        description: "Applies to domestic connections consuming up to 200 units",
         slabs: [
-          { upto: 100, rate: 3.4, label: "0-100 units" },
-          { upto: 200, rate: 4.8, label: "101-200 units" },
+          { upto: 200, rate: 5.1, label: "0-200 units" },
         ],
       },
       {
@@ -370,9 +359,9 @@ const tariffStructures = {
         description: "Charged when monthly usage exceeds 200 units",
         slabs: [
           { upto: 200, rate: 5.1, label: "0-200 units" },
-          { upto: 300, rate: 7.2, label: "201-300 units" },
-          { upto: 400, rate: 8.5, label: "301-400 units" },
-          { upto: 800, rate: 10, label: "401-800 units" },
+          { upto: 300, rate: 7.7, label: "201-300 units" },
+          { upto: 400, rate: 9, label: "301-400 units" },
+          { upto: 800, rate: 9.5, label: "401-800 units" },
           { upto: Infinity, rate: 10, label: "Above 800 units" },
         ],
       },
