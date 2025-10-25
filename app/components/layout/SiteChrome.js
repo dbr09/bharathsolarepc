@@ -57,8 +57,11 @@ export function SiteHeader() {
           : "border-transparent"
       }`}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/70 to-slate-950/35 opacity-95 transition-opacity duration-500 group-hover:opacity-100" aria-hidden />
-      <div className="absolute inset-x-0 top-0 h-0.5 overflow-hidden bg-white/10" aria-hidden>
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/70 to-slate-950/35 opacity-95 transition-opacity duration-500 group-hover:opacity-100"
+        aria-hidden
+      />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-0.5 overflow-hidden bg-white/10" aria-hidden>
         <span
           className="block h-full origin-left bg-gradient-to-r from-emerald-400 via-sky-400 to-amber-300 transition-transform duration-500"
           style={{ transform: `scaleX(${Math.max(progress, 0.03)})` }}
@@ -178,7 +181,7 @@ export function SiteHeader() {
         </div>
       )}
 
-      <div className="absolute bottom-0 left-0 h-[1.5px] w-full overflow-hidden" aria-hidden>
+      <div className="pointer-events-none absolute bottom-0 left-0 h-[1.5px] w-full overflow-hidden" aria-hidden>
         <span
           className="block h-full origin-left scale-x-0 bg-gradient-to-r from-emerald-400 via-sky-400 to-amber-400 transition-transform duration-500"
           style={{ transform: `scaleX(${Math.max(progress, 0)})` }}
