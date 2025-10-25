@@ -64,7 +64,7 @@ export function SiteHeader() {
           style={{ transform: `scaleX(${Math.max(progress, 0.03)})` }}
         />
       </div>
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 text-slate-100">
+      <div className="flex w-full max-w-7xl items-center gap-6 px-6 py-4 text-slate-100">
         <Link href="/" className="relative flex items-center gap-3">
           <span className="glow-border relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(15,118,110,0.45)] ring-1 ring-white/30">
             <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
@@ -75,7 +75,7 @@ export function SiteHeader() {
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-3 md:flex">
+        <nav className="hidden items-center gap-3 md:ml-8 md:flex">
           {navLinks.map((item) => {
             const isActive =
               pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
@@ -99,7 +99,7 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 md:ml-auto md:flex">
           <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-300/80">
             <span className="hidden sm:inline-flex items-center gap-2 text-[0.85rem] normal-case tracking-normal text-slate-100">
               <PhoneIcon className="h-4 w-4 text-emerald-300" />
@@ -128,7 +128,7 @@ export function SiteHeader() {
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-100 transition hover:border-white/20 hover:bg-white/10 md:hidden"
+          className="ml-auto inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-100 transition hover:border-white/20 hover:bg-white/10 md:hidden"
           aria-label="Toggle navigation"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
