@@ -407,12 +407,6 @@ function Hero({ scrollProgress }) {
                 ))}
               </ul>
             </div>
-            <div
-              className="pointer-events-none absolute -right-12 -top-12 hidden h-32 w-32 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl sm:block"
-              style={{ transform: `translate3d(${floatingShiftX * 0.25}px, ${floatingShiftY * 0.25}px, 0)` }}
-            >
-              <Image src="/globe.svg" alt="Solar network" fill className="p-6 opacity-80" />
-            </div>
             <div className="pointer-events-none absolute -left-10 bottom-12 hidden h-24 w-24 rounded-full bg-emerald-400/20 blur-3xl sm:block" aria-hidden />
           </div>
         </div>
