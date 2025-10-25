@@ -160,10 +160,10 @@ export function SiteHeader() {
           </div>
           <Link
             href="/contact"
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
-            <span className="relative z-10">Talk to an expert</span>
-            <span className="relative z-10 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
+            <span className="relative z-10 whitespace-nowrap">Talk to an expert</span>
+            <span className="relative z-10 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/20">
               <ArrowIcon className="h-3 w-3" />
             </span>
             <span className="absolute inset-0 translate-x-[-120%] bg-white/25 transition duration-500 group-hover:translate-x-[120%]" />
@@ -223,7 +223,7 @@ export function SiteHeader() {
               </a>
               <Link
                 href="/contact"
-                className="inline-flex w-full justify-center rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_18px_40px_-18px_rgba(16,185,129,0.7)]"
+                className="inline-flex w-full justify-center rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-[0_18px_40px_-18px_rgba(16,185,129,0.7)]"
                 onClick={() => setOpen(false)}
               >
                 Talk to an expert
