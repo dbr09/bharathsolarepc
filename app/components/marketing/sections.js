@@ -526,6 +526,9 @@ function Calculator() {
     },
   ];
 
+  const interactiveFieldClasses =
+    "w-full rounded-2xl border border-[#34d399]/30 bg-gradient-to-r from-[#103524]/70 via-[#0b2218]/70 to-[#103524]/70 px-4 py-3 text-base text-white shadow-[0_25px_65px_-35px_rgba(16,185,129,0.9)] transition hover:border-[#34d399]/70 focus:border-[#147B3E] focus:outline-none focus:ring-4 focus:ring-[#147B3E]/35 focus:ring-offset-2 focus:ring-offset-slate-950 placeholder:text-emerald-200/70";
+
   return (
     <div className="rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_40px_110px_-55px_rgba(16,185,129,0.65)] backdrop-blur-xl">
       <div className="space-y-3">
@@ -548,7 +551,7 @@ function Calculator() {
             inputMode="numeric"
             value={unitsMonth}
             onChange={(event) => setUnitsMonth(event.target.value)}
-            className="w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+            className={interactiveFieldClasses}
             placeholder="e.g. 850"
             min={0}
           />
@@ -561,7 +564,7 @@ function Calculator() {
             id="tariff"
             value={tariff}
             onChange={(event) => setTariff(event.target.value)}
-            className="w-full appearance-none rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-base text-white focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
+            className={`${interactiveFieldClasses} appearance-none`}
           >
             {tariffOptions.map((option) => (
               <option key={option.value} value={option.value} className="bg-slate-900 text-white">
