@@ -64,7 +64,7 @@ export function SiteHeader() {
           style={{ transform: `scaleX(${Math.max(progress, 0.03)})` }}
         />
       </div>
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 text-slate-100">
+      <div className="flex w-full max-w-7xl items-center gap-6 px-6 py-4 text-slate-100">
         <Link href="/" className="relative flex items-center gap-3">
           <span className="glow-border relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(15,118,110,0.45)] ring-1 ring-white/30">
             <Image src="/logo.png" alt="Bharath Solar EPC" fill className="object-contain p-1" sizes="48px" priority />
@@ -75,7 +75,7 @@ export function SiteHeader() {
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-3 md:flex">
+        <nav className="hidden items-center gap-3 md:ml-8 md:flex">
           {navLinks.map((item) => {
             const isActive =
               pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
@@ -99,36 +99,26 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-300/80">
-            <span className="hidden sm:inline-flex items-center gap-2 text-[0.85rem] normal-case tracking-normal text-slate-100">
+        <div className="hidden items-center gap-3 md:ml-auto md:flex">
+          <div className="flex items-center gap-3 rounded-full border border-white/15 bg-slate-950/70 px-5 py-2 text-xs uppercase tracking-[0.3em] text-slate-200/90 shadow-[0_12px_35px_-20px_rgba(15,118,110,0.75)] backdrop-blur">
+            <span className="inline-flex items-center gap-2 text-[0.9rem] normal-case tracking-normal text-white">
               <PhoneIcon className="h-4 w-4 text-emerald-300" />
               <a
                 href="tel:+918977310017"
-                className="font-semibold text-slate-100 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className="font-semibold text-white whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
                 +91 89773 10017
               </a>
             </span>
             <span className="hidden h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.75)] sm:block" aria-hidden />
-            <span className="text-[0.7rem] tracking-[0.42em] text-emerald-200/80">Talk today</span>
+            <span className="text-[0.7rem] tracking-[0.42em] text-emerald-200/90">Talk today</span>
           </div>
-          <Link
-            href="/contact"
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_20px_45px_-18px_rgba(16,185,129,0.75)] transition hover:scale-[1.04] hover:shadow-[0_26px_70px_-24px_rgba(16,185,129,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-          >
-            <span className="relative z-10">Talk to an expert</span>
-            <span className="relative z-10 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
-              <ArrowIcon className="h-3 w-3" />
-            </span>
-            <span className="absolute inset-0 translate-x-[-120%] bg-white/25 transition duration-500 group-hover:translate-x-[120%]" />
-          </Link>
         </div>
 
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-100 transition hover:border-white/20 hover:bg-white/10 md:hidden"
+          className="ml-auto inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-100 transition hover:border-white/20 hover:bg-white/10 md:hidden"
           aria-label="Toggle navigation"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
@@ -167,13 +157,6 @@ export function SiteHeader() {
             >
               <PhoneIcon className="h-4 w-4" /> +91 89773 10017
             </a>
-            <Link
-              href="/contact"
-              className="inline-flex w-full justify-center rounded-full bg-gradient-to-r from-emerald-500 to-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 shadow-[0_18px_40px_-18px_rgba(16,185,129,0.7)]"
-              onClick={() => setOpen(false)}
-            >
-              Talk to an expert
-            </Link>
           </div>
         </div>
       )}
@@ -252,14 +235,6 @@ function PhoneIcon({ className }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M4 5.5C4 4.12 5.12 3 6.5 3h1.02c.62 0 1.16.38 1.37.96l1.05 2.8a1.5 1.5 0 01-.54 1.73l-1.12.82a12.1 12.1 0 005.89 5.89l.82-1.12a1.5 1.5 0 011.73-.54l2.8 1.05c.58.21.96.75.96 1.37V17.5c0 1.38-1.12 2.5-2.5 2.5H17C10.37 20 4 13.63 4 7z" />
-    </svg>
-  );
-}
-
-function ArrowIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
     </svg>
   );
 }

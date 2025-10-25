@@ -221,24 +221,89 @@ export default function ProcessExperience() {
   const [activeReadinessId, setActiveReadinessId] = useState(readinessCheckpoints[0].id);
 
   const phasesWithDurations = useMemo(() => {
-    const scale = Math.sqrt(systemSize / 250);
+    if (!processPhases.length) {
+      return [];
+    }
+
+    const baseTotalWeeks = processPhases.reduce((sum, phase) => sum + phase.baseWeeks, 0);
+    if (baseTotalWeeks <= 0) {
+      return [];
+    }
+
+    // Larger plants benefit from parallel workstreams, so the scaling curve gently
+    // compresses total duration as capacity increases while still keeping smaller
+    // installs realistic.
+    const normalizedCapacity = Math.max(systemSize, 1);
+    const scale = Math.pow(normalizedCapacity / 250, -0.05);
+    const targetTotalWeeks = Math.max(
+      processPhases.length,
+      Math.round(baseTotalWeeks * scale),
+    );
+
+    const idealDurations = processPhases.map((phase) =>
+      (phase.baseWeeks / baseTotalWeeks) * targetTotalWeeks,
+    );
+
+    const computeRemainder = (direction) => {
+      const indexed = idealDurations.map((ideal, index) => ({
+        index,
+        fraction: ideal - Math.floor(ideal),
+      }));
+
+      indexed.sort((a, b) =>
+        direction === "increase"
+          ? b.fraction - a.fraction
+          : a.fraction - b.fraction,
+      );
+
+      return indexed;
+    };
+
+    let computedWeeks = idealDurations.map((ideal) => Math.max(1, Math.floor(ideal)));
+    let allocated = computedWeeks.reduce((sum, weeks) => sum + weeks, 0);
+
+    if (allocated < targetTotalWeeks) {
+      const order = computeRemainder("increase");
+      let pointer = 0;
+      while (allocated < targetTotalWeeks && order.length > 0) {
+        const { index } = order[pointer % order.length];
+        computedWeeks[index] += 1;
+        allocated += 1;
+        pointer += 1;
+      }
+    } else if (allocated > targetTotalWeeks) {
+      const order = computeRemainder("decrease");
+      let pointer = 0;
+      let safety = 0;
+      const maxIterations = order.length * 6;
+      while (allocated > targetTotalWeeks && order.length > 0 && safety < maxIterations) {
+        const { index } = order[pointer % order.length];
+        if (computedWeeks[index] > 1) {
+          computedWeeks[index] -= 1;
+          allocated -= 1;
+        }
+        pointer += 1;
+        safety += 1;
+      }
+    }
+
     const phases = [];
     let cursor = 0;
 
-    for (const phase of processPhases) {
-      const computedWeeks = Math.max(1, Math.round(phase.baseWeeks * scale));
+    processPhases.forEach((phase, index) => {
+      const weeks = computedWeeks[index] ?? 1;
       const startWeek = cursor + 1;
-      const endWeek = cursor + computedWeeks;
+      const endWeek = cursor + weeks;
 
       phases.push({
         ...phase,
-        computedWeeks,
+        computedWeeks: weeks,
         startWeek,
         endWeek,
       });
 
       cursor = endWeek;
-    }
+    });
 
     return phases;
   }, [systemSize]);
@@ -254,7 +319,12 @@ export default function ProcessExperience() {
     .reduce((acc, phase) => acc + phase.computedWeeks, 0);
 
   const timelineProgress = totalWeeks
-    ? Math.round(((elapsedWeeksBeforePhase + selectedPhase?.computedWeeks / 2) / totalWeeks) * 100)
+    ? Math.min(
+        100,
+        Math.round(
+          ((elapsedWeeksBeforePhase + (selectedPhase?.computedWeeks ?? 0)) / totalWeeks) * 100,
+        ),
+      )
     : 0;
 
   const activeStream = collaborationStreams.find((stream) => stream.id === activeStreamId);
