@@ -28,6 +28,7 @@ body {
   background-attachment: fixed;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 a {
@@ -36,6 +37,46 @@ a {
 
 section {
   scroll-margin-top: 96px;
+}
+
+.site-container {
+  width: 100%;
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .site-container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 15.5px;
+    line-height: 1.65;
+    background-attachment: scroll;
+  }
+
+  section {
+    scroll-margin-top: 80px;
+  }
+
+  .site-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
 }
 
 ::selection {

@@ -247,12 +247,12 @@ export function ValueHighlightsSection() {
   const active = valueProps[activeIndex];
 
   return (
-    <section className="relative py-16 md:py-24">
+    <section className="relative py-14 sm:py-16 md:py-24">
       <div className="pointer-events-none absolute inset-x-0 top-12 h-64 bg-gradient-to-r from-emerald-400/15 via-transparent to-sky-400/15 blur-3xl" aria-hidden />
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="site-container">
+        <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div
-            className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/6 p-8 shadow-[0_45px_120px_-60px_rgba(56,189,248,0.65)] backdrop-blur-xl"
+            className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_45px_120px_-60px_rgba(56,189,248,0.65)] backdrop-blur-xl sm:p-8"
             onPointerMove={(event) => {
               const rect = event.currentTarget.getBoundingClientRect();
               const x = ((event.clientX - rect.left) / rect.width) * 100;
@@ -271,25 +271,25 @@ export function ValueHighlightsSection() {
             <div className="relative z-10 space-y-6">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.35em] text-amber-200/90">Why Bharath Solar EPC</p>
-                <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl md:text-[2.6rem]">
+                <h2 className="mt-3 text-3xl font-bold text-white sm:mt-4 sm:text-4xl md:text-[2.6rem]">
                   Everything you need to own and run dependable solar assets
                 </h2>
-                <p className="mt-4 text-base leading-relaxed text-slate-200/90">
+                <p className="mt-4 text-sm leading-relaxed text-slate-200/90 sm:text-base">
                   From feasibility to lifetime performance, our multi-disciplinary team covers electrical, structural and financial diligence so you always know what to expect.
                 </p>
               </div>
-              <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-6 shadow-inner shadow-emerald-500/10 backdrop-blur">
+              <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-5 shadow-inner shadow-emerald-500/10 backdrop-blur sm:p-6">
                 <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Now spotlighting</p>
                 <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
                   <div className="max-w-xl">
                     <h3 className="text-2xl font-semibold text-white sm:text-3xl">{active.title}</h3>
-                    <p className="mt-3 text-base leading-relaxed text-slate-200/80">{active.spotlight}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-200/80 sm:text-base">{active.spotlight}</p>
                   </div>
-                  <span className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-white/10 text-emerald-300 shadow-[0_12px_30px_-18px_rgba(16,185,129,0.9)]">
+                  <span className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-white/10 text-emerald-300 shadow-[0_12px_30px_-18px_rgba(16,185,129,0.9)] sm:h-12 sm:w-12">
                     <active.icon className="h-5 w-5" />
                   </span>
                 </div>
-                <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                <div className="mt-6 grid gap-3 sm:grid-cols-3 sm:gap-4">
                   {active.metrics.map((metric) => (
                     <div
                       key={metric.label}
@@ -303,7 +303,7 @@ export function ValueHighlightsSection() {
               </div>
             </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-1">
             {valueProps.map((item, index) => {
               const isActive = index === activeIndex;
               return (
@@ -313,7 +313,7 @@ export function ValueHighlightsSection() {
                   onMouseEnter={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
                   onClick={() => setActiveIndex(index)}
-                  className={`group relative overflow-hidden rounded-3xl border px-6 py-6 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                  className={`group relative overflow-hidden rounded-3xl border px-5 py-5 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-6 sm:py-6 ${
                     isActive
                       ? "border-white/40 bg-white/10 shadow-[0_30px_80px_-50px_rgba(56,189,248,0.9)]"
                       : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
@@ -327,7 +327,7 @@ export function ValueHighlightsSection() {
                     }`}
                   />
                   <div className="relative z-10 flex items-start gap-4">
-                    <span className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[#147B3E]/15 text-[#147B3E]">
+                    <span className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-[#147B3E]/15 text-[#147B3E] sm:h-12 sm:w-12">
                       <item.icon className="h-5 w-5" />
                     </span>
                     <div>
@@ -352,7 +352,7 @@ export function ValueHighlightsSection() {
 export function CalculatorSection() {
   return (
     <section className="relative py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="site-container">
         <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="space-y-6">
             <div>
@@ -592,7 +592,7 @@ export function SolutionsSection() {
 
   return (
     <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="site-container">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="space-y-6">
             <div>
@@ -731,7 +731,7 @@ export function SolutionsSection() {
 export function ProcessSection() {
   return (
     <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="site-container">
         <div className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">How we work</p>
           <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
@@ -784,7 +784,7 @@ export function ProjectsHighlightsSection() {
 
   return (
     <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="site-container">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Proven track record</p>
@@ -981,7 +981,7 @@ export function ContactSection() {
 
   return (
     <section className="py-24">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="site-container">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-6">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Start a conversation</p>
