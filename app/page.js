@@ -617,15 +617,7 @@ function CaseStudySpotlight() {
               </div>
             </div>
             <div className="relative mt-5 overflow-hidden rounded-[24px] border border-white/10 bg-white/5 p-5 sm:rounded-[28px]">
-              <div className="flex flex-wrap items-center gap-3 text-xs text-slate-200 sm:gap-4 sm:text-sm">
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
-                  <SparkIcon className="h-4 w-4" /> Digital twin validated
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200">
-                  <SparkIcon className="h-4 w-4" /> GMP compliant routing
-                </span>
-              </div>
-              <div className="mt-5 grid gap-3 sm:grid-cols-2 sm:gap-4">
+              <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
                 <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm text-slate-200">
                   <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Payback</p>
                   <p className="mt-1 text-xl font-semibold text-white">3.1 years</p>
