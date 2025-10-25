@@ -339,28 +339,41 @@ function formatCurrency(amount) {
 const tariffStructures = {
   domestic: {
     label: "LT Cat-I(A) Domestic",
-    description: "Telescopic slabs for residential consumers",
-    customerCharge: 20,
-    electricityDutyRate: 0.06,
+    description: "TSNPDCL domestic telescopic slabs",
+    customerCharge: 0,
+    electricityDutyRate: 0,
     tiers: [
       {
         maxUnits: 100,
-        fixedCharge: 10,
+        fixedCharge: 0,
+        label: "LT Cat-I(A) Domestic (≤100 units)",
+        description: "Applicable when monthly usage stays within 0-100 units",
         slabs: [
-          { upto: 50, rate: 3, label: "0-50 units" },
-          { upto: 100, rate: 3.1, label: "51-100 units" },
+          { upto: 50, rate: 1.95, label: "0-50 units" },
+          { upto: 100, rate: 3.05, label: "51-100 units" },
+        ],
+      },
+      {
+        maxUnits: 200,
+        fixedCharge: 10,
+        label: "LT Cat-I(B)(i) Domestic (101-200 units)",
+        description: "Applies to domestic connections consuming 101-200 units",
+        slabs: [
+          { upto: 100, rate: 3.4, label: "0-100 units" },
+          { upto: 200, rate: 4.8, label: "101-200 units" },
         ],
       },
       {
         maxUnits: Infinity,
-        fixedCharge: 90,
+        fixedCharge: 50,
+        label: "LT Cat-I(B)(ii) Domestic (>200 units)",
+        description: "Charged when monthly usage exceeds 200 units",
         slabs: [
-          { upto: 50, rate: 3, label: "0-50 units" },
-          { upto: 100, rate: 3.1, label: "51-100 units" },
-          { upto: 200, rate: 4.5, label: "101-200 units" },
-          { upto: 300, rate: 6, label: "201-300 units" },
-          { upto: 400, rate: 6.9, label: "301-400 units" },
-          { upto: Infinity, rate: 7.3, label: "Above 400 units" },
+          { upto: 200, rate: 5.1, label: "0-200 units" },
+          { upto: 300, rate: 7.2, label: "201-300 units" },
+          { upto: 400, rate: 8.5, label: "301-400 units" },
+          { upto: 800, rate: 10, label: "401-800 units" },
+          { upto: Infinity, rate: 10, label: "Above 800 units" },
         ],
       },
     ],
@@ -484,6 +497,8 @@ function calculateTariff(units, tariffKey) {
   const subtotal = roundToPaise(energyCharges + fixedCharge + customerCharge + electricityDuty);
   const roundedTotal = Math.round(subtotal);
   const roundingAdjustment = roundToPaise(roundedTotal - subtotal);
+  const tierLabel = tier.label ?? structure.label;
+  const tierDescription = tier.description ?? structure.description;
 
   return {
     totalCharge: energyCharges,
@@ -496,8 +511,8 @@ function calculateTariff(units, tariffKey) {
     subtotal,
     roundedTotal,
     roundingAdjustment,
-    label: structure.label,
-    description: structure.description,
+    label: tierLabel,
+    description: tierDescription,
   };
 }
 
@@ -586,6 +601,23 @@ function Calculator() {
 
   const showRoundingAdjustment = Math.abs(roundingAdjustment) > 0.001;
   const dutyPercentage = Math.round(dutyRate * 100);
+  const additionalChargeNotes = [];
+
+  if (fixedCharge > 0) {
+    additionalChargeNotes.push(`₹${formatCurrency(fixedCharge)} fixed charge`);
+  }
+
+  if (customerCharge > 0) {
+    additionalChargeNotes.push(`₹${formatCurrency(customerCharge)} customer charge`);
+  }
+
+  if (electricityDuty > 0) {
+    const dutyLabel = dutyRate ? `${dutyPercentage}% electricity duty` : "electricity duty";
+    additionalChargeNotes.push(`₹${formatCurrency(electricityDuty)} ${dutyLabel}`);
+  }
+
+  const additionalChargesCopy =
+    additionalChargeNotes.length > 0 ? ` along with ${additionalChargeNotes.join(", ")}` : "";
 
   const editableUnitsFieldClasses =
     "relative w-full overflow-hidden rounded-3xl border-2 border-emerald-400/80 bg-[#0f1c17] px-5 py-4 text-lg font-semibold text-white shadow-[0_35px_85px_-45px_rgba(52,211,153,0.95)] transition focus:border-white focus:outline-none focus:ring-4 focus:ring-emerald-400/60 focus:ring-offset-2 focus:ring-offset-slate-950 placeholder:text-emerald-200/80";
@@ -647,9 +679,7 @@ function Calculator() {
                 </p>
               ) : null}
               <p className="text-xs text-slate-300/80">
-                Includes TSNPDCL domestic slabs, ₹{formatCurrency(fixedCharge)} fixed charge, ₹{formatCurrency(customerCharge)}
-                {" "}
-                customer charge and {dutyRate ? `${dutyPercentage}% electricity duty` : "electricity duty"}.
+                Includes TSNPDCL domestic slabs{additionalChargesCopy}.
               </p>
             </div>
           </div>
@@ -703,26 +733,32 @@ function Calculator() {
                   <td className="px-4 py-3 text-right">—</td>
                   <td className="px-4 py-3 text-right">₹{formatCurrency(energyCharges)}</td>
                 </tr>
-                <tr>
-                  <td className="px-4 py-3 font-semibold text-white">Fixed charges</td>
-                  <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">₹{formatCurrency(fixedCharge)}</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-semibold text-white">Customer charges</td>
-                  <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">₹{formatCurrency(customerCharge)}</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-semibold text-white">
-                    {dutyRate ? `Electricity duty (${dutyPercentage}%)` : "Electricity duty"}
-                  </td>
-                  <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">₹{formatCurrency(electricityDuty)}</td>
-                </tr>
+                {fixedCharge > 0 ? (
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-white">Fixed charges</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">₹{formatCurrency(fixedCharge)}</td>
+                  </tr>
+                ) : null}
+                {customerCharge > 0 ? (
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-white">Customer charges</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">₹{formatCurrency(customerCharge)}</td>
+                  </tr>
+                ) : null}
+                {electricityDuty > 0 ? (
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-white">
+                      {dutyRate ? `Electricity duty (${dutyPercentage}%)` : "Electricity duty"}
+                    </td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">₹{formatCurrency(electricityDuty)}</td>
+                  </tr>
+                ) : null}
                 <tr>
                   <td className="px-4 py-3 font-semibold text-white">Bill before round-off</td>
                   <td className="px-4 py-3 text-right">—</td>
