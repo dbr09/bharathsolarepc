@@ -320,6 +320,8 @@ export function CalculatorSection() {
   );
 }
 
+const DEFAULT_TARIFF_KEY = "domestic";
+
 const tariffStructures = {
   domestic: {
     label: "LT Cat-I(A) Domestic",
@@ -464,17 +466,7 @@ function calculateTariff(units, tariffKey) {
 
 function Calculator() {
   const [unitsMonth, setUnitsMonth] = useState("600");
-  const [tariff, setTariff] = useState("domestic");
-
-  const tariffOptions = useMemo(
-    () =>
-      Object.entries(tariffStructures).map(([value, details]) => ({
-        value,
-        label: details.label,
-        description: details.description,
-      })),
-    [],
-  );
+  const activeTariff = tariffStructures[DEFAULT_TARIFF_KEY];
 
   const { kwRounded, generation, roofArea, slabBreakdown, fixedCharge, monthlyBill, carbonOffset, hasInput } = useMemo(() => {
     const units = Number.parseFloat(unitsMonth) || 0;
@@ -485,7 +477,7 @@ function Calculator() {
     const kwRoundedValue = kw > 0 ? Math.max(1, Math.round(kw * 10) / 10) : 0;
     const generationValue = kwRoundedValue * unitsPerKwMonth;
     const roof = kwRoundedValue * roofSqftPerKw;
-    const { breakdown, fixedCharge: tierFixedCharge, totalCharge } = calculateTariff(units, tariff);
+    const { breakdown, fixedCharge: tierFixedCharge, totalCharge } = calculateTariff(units, DEFAULT_TARIFF_KEY);
     const monthlyBillValue = totalCharge + tierFixedCharge;
     const carbonOffsetValue = generationValue * 12 * 0.82 * 0.001; // tonnes of CO₂ avoided annually
 
@@ -499,9 +491,7 @@ function Calculator() {
       carbonOffset: carbonOffsetValue,
       hasInput: units > 0,
     };
-  }, [tariff, unitsMonth]);
-
-  const activeTariff = tariffOptions.find((option) => option.value === tariff);
+  }, [unitsMonth]);
 
   const summaryStats = [
     {
@@ -525,9 +515,6 @@ function Calculator() {
       helper: "Based on 0.82 kg/unit grid factor",
     },
   ];
-
-  const interactiveFieldClasses =
-    "w-full rounded-2xl border border-[#34d399]/30 bg-gradient-to-r from-[#103524]/70 via-[#0b2218]/70 to-[#103524]/70 px-4 py-3 text-base text-white shadow-[0_25px_65px_-35px_rgba(16,185,129,0.9)] transition hover:border-[#34d399]/70 focus:border-[#147B3E] focus:outline-none focus:ring-4 focus:ring-[#147B3E]/35 focus:ring-offset-2 focus:ring-offset-slate-950 placeholder:text-emerald-200/70";
 
   const editableUnitsFieldClasses =
     "relative w-full overflow-hidden rounded-3xl border-2 border-emerald-400/80 bg-[#0f1c17] px-5 py-4 text-lg font-semibold text-white shadow-[0_35px_85px_-45px_rgba(52,211,153,0.95)] transition focus:border-white focus:outline-none focus:ring-4 focus:ring-emerald-400/60 focus:ring-offset-2 focus:ring-offset-slate-950 placeholder:text-emerald-200/80";
@@ -573,25 +560,24 @@ function Calculator() {
             Enter your units here to personalise the system size, roof space, and savings estimates.
           </p>
         </div>
-        <div className="space-y-2">
-          <label htmlFor="tariff" className="text-sm font-semibold text-slate-200">
-            Tariff category
-          </label>
-          <select
-            id="tariff"
-            value={tariff}
-            onChange={(event) => setTariff(event.target.value)}
-            className={`${interactiveFieldClasses} appearance-none`}
-          >
-            {tariffOptions.map((option) => (
-              <option key={option.value} value={option.value} className="bg-slate-900 text-white">
-                {option.label}
-              </option>
-            ))}
-          </select>
-          {activeTariff?.description ? (
-            <p className="text-xs text-slate-400">{activeTariff.description}</p>
-          ) : null}
+        <div className="space-y-3">
+          <p className="text-sm font-semibold text-slate-200">Monthly DISCOM bill</p>
+          <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/5 p-5 shadow-[0_35px_90px_-55px_rgba(16,185,129,0.55)]">
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/15 via-transparent to-emerald-400/10" />
+            <div className="relative z-10 space-y-2">
+              <p className="text-xs uppercase tracking-[0.3em] text-emerald-200/80">Total payable</p>
+              <p className="text-3xl font-bold text-white">
+                {hasInput ? `₹${Math.round(monthlyBill).toLocaleString()}` : "—"}
+                <span className="ml-2 text-sm font-semibold text-emerald-200/80">per month</span>
+              </p>
+              <p className="text-xs text-slate-300/80">
+                Includes TSNPDCL domestic energy slabs and fixed charges.
+              </p>
+            </div>
+          </div>
+          <p className="text-xs text-slate-400">
+            {activeTariff?.description || "Based on the latest TSNPDCL domestic tariff schedule."}
+          </p>
         </div>
       </form>
 
