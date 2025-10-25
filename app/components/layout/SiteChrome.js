@@ -104,11 +104,11 @@ export function SiteHeader() {
 
         <div className="hidden items-center gap-3 md:flex">
           <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-300/80">
-            <span className="hidden sm:inline-flex items-center gap-2 text-[0.85rem] normal-case tracking-normal text-slate-100">
-              <PhoneIcon className="h-4 w-4 text-emerald-300" />
+            <span className="hidden sm:inline-flex items-center gap-2 text-[0.85rem] normal-case tracking-normal text-white">
+              <PhoneIcon className="h-4 w-4 text-emerald-200" />
               <a
                 href="tel:+918977310017"
-                className="font-semibold text-slate-100 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className="font-semibold text-white drop-shadow-[0_0_8px_rgba(15,118,110,0.45)] whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
                 +91 89773 10017
               </a>
