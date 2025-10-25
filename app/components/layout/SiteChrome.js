@@ -114,10 +114,9 @@ export function SiteHeader() {
               sizes="(min-width: 640px) 48px, 44px"
             />
           </span>
-          <div className="flex">
-            <p className="whitespace-nowrap text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-white sm:text-xs sm:tracking-[0.32em]">
-              Bharath Solar EPC
-            </p>
+          <div className="flex flex-col leading-tight text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-white sm:text-xs sm:tracking-[0.32em]">
+            <span className="whitespace-nowrap">Bharath</span>
+            <span className="whitespace-nowrap">Solar EPC</span>
           </div>
         </Link>
 
