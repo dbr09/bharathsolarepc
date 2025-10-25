@@ -41,14 +41,6 @@ const sectionCards = [
     glow: "from-sky-400/20 via-transparent to-transparent",
   },
   {
-    title: "Client success",
-    description: "Hospitals, factories and homes that trust our engineering and O&M programmes.",
-    href: "/testimonials",
-    icon: QuoteIcon,
-    accent: "bg-amber-400/20 text-amber-200",
-    glow: "from-amber-400/25 via-transparent to-transparent",
-  },
-  {
     title: "Payments & finance",
     description: "See how Razorpay will simplify advance, milestone and O&M collections for you.",
     href: "/payments",
@@ -1070,14 +1062,6 @@ function ProcessIcon({ className }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" />
-    </svg>
-  );
-}
-
-function QuoteIcon({ className }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h8M5 11h5v6H5zm9 0h5v6h-5z" />
     </svg>
   );
 }
