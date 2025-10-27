@@ -96,7 +96,7 @@ const processPhases = [
   {
     id: "operations",
     name: "Operations & Optimisation",
-    baseWeeks: 12,
+    baseWeeks: 8,
     objective:
       "Stabilise generation, monitor analytics, and implement optimisations for lifetime returns.",
     activities: [
@@ -168,45 +168,6 @@ const collaborationStreams = [
   },
 ];
 
-const readinessCheckpoints = [
-  {
-    id: "preconstruction",
-    label: "Pre-construction",
-    focus: "All regulatory, financial, and technical approvals ready for shovel-ready status.",
-    checks: [
-      "PPA, net metering and government subsidies formally approved",
-      "Bank guarantees, insurance, and advance payment schedules agreed",
-      "Utility metering specs and protection settings acknowledged",
-      "Environmental and structural clearances documented",
-    ],
-    artifacts: ["Approval tracker", "Financial closure letter", "Signed net-metering agreement"],
-  },
-  {
-    id: "midbuild",
-    label: "Mid build",
-    focus: "Execution performance aligns with baseline schedule and quality benchmarks.",
-    checks: [
-      "Critical path milestones achieved within float",
-      "Material reconciliation within ±2% variance",
-      "Quality NCRs closed with root cause actions",
-      "Zero lost time incidents and safety audits green",
-    ],
-    artifacts: ["Progress S-curve", "Quality NCR log", "Safety audit scorecards"],
-  },
-  {
-    id: "handover",
-    label: "Handover",
-    focus: "System readiness proven with documentation, warranties, and O&M onboarding complete.",
-    checks: [
-      "Performance ratio exceeds guaranteed value",
-      "As-built drawings mirror installed topology",
-      "OEM warranties activated and stored",
-      "O&M team trained with spare strategy approved",
-    ],
-    artifacts: ["Commissioning dossier", "Warranty matrix", "Training completion report"],
-  },
-];
-
 function formatWeeks(weeks) {
   if (weeks < 1) {
     return "<1 week";
@@ -218,10 +179,9 @@ export default function ProcessExperience() {
   const [systemSize, setSystemSize] = useState(250);
   const [selectedPhaseIndex, setSelectedPhaseIndex] = useState(0);
   const [activeStreamId, setActiveStreamId] = useState(collaborationStreams[0].id);
-  const [activeReadinessId, setActiveReadinessId] = useState(readinessCheckpoints[0].id);
 
   const phasesWithDurations = useMemo(() => {
-    const scale = Math.sqrt(systemSize / 250);
+    const scale = Math.pow(systemSize / 250, 0.22);
     const phases = [];
     let cursor = 0;
 
@@ -254,12 +214,13 @@ export default function ProcessExperience() {
     .reduce((acc, phase) => acc + phase.computedWeeks, 0);
 
   const timelineProgress = totalWeeks
-    ? Math.round(((elapsedWeeksBeforePhase + selectedPhase?.computedWeeks / 2) / totalWeeks) * 100)
+    ? Math.min(
+        100,
+        Math.round(((elapsedWeeksBeforePhase + selectedPhase?.computedWeeks) / totalWeeks) * 100),
+      )
     : 0;
 
   const activeStream = collaborationStreams.find((stream) => stream.id === activeStreamId);
-  const activeReadiness = readinessCheckpoints.find((checkpoint) => checkpoint.id === activeReadinessId);
-
   return (
     <>
       <section className="py-16 md:py-20">
@@ -506,84 +467,6 @@ export default function ProcessExperience() {
         </div>
       </section>
 
-      <section className="py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-black/20 md:p-10">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div className="max-w-2xl">
-                <p className="text-sm uppercase tracking-[0.3em] text-[#F16921]">Quality gates</p>
-                <h2 className="mt-2 text-3xl font-semibold text-white sm:text-4xl">
-                  Track readiness across the EPC lifecycle
-                </h2>
-                <p className="mt-3 text-sm text-slate-300">
-                  Select a checkpoint to view the criteria and artefacts we require before green-lighting the next milestone. The
-                  checklist mirrors what our QA and client teams review in joint audits.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {readinessCheckpoints.map((checkpoint) => (
-                  <button
-                    key={checkpoint.id}
-                    type="button"
-                    onClick={() => setActiveReadinessId(checkpoint.id)}
-                    className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                      checkpoint.id === activeReadinessId
-                        ? "border-transparent bg-white text-slate-900"
-                        : "border-white/20 bg-white/5 text-slate-200 hover:border-white/40 hover:bg-white/10"
-                    }`}
-                  >
-                    {checkpoint.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-8 grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-6 text-sm text-slate-200">
-                <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Focus</p>
-                <p className="mt-1 text-lg font-semibold text-white">{activeReadiness?.focus}</p>
-                <h3 className="mt-4 text-2xl font-semibold text-white">Checklist before sign-off</h3>
-                <ul className="mt-4 space-y-3">
-                  {activeReadiness?.checks.map((check) => (
-                    <li key={check} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                      <div className="flex items-start gap-3">
-                        <span className="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#147B3E]/20 text-[#147B3E]">
-                          ✓
-                        </span>
-                        <p className="text-sm text-slate-200">{check}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/30 p-6 text-sm text-slate-200">
-                <div>
-                  <h4 className="text-sm font-semibold text-white">Evidence package</h4>
-                  <ul className="mt-3 flex flex-wrap gap-2 text-xs">
-                    {activeReadiness?.artifacts.map((artifact) => (
-                      <li key={artifact} className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-slate-200">
-                        {artifact}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="rounded-2xl border border-[#147B3E]/30 bg-[#147B3E]/10 p-4 text-xs text-[#C6F2D9]">
-                  <p>
-                    Joint audits combine digital evidence with on-site walkthroughs. Every checkpoint feeds into our single
-                    source of truth so stakeholders have immediate visibility on outstanding actions.
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-slate-300">
-                  <p>
-                    Looking for deeper governance? We can plug this matrix into your PMO templates, ISO frameworks, or ESG
-                    disclosures so reporting is automated.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

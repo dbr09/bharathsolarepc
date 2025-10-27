@@ -172,48 +172,6 @@ export const caseStudies = [
   },
 ];
 
-export const testimonials = [
-  {
-    quote: "The Bharath Solar EPC team gave us clarity on payback, executed neatly and has been proactive on every service call.",
-    name: "Nithisha Poultry Farms",
-    role: "100 kW on-grid plant, 2024",
-    sector: "Agro & Food",
-    rating: "4.9/5 satisfaction",
-  },
-  {
-    quote: "From engineering drawings to net-metering approvals, they managed each step professionally. Generation exceeds projections.",
-    name: "Tulasi Hospitals",
-    role: "120 kW rooftop system, 2018",
-    sector: "Healthcare",
-    rating: "99% uptime maintained",
-  },
-  {
-    quote: "Their villa design balanced aesthetics and performance. The concealed wiring and pergola finish won over our architect.",
-    name: "Sreshta Lake Homes",
-    role: "18 kW premium residence, 2023",
-    sector: "Residential",
-    rating: "₹16k monthly savings",
-  },
-];
-
-export const faqs = [
-  {
-    question: "How do you estimate the right solar capacity for my site?",
-    answer:
-      "We analyse your 12-month consumption, tariff slabs, roof geometry and shading using PVsyst. The built-in calculator provides a quick starting point, followed by an on-site survey for precision.",
-  },
-  {
-    question: "Do you assist with subsidies and net-metering?",
-    answer:
-      "Yes. Our documentation desk prepares DISCOM applications, schedules inspections and uploads proofs on the National Portal. We keep you informed at every stage until commissioning.",
-  },
-  {
-    question: "What maintenance is required after installation?",
-    answer:
-      "Preventive cleaning and visual checks every 15–30 days paired with quarterly electrical inspections. Our O&M plans include remote monitoring, breakdown support and guaranteed response SLAs.",
-  },
-];
-
 const contactJourney = [
   {
     title: "Discovery & bill study",
@@ -247,12 +205,12 @@ export function ValueHighlightsSection() {
   const active = valueProps[activeIndex];
 
   return (
-    <section className="relative py-16 md:py-24">
+    <section className="relative py-14 sm:py-16 md:py-24">
       <div className="pointer-events-none absolute inset-x-0 top-12 h-64 bg-gradient-to-r from-emerald-400/15 via-transparent to-sky-400/15 blur-3xl" aria-hidden />
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="site-container">
+        <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div
-            className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/6 p-8 shadow-[0_45px_120px_-60px_rgba(56,189,248,0.65)] backdrop-blur-xl"
+            className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_45px_120px_-60px_rgba(56,189,248,0.65)] backdrop-blur-xl sm:p-8"
             onPointerMove={(event) => {
               const rect = event.currentTarget.getBoundingClientRect();
               const x = ((event.clientX - rect.left) / rect.width) * 100;
@@ -271,25 +229,25 @@ export function ValueHighlightsSection() {
             <div className="relative z-10 space-y-6">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.35em] text-amber-200/90">Why Bharath Solar EPC</p>
-                <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl md:text-[2.6rem]">
+                <h2 className="mt-3 text-3xl font-bold text-white sm:mt-4 sm:text-4xl md:text-[2.6rem]">
                   Everything you need to own and run dependable solar assets
                 </h2>
-                <p className="mt-4 text-base leading-relaxed text-slate-200/90">
+                <p className="mt-4 text-sm leading-relaxed text-slate-200/90 sm:text-base">
                   From feasibility to lifetime performance, our multi-disciplinary team covers electrical, structural and financial diligence so you always know what to expect.
                 </p>
               </div>
-              <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-6 shadow-inner shadow-emerald-500/10 backdrop-blur">
+              <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-5 shadow-inner shadow-emerald-500/10 backdrop-blur sm:p-6">
                 <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Now spotlighting</p>
                 <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
                   <div className="max-w-xl">
                     <h3 className="text-2xl font-semibold text-white sm:text-3xl">{active.title}</h3>
-                    <p className="mt-3 text-base leading-relaxed text-slate-200/80">{active.spotlight}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-200/80 sm:text-base">{active.spotlight}</p>
                   </div>
-                  <span className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-white/10 text-emerald-300 shadow-[0_12px_30px_-18px_rgba(16,185,129,0.9)]">
+                  <span className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-white/10 text-emerald-300 shadow-[0_12px_30px_-18px_rgba(16,185,129,0.9)] sm:h-12 sm:w-12">
                     <active.icon className="h-5 w-5" />
                   </span>
                 </div>
-                <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                <div className="mt-6 grid gap-3 sm:grid-cols-3 sm:gap-4">
                   {active.metrics.map((metric) => (
                     <div
                       key={metric.label}
@@ -303,7 +261,7 @@ export function ValueHighlightsSection() {
               </div>
             </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-1">
             {valueProps.map((item, index) => {
               const isActive = index === activeIndex;
               return (
@@ -313,7 +271,7 @@ export function ValueHighlightsSection() {
                   onMouseEnter={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
                   onClick={() => setActiveIndex(index)}
-                  className={`group relative overflow-hidden rounded-3xl border px-6 py-6 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                  className={`group relative overflow-hidden rounded-3xl border px-5 py-5 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:px-6 sm:py-6 ${
                     isActive
                       ? "border-white/40 bg-white/10 shadow-[0_30px_80px_-50px_rgba(56,189,248,0.9)]"
                       : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
@@ -327,7 +285,7 @@ export function ValueHighlightsSection() {
                     }`}
                   />
                   <div className="relative z-10 flex items-start gap-4">
-                    <span className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[#147B3E]/15 text-[#147B3E]">
+                    <span className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-[#147B3E]/15 text-[#147B3E] sm:h-12 sm:w-12">
                       <item.icon className="h-5 w-5" />
                     </span>
                     <div>
@@ -351,236 +309,501 @@ export function ValueHighlightsSection() {
 
 export function CalculatorSection() {
   return (
-    <section className="relative py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="space-y-6">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Plan your plant</p>
-              <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Solar sizing calculator</h2>
-              <p className="mt-4 text-base leading-relaxed text-slate-200/90">
-                1 kW of rooftop solar in Telangana generates about <strong>150 units</strong> per month. Dial in your consumption profile and tariff band to instantly view the ideal system size, investment and payback.
-              </p>
-            </div>
-            <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-6 shadow-inner">
-              <p className="text-xs uppercase tracking-[0.35em] text-slate-400">How to use</p>
-              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-slate-200/90">
-                <li className="flex items-start gap-3">
-                  <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Start with a quick preset or drag the sliders to match your monthly bill and tariff slab.
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Review instant projections for capacity, capex, payback and long-term CO₂ savings.
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckIcon className="mt-1 h-4 w-4 text-[#147B3E]" /> Share the results with us to receive a site-specific layout, shading analysis and financing options.
-                </li>
-              </ul>
-            </div>
-          </div>
-          <Calculator />
-        </div>
+    <section className="relative py-14 md:py-20">
+      <div className="site-container space-y-6">
+        <Calculator />
+        <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
+          Estimates assume 150 units per kW and Telangana irradiance averages.
+        </p>
       </div>
     </section>
   );
 }
 
+const DEFAULT_TARIFF_KEY = "domestic";
+
+function roundToPaise(value) {
+  return Math.round((Number(value) + Number.EPSILON) * 100) / 100;
+}
+
+function formatCurrency(amount) {
+  if (!Number.isFinite(amount)) return "—";
+  const rounded = roundToPaise(amount);
+  const hasPaise = Math.abs(rounded - Math.round(rounded)) > 1e-6;
+  return rounded.toLocaleString("en-IN", {
+    minimumFractionDigits: hasPaise ? 2 : 0,
+    maximumFractionDigits: hasPaise ? 2 : 0,
+  });
+}
+
+const tariffStructures = {
+  domestic: {
+    label: "LT Cat-I(A) Domestic",
+    description: "TSNPDCL domestic telescopic slabs",
+    customerCharge: 0,
+    electricityDutyRate: 0,
+    tiers: [
+      {
+        maxUnits: 100,
+        fixedCharge: 0,
+        label: "LT Cat-I(A) Domestic (0-100 units)",
+        description: "Applies when monthly usage is 100 units or below",
+        slabs: [
+          { upto: 50, rate: 1.95, label: "0-50 units" },
+          { upto: 100, rate: 3.1, label: "51-100 units" },
+        ],
+      },
+      {
+        maxUnits: 200,
+        fixedCharge: 10,
+        label: "LT Cat-I(B)(i) Domestic (101-200 units)",
+        description: "Charged when monthly usage is above 100 units and up to 200 units",
+        slabs: [
+          { upto: 100, rate: 3.4, label: "0-100 units" },
+          { upto: 200, rate: 4.8, label: "101-200 units" },
+        ],
+      },
+      {
+        maxUnits: Infinity,
+        fixedCharge: 50,
+        label: "LT Cat-I(B)(ii) Domestic (>200 units)",
+        description: "Charged when monthly usage exceeds 200 units",
+        slabs: [
+          { upto: 200, rate: 5.1, label: "0-200 units" },
+          { upto: 300, rate: 7.1, label: "201-300 units" },
+          { upto: 400, rate: 7.7, label: "301-400 units" },
+          { upto: 800, rate: 8.6, label: "401-800 units" },
+          { upto: Infinity, rate: 9, label: "Above 800 units" },
+        ],
+      },
+    ],
+  },
+  commercial: {
+    label: "LT Cat-II(A) Commercial",
+    description: "General commercial establishments",
+    tiers: [
+      {
+        maxUnits: 50,
+        fixedCharge: 70,
+        slabs: [{ upto: 50, rate: 7.5, label: "0-50 units" }],
+      },
+      {
+        maxUnits: 100,
+        fixedCharge: 80,
+        slabs: [{ upto: 100, rate: 8.5, label: "0-100 units" }],
+      },
+      {
+        maxUnits: 300,
+        fixedCharge: 85,
+        slabs: [
+          { upto: 100, rate: 8.5, label: "0-100 units" },
+          { upto: 300, rate: 9, label: "101-300 units" },
+        ],
+      },
+      {
+        maxUnits: 500,
+        fixedCharge: 90,
+        slabs: [
+          { upto: 100, rate: 8.5, label: "0-100 units" },
+          { upto: 300, rate: 9, label: "101-300 units" },
+          { upto: 500, rate: 9.5, label: "301-500 units" },
+        ],
+      },
+      {
+        maxUnits: Infinity,
+        fixedCharge: 95,
+        slabs: [
+          { upto: 100, rate: 8.5, label: "0-100 units" },
+          { upto: 300, rate: 9, label: "101-300 units" },
+          { upto: 500, rate: 9.5, label: "301-500 units" },
+          { upto: Infinity, rate: 10, label: "Above 500 units" },
+        ],
+      },
+    ],
+  },
+  advertisement: {
+    label: "LT Cat-VII Advertisement & Hoardings",
+    description: "Dedicated supply for signage and hoardings",
+    tiers: [
+      {
+        maxUnits: Infinity,
+        fixedCharge: 125,
+        slabs: [{ upto: Infinity, rate: 12, label: "All units" }],
+      },
+    ],
+  },
+};
+
+function calculateTariff(units, tariffKey) {
+  const structure = tariffStructures[tariffKey];
+  if (!structure || units <= 0) {
+    return {
+      totalCharge: 0,
+      effectiveRate: 0,
+      breakdown: [],
+      fixedCharge: 0,
+      customerCharge: 0,
+      electricityDuty: 0,
+      dutyRate: 0,
+      subtotal: 0,
+      roundedTotal: 0,
+      roundingAdjustment: 0,
+      label: structure?.label ?? "",
+      description: structure?.description ?? "",
+    };
+  }
+
+  const tier = structure.tiers.find((option) => units <= option.maxUnits) ?? structure.tiers[structure.tiers.length - 1];
+  const breakdown = [];
+  let remaining = units;
+  let consumed = 0;
+  let totalCharge = 0;
+
+  for (const slab of tier.slabs) {
+    if (remaining <= 0) break;
+
+    const cumulativeLimit = slab.upto;
+    const slabCap = cumulativeLimit === Infinity ? Infinity : cumulativeLimit - consumed;
+    if (slabCap <= 0) {
+      consumed = cumulativeLimit === Infinity ? consumed : cumulativeLimit;
+      continue;
+    }
+
+    const slabUnits = Math.min(remaining, slabCap);
+    if (slabUnits <= 0) {
+      consumed = cumulativeLimit === Infinity ? consumed : cumulativeLimit;
+      continue;
+    }
+
+    const amount = slabUnits * slab.rate;
+    breakdown.push({
+      label: slab.label,
+      units: slabUnits,
+      rate: slab.rate,
+      amount,
+    });
+
+    totalCharge += amount;
+    remaining -= slabUnits;
+    consumed += slabUnits;
+  }
+
+  const effectiveRate = totalCharge / units;
+  const energyCharges = roundToPaise(totalCharge);
+  const dutyRate = structure.electricityDutyRate ?? 0;
+  const electricityDuty = roundToPaise(energyCharges * dutyRate);
+  const customerCharge = structure.customerCharge ?? 0;
+  const fixedCharge = tier.fixedCharge ?? 0;
+  const subtotal = roundToPaise(energyCharges + fixedCharge + customerCharge + electricityDuty);
+  const roundedTotal = Math.round(subtotal);
+  const roundingAdjustment = roundToPaise(roundedTotal - subtotal);
+  const tierLabel = tier.label ?? structure.label;
+  const tierDescription = tier.description ?? structure.description;
+
+  return {
+    totalCharge: energyCharges,
+    effectiveRate,
+    breakdown,
+    fixedCharge,
+    customerCharge,
+    electricityDuty,
+    dutyRate,
+    subtotal,
+    roundedTotal,
+    roundingAdjustment,
+    label: tierLabel,
+    description: tierDescription,
+  };
+}
+
 function Calculator() {
   const [unitsMonth, setUnitsMonth] = useState("600");
-  const [tariff, setTariff] = useState("8.5");
+  const activeTariff = tariffStructures[DEFAULT_TARIFF_KEY];
 
-  const unitPresets = [
-    { label: "2 BHK apartment", value: 300 },
-    { label: "3 BHK / villa", value: 600 },
-    { label: "Small business", value: 1200 },
-    { label: "Manufacturing shed", value: 2500 },
+  const {
+    kwRounded,
+    generation,
+    roofArea,
+    slabBreakdown,
+    fixedCharge,
+    customerCharge,
+    electricityDuty,
+    dutyRate,
+    monthlyBill,
+    monthlyBillBeforeRound,
+    roundingAdjustment,
+    energyCharges,
+    carbonOffset,
+    hasInput,
+  } = useMemo(() => {
+    const units = Number.parseFloat(unitsMonth) || 0;
+    const unitsPerKwMonth = 150;
+    const roofSqftPerKw = 100;
+
+    const kw = units > 0 ? units / unitsPerKwMonth : 0;
+    const kwRoundedValue = kw > 0 ? Math.max(1, Math.round(kw * 10) / 10) : 0;
+    const generationValue = kwRoundedValue * unitsPerKwMonth;
+    const roof = kwRoundedValue * roofSqftPerKw;
+    const {
+      breakdown,
+      fixedCharge: tierFixedCharge,
+      totalCharge,
+      customerCharge: customerChargeValue,
+      electricityDuty: electricityDutyValue,
+      dutyRate: dutyRateValue,
+      subtotal,
+      roundedTotal,
+      roundingAdjustment: roundingAdjustmentValue,
+    } = calculateTariff(units, DEFAULT_TARIFF_KEY);
+    const monthlyBillValue = roundedTotal;
+    const carbonOffsetValue = generationValue * 12 * 0.82 * 0.001; // tonnes of CO₂ avoided annually
+
+    return {
+      kwRounded: kwRoundedValue,
+      generation: generationValue,
+      roofArea: roof,
+      slabBreakdown: breakdown,
+      fixedCharge: tierFixedCharge,
+      customerCharge: customerChargeValue,
+      electricityDuty: electricityDutyValue,
+      dutyRate: dutyRateValue,
+      monthlyBill: monthlyBillValue,
+      monthlyBillBeforeRound: subtotal,
+      roundingAdjustment: roundingAdjustmentValue,
+      energyCharges: totalCharge,
+      carbonOffset: carbonOffsetValue,
+      hasInput: units > 0,
+    };
+  }, [unitsMonth]);
+
+  const summaryStats = [
+    {
+      label: "System size",
+      value: hasInput ? `${kwRounded.toFixed(1)} kW` : "—",
+      helper: "Recommended plant capacity",
+    },
+    {
+      label: "Roof space",
+      value: hasInput ? `${roofArea.toLocaleString()} sq.ft` : "—",
+      helper: "Usable shadow-free area",
+    },
+    {
+      label: "Monthly generation",
+      value: hasInput ? `${generation.toLocaleString()} units` : "—",
+      helper: "Energy produced by the plant",
+    },
+    {
+      label: "Annual CO₂ offset",
+      value: hasInput ? `${carbonOffset.toFixed(1)} tonnes` : "—",
+      helper: "Based on 0.82 kg/unit grid factor",
+    },
   ];
 
-  const tariffPresets = [
-    { label: "Domestic", value: 6.5 },
-    { label: "Commercial", value: 8.5 },
-    { label: "HT/Industrial", value: 11 },
-  ];
+  const showRoundingAdjustment = Math.abs(roundingAdjustment) > 0.001;
+  const dutyPercentage = Math.round(dutyRate * 100);
+  const additionalChargeNotes = [];
 
-  const { kwRounded, generation, roofArea, monthlySavings, annualSavings, capex, payback, co2Offset, projections, hasInput } =
-    useMemo(() => {
-      const units = Number.parseFloat(unitsMonth) || 0;
-      const rate = Number.parseFloat(tariff) || 0;
-      const unitsPerKwMonth = 150;
-      const roofSqftPerKw = 100;
-      const capexPerKw = 55000;
+  if (fixedCharge > 0) {
+    additionalChargeNotes.push(`₹${formatCurrency(fixedCharge)} fixed charge`);
+  }
 
-      const kw = units > 0 ? units / unitsPerKwMonth : 0;
-      const kwRoundedValue = kw > 0 ? Math.max(1, Math.round(kw * 10) / 10) : 0;
-      const generationValue = kwRoundedValue * unitsPerKwMonth;
-      const roof = kwRoundedValue * roofSqftPerKw;
-      const savings = Math.min(units, generationValue) * rate;
-      const annualSavingsValue = savings * 12;
-      const capexValue = kwRoundedValue * capexPerKw;
-      const paybackValue = savings > 0 ? capexValue / annualSavingsValue : 0;
-      const co2Annual = (Math.min(units, generationValue) * 0.82 * 12) / 1000;
+  if (customerCharge > 0) {
+    additionalChargeNotes.push(`₹${formatCurrency(customerCharge)} customer charge`);
+  }
 
-      const projectionYears = [1, 5, 10];
-      const maxProjection = Math.max(...projectionYears.map((year) => annualSavingsValue * year), 0);
-      const projectionData = projectionYears.map((year) => {
-        const total = annualSavingsValue * year;
-        return {
-          label: `${year} yr${year > 1 ? "s" : ""}`,
-          savings: total,
-          co2: co2Annual * year,
-          progress: maxProjection > 0 ? Math.round((total / maxProjection) * 100) : 0,
-        };
-      });
+  if (electricityDuty > 0) {
+    const dutyLabel = dutyRate ? `${dutyPercentage}% electricity duty` : "electricity duty";
+    additionalChargeNotes.push(`₹${formatCurrency(electricityDuty)} ${dutyLabel}`);
+  }
 
-      return {
-        kwRounded: kwRoundedValue,
-        generation: generationValue,
-        roofArea: roof,
-        monthlySavings: savings,
-        annualSavings: annualSavingsValue,
-        capex: capexValue,
-        payback: paybackValue,
-        co2Offset: co2Annual,
-        projections: projectionData,
-        hasInput: units > 0,
-      };
-    }, [tariff, unitsMonth]);
+  const additionalChargesCopy =
+    additionalChargeNotes.length > 0 ? ` along with ${additionalChargeNotes.join(", ")}` : "";
 
-  const unitsValue = Number.parseFloat(unitsMonth) || 0;
-  const tariffValue = Number.parseFloat(tariff) || 0;
+  const editableUnitsFieldClasses =
+    "relative w-full overflow-hidden rounded-3xl border-2 border-emerald-400/80 bg-[#0f1c17] px-5 py-4 text-lg font-semibold text-white shadow-[0_35px_85px_-45px_rgba(52,211,153,0.95)] transition focus:border-white focus:outline-none focus:ring-4 focus:ring-emerald-400/60 focus:ring-offset-2 focus:ring-offset-slate-950 placeholder:text-emerald-200/80";
 
   return (
-    <div className="space-y-6 rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_40px_110px_-55px_rgba(16,185,129,0.65)] backdrop-blur-xl">
-      <form className="space-y-5">
-        <div>
-          <label htmlFor="units" className="text-sm font-semibold text-slate-200">
-            Monthly electricity usage (units)
-          </label>
-          <input
-            id="units"
-            type="number"
-            inputMode="numeric"
-            value={unitsMonth}
-            onChange={(event) => setUnitsMonth(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
-          />
-          <input
-            type="range"
-            min="100"
-            max="6000"
-            step="50"
-            value={Math.min(Math.max(unitsValue, 0), 6000)}
-            onChange={(event) => setUnitsMonth(event.target.value)}
-            className="mt-4 w-full accent-emerald-400"
-            aria-label="Monthly electricity usage slider"
-          />
-          <div className="mt-2 flex justify-between text-[10px] uppercase tracking-[0.3em] text-slate-500">
-            <span>100 units</span>
-            <span>6000 units</span>
+    <div className="rounded-3xl border border-white/10 bg-white/6 p-6 shadow-[0_40px_110px_-55px_rgba(16,185,129,0.65)] backdrop-blur-xl">
+      <div className="space-y-3">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Plan your plant</p>
+        <h2 className="text-3xl font-bold text-white sm:text-4xl">Solar sizing calculator</h2>
+        <p className="text-sm leading-relaxed text-slate-200/90">
+          Enter your monthly electricity usage to view the right system size, roof space required, expected generation and CO₂
+          savings.
+        </p>
+      </div>
+
+      <form className="mt-6 grid gap-6 lg:grid-cols-2">
+        <div className="space-y-3">
+          <div className="flex items-center justify-between gap-3">
+            <label htmlFor="units" className="text-sm font-semibold text-slate-200">
+              Monthly electricity usage (units)
+            </label>
+            <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-200">
+              Editable
+            </span>
           </div>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {unitPresets.map((preset) => (
-              <button
-                key={preset.label}
-                type="button"
-                onClick={() => setUnitsMonth(String(preset.value))}
-                className={`rounded-full border px-3 py-1 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                  unitsValue === preset.value
-                    ? "border-emerald-300 bg-emerald-500/20 text-emerald-100"
-                    : "border-white/10 bg-transparent text-slate-300 hover:border-white/20 hover:text-white"
-                }`}
-              >
-                {preset.label}
-              </button>
-            ))}
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-0 rounded-[26px] border border-emerald-300/40 shadow-[0_0_45px_-10px_rgba(52,211,153,0.85)]" />
+            <input
+              id="units"
+              type="number"
+              inputMode="numeric"
+              value={unitsMonth}
+              onChange={(event) => setUnitsMonth(event.target.value)}
+              className={editableUnitsFieldClasses}
+              placeholder="Enter your units here"
+              min={0}
+            />
+            <div className="pointer-events-none absolute -top-3 left-6 rounded-full bg-emerald-400 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-950 shadow-lg">
+              Tap to adjust
+            </div>
           </div>
+          <p className="text-xs font-semibold text-emerald-200/90">
+            Enter your units here to personalise the system size, roof space, and savings estimates.
+          </p>
         </div>
-        <div>
-          <label htmlFor="tariff" className="text-sm font-semibold text-slate-200">
-            Average tariff (₹/unit)
-          </label>
-          <input
-            id="tariff"
-            type="number"
-            inputMode="decimal"
-            step="0.1"
-            value={tariff}
-            onChange={(event) => setTariff(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-white/20 bg-white/5 px-4 py-3 text-base text-white placeholder:text-slate-400 focus:border-[#147B3E] focus:outline-none focus:ring-2 focus:ring-[#147B3E]/40"
-          />
-          <input
-            type="range"
-            min="5"
-            max="14"
-            step="0.1"
-            value={Math.min(Math.max(tariffValue, 5), 14)}
-            onChange={(event) => setTariff(event.target.value)}
-            className="mt-4 w-full accent-emerald-400"
-            aria-label="Average tariff slider"
-          />
-          <div className="mt-2 flex justify-between text-[10px] uppercase tracking-[0.3em] text-slate-500">
-            <span>₹5</span>
-            <span>₹14</span>
+        <div className="space-y-3">
+          <p className="text-sm font-semibold text-slate-200">Monthly DISCOM bill</p>
+          <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/5 p-5 shadow-[0_35px_90px_-55px_rgba(16,185,129,0.55)]">
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-500/15 via-transparent to-emerald-400/10" />
+            <div className="relative z-10 space-y-2">
+              <p className="text-xs uppercase tracking-[0.3em] text-emerald-200/80">Total payable</p>
+              <p className="text-3xl font-bold text-white">
+                {hasInput ? `₹${formatCurrency(monthlyBill)}` : "—"}
+                <span className="ml-2 text-sm font-semibold text-emerald-200/80">per month</span>
+              </p>
+              {hasInput ? (
+                <p className="text-xs font-medium text-emerald-100/80">
+                  Before round-off: ₹{formatCurrency(monthlyBillBeforeRound)}
+                </p>
+              ) : null}
+              <p className="text-xs text-slate-300/80">
+                Includes TSNPDCL domestic slabs{additionalChargesCopy}.
+              </p>
+            </div>
           </div>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {tariffPresets.map((preset) => (
-              <button
-                key={preset.label}
-                type="button"
-                onClick={() => setTariff(String(preset.value))}
-                className={`rounded-full border px-3 py-1 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
-                  Math.abs(tariffValue - preset.value) < 0.01
-                    ? "border-emerald-300 bg-emerald-500/20 text-emerald-100"
-                    : "border-white/10 bg-transparent text-slate-300 hover:border-white/20 hover:text-white"
-                }`}
-              >
-                {preset.label}
-              </button>
-            ))}
-          </div>
+          <p className="text-xs text-slate-400">
+            {activeTariff?.description || "Based on the latest TSNPDCL domestic tariff schedule."}
+          </p>
         </div>
       </form>
 
-      <div className="space-y-4">
-        <ResultRow label="Recommended system size" value={hasInput ? `${kwRounded.toFixed(1)} kW` : "—"} />
-        <ResultRow label="Expected monthly generation" value={hasInput ? `${generation.toLocaleString()} units` : "—"} />
-        <ResultRow label="Roof space required" value={hasInput ? `${roofArea.toLocaleString()} sq.ft` : "—"} />
-        <ResultRow label="Estimated monthly savings" value={hasInput ? `₹${Math.round(monthlySavings).toLocaleString()}` : "—"} />
-        <ResultRow label="Estimated project cost" value={hasInput ? `₹${Math.round(capex).toLocaleString()}` : "—"} />
-        <ResultRow label="Simple payback" value={hasInput && payback > 0 ? `${payback.toFixed(1)} years` : "—"} />
-        <ResultRow label="Annual CO₂ offset" value={hasInput ? `${co2Offset.toFixed(1)} tonnes` : "—"} />
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {summaryStats.map((stat) => (
+          <SummaryStat key={stat.label} {...stat} />
+        ))}
       </div>
 
-      <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-emerald-500/15 via-transparent to-emerald-500/10 p-6">
-        <p className="text-xs uppercase tracking-[0.35em] text-emerald-200">Savings projection</p>
-        <div className="mt-5 grid gap-4 sm:grid-cols-3">
-          {projections.map((projection) => (
-            <div key={projection.label} className="rounded-2xl border border-white/10 bg-white/5 p-4 text-slate-200">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{projection.label}</p>
-              <div className="relative mt-4 h-20 overflow-hidden rounded-2xl bg-white/5">
-                <div
-                  className="absolute inset-x-1 bottom-1 rounded-t-2xl bg-gradient-to-t from-emerald-400/80 via-emerald-300/40 to-transparent"
-                  style={{ height: `${projection.progress}%` }}
-                />
-              </div>
-              <p className="mt-4 text-sm font-semibold text-white">
-                {hasInput ? `₹${Math.round(projection.savings).toLocaleString()}` : "—"}
+      <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Tariff breakdown</p>
+            <p className="text-sm text-slate-200/80">{activeTariff?.label}</p>
+          </div>
+            {hasInput ? (
+              <p className="text-sm font-semibold text-white">
+                DISCOM bill: ₹{formatCurrency(monthlyBill)} / month
               </p>
-              <p className="text-xs text-emerald-200/80">
-                {hasInput ? `${projection.co2.toFixed(1)} t CO₂ avoided` : "Adjust inputs to view impact"}
-              </p>
-            </div>
-          ))}
+            ) : null}
         </div>
+        {hasInput && slabBreakdown.length > 0 ? (
+          <div className="mt-4 overflow-x-auto">
+            <div className="inline-block min-w-full overflow-hidden rounded-xl border border-white/10 align-middle">
+              <table className="min-w-full divide-y divide-white/10 text-sm text-slate-200/90">
+                <thead className="bg-white/5 text-xs uppercase tracking-[0.3em] text-slate-400">
+                  <tr>
+                    <th className="px-4 py-3 text-left">Slab</th>
+                    <th className="px-4 py-3 text-right">Units</th>
+                    <th className="px-4 py-3 text-right">Rate (₹)</th>
+                    <th className="px-4 py-3 text-right">Amount (₹)</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {slabBreakdown.map((slab) => (
+                    <tr key={slab.label}>
+                      <td className="px-4 py-3">{slab.label}</td>
+                      <td className="px-4 py-3 text-right">{slab.units.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-right">{slab.rate.toFixed(2)}</td>
+                      <td className="px-4 py-3 text-right">₹{formatCurrency(slab.amount)}</td>
+                    </tr>
+                  ))}
+                  <tr className="bg-white/5">
+                    <td className="px-4 py-3 font-semibold text-white">Energy charges total</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">₹{formatCurrency(energyCharges)}</td>
+                  </tr>
+                  {fixedCharge > 0 ? (
+                    <tr>
+                      <td className="px-4 py-3 font-semibold text-white">Fixed charges</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">₹{formatCurrency(fixedCharge)}</td>
+                    </tr>
+                  ) : null}
+                  {customerCharge > 0 ? (
+                    <tr>
+                      <td className="px-4 py-3 font-semibold text-white">Customer charges</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">₹{formatCurrency(customerCharge)}</td>
+                    </tr>
+                  ) : null}
+                  {electricityDuty > 0 ? (
+                    <tr>
+                      <td className="px-4 py-3 font-semibold text-white">
+                        {dutyRate ? `Electricity duty (${dutyPercentage}%)` : "Electricity duty"}
+                      </td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">₹{formatCurrency(electricityDuty)}</td>
+                    </tr>
+                  ) : null}
+                  <tr>
+                    <td className="px-4 py-3 font-semibold text-white">Bill before round-off</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">₹{formatCurrency(monthlyBillBeforeRound)}</td>
+                  </tr>
+                  {showRoundingAdjustment ? (
+                    <tr>
+                      <td className="px-4 py-3 font-semibold text-white">Round-off adjustment</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">₹{formatCurrency(roundingAdjustment)}</td>
+                    </tr>
+                  ) : null}
+                  <tr className="bg-emerald-500/10 font-semibold text-white">
+                    <td className="px-4 py-3">Net amount payable</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">₹{formatCurrency(monthlyBill)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : (
+          <p className="mt-4 text-sm text-slate-300/80">
+            Enter your monthly consumption to view the slab-wise TSNPDCL energy charge breakdown and fixed charges.
+          </p>
+        )}
       </div>
+
+      <p className="mt-6 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200/90">
+        Share your latest bill and roof details with our team to receive a detailed design, financial model and commercial proposal tailored to your site.
+      </p>
     </div>
   );
 }
 
-function ResultRow({ label, value }) {
+function SummaryStat({ label, value, helper }) {
   return (
-    <div className="flex flex-col justify-between gap-1 sm:flex-row sm:items-center">
-      <span className="text-slate-300/80">{label}</span>
-      <span className="font-semibold text-white">{value}</span>
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+      <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{label}</p>
+      <p className="mt-3 text-lg font-semibold text-white">{value}</p>
+      {helper ? <p className="mt-1 text-xs text-slate-400/80">{helper}</p> : null}
     </div>
   );
 }
@@ -592,7 +815,7 @@ export function SolutionsSection() {
 
   return (
     <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="site-container">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="space-y-6">
             <div>
@@ -672,7 +895,7 @@ export function SolutionsSection() {
               </div>
             </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
             {solutions.map((solution, index) => {
               const isActive = index === activeIndex;
               return (
@@ -682,7 +905,7 @@ export function SolutionsSection() {
                   onMouseEnter={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
                   onClick={() => setActiveIndex(index)}
-                  className={`group relative overflow-hidden rounded-3xl border px-6 py-6 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                  className={`group relative overflow-hidden rounded-3xl border px-5 py-4 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                     isActive
                       ? "border-white/40 bg-white/10 shadow-[0_30px_80px_-50px_rgba(245,158,11,0.65)]"
                       : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
@@ -695,25 +918,25 @@ export function SolutionsSection() {
                       isActive ? "opacity-70" : "group-hover:opacity-40"
                     }`}
                   />
-                  <div className="relative z-10 space-y-4">
-                    <div className="flex items-center justify-between gap-4">
-                      <span className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[#F16921]/15 text-[#F16921]">
+                  <div className="relative z-10 space-y-3">
+                    <div className="flex items-center justify-between gap-3.5">
+                      <span className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-[#F16921]/15 text-[#F16921]">
                         <solution.icon className="h-5 w-5" />
                       </span>
                       <span className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">{solution.stats[0].label}</span>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white">{solution.name}</h3>
-                      <p className="mt-3 text-sm leading-relaxed text-slate-200/90">{solution.summary}</p>
+                      <h3 className="text-base font-semibold text-white">{solution.name}</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-200/90">{solution.summary}</p>
                     </div>
-                    <ul className="space-y-2 text-xs text-slate-200/80">
+                    <ul className="space-y-1.5 text-xs text-slate-200/80">
                       {solution.bullets.map((bullet) => (
                         <li key={bullet} className="flex items-start gap-2">
                           <CheckIcon className="mt-1 h-3.5 w-3.5 text-[#147B3E]" /> {bullet}
                         </li>
                       ))}
                     </ul>
-                    <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
+                    <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.3em] text-slate-400">
                       <span>Tap to compare</span>
                       <ArrowIcon className="h-4 w-4" />
                     </div>
@@ -731,7 +954,7 @@ export function SolutionsSection() {
 export function ProcessSection() {
   return (
     <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="site-container">
         <div className="max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">How we work</p>
           <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
@@ -784,7 +1007,7 @@ export function ProjectsHighlightsSection() {
 
   return (
     <section className="py-16 md:py-20">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="site-container">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Proven track record</p>
@@ -833,7 +1056,7 @@ export function ProjectsHighlightsSection() {
               />
             </div>
           </article>
-          <div className="grid gap-4">
+          <div className="grid gap-3.5">
             {caseStudies.map((item, index) => {
               const isActive = index === activeIndex;
               return (
@@ -843,7 +1066,7 @@ export function ProjectsHighlightsSection() {
                   onMouseEnter={() => setActiveIndex(index)}
                   onFocus={() => setActiveIndex(index)}
                   onClick={() => setActiveIndex(index)}
-                  className={`group relative flex w-full flex-col rounded-3xl border px-6 py-5 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
+                  className={`group relative flex w-full flex-col rounded-3xl border px-5 py-4 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${
                     isActive
                       ? "border-white/40 bg-white/10 shadow-[0_25px_80px_-55px_rgba(6,182,212,0.55)]"
                       : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/10"
@@ -861,113 +1084,13 @@ export function ProjectsHighlightsSection() {
                       {index + 1}
                     </span>
                   </div>
-                  <p className="mt-3 text-xs leading-relaxed text-slate-200/80">{item.detail}</p>
-                  <span className="mt-4 inline-flex items-center text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">
+                  <p className="mt-2.5 text-xs leading-relaxed text-slate-200/80">{item.detail}</p>
+                  <span className="mt-3 inline-flex items-center text-[11px] font-semibold uppercase tracking-[0.35em] text-slate-400">
                     Review spotlight <ArrowIcon className="ml-2 h-3.5 w-3.5" />
                   </span>
                 </button>
               );
             })}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function TestimonialsFaqSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % testimonials.length);
-    }, 8000);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    let frame;
-    let start;
-
-    const step = (timestamp) => {
-      if (!start) start = timestamp;
-      const ratio = Math.min((timestamp - start) / 8000, 1);
-      setProgress(ratio * 100);
-      if (ratio < 1) {
-        frame = window.requestAnimationFrame(step);
-      }
-    };
-
-    frame = window.requestAnimationFrame(step);
-    return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [activeIndex]);
-
-  const active = testimonials[activeIndex];
-
-  return (
-    <section className="py-16 md:py-20">
-      <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="space-y-6">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Client confidence</p>
-            <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Voices from our partners</h2>
-          </div>
-          <figure className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/6 p-8 shadow-[0_40px_110px_-55px_rgba(129,140,248,0.5)] backdrop-blur-xl">
-            <span aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/20 via-transparent to-emerald-400/20 opacity-60" />
-            <div className="relative z-10 space-y-6">
-              <div className="flex flex-wrap items-center justify-between gap-4">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.35em] text-slate-400">{active.sector}</p>
-                  <h3 className="mt-2 text-xl font-semibold text-white">{active.name}</h3>
-                  <p className="text-xs text-slate-400">{active.role}</p>
-                </div>
-                <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-emerald-200">{active.rating}</span>
-              </div>
-              <blockquote className="text-xl leading-relaxed text-slate-100">“{active.quote}”</blockquote>
-              <div className="flex items-center gap-4">
-                {testimonials.map((item, index) => {
-                  const isActive = index === activeIndex;
-                  return (
-                    <button
-                      key={item.name}
-                      type="button"
-                      onClick={() => setActiveIndex(index)}
-                      onFocus={() => setActiveIndex(index)}
-                      className="group flex flex-col items-start gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-                      aria-pressed={isActive}
-                    >
-                      <span className="block h-2 w-20 overflow-hidden rounded-full bg-white/10">
-                        <span
-                          className={`block h-full rounded-full bg-gradient-to-r from-emerald-400 to-emerald-200 transition-all duration-500 ${
-                            isActive ? "" : "w-0"
-                          }`}
-                          style={{ width: isActive ? `${progress}%` : "0%" }}
-                        />
-                      </span>
-                      <span className={`text-[10px] uppercase tracking-[0.3em] ${isActive ? "text-emerald-200" : "text-slate-400"}`}>
-                        {item.sector}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </figure>
-        </div>
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">FAQs</p>
-          <h2 className="mt-4 text-3xl font-bold text-white sm:text-4xl">Frequently asked questions</h2>
-          <div className="mt-6 space-y-4">
-            {faqs.map((faq) => (
-              <details key={faq.question} className="group rounded-3xl border border-white/10 bg-white/5 p-5 text-sm text-slate-200 shadow-sm">
-                <summary className="cursor-pointer list-none font-semibold text-white">{faq.question}</summary>
-                <p className="mt-4 text-sm leading-relaxed text-slate-200/90">{faq.answer}</p>
-              </details>
-            ))}
           </div>
         </div>
       </div>
@@ -981,7 +1104,7 @@ export function ContactSection() {
 
   return (
     <section className="py-24">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="site-container">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-6">
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#F16921]/80">Start a conversation</p>
