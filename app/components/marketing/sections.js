@@ -708,79 +708,81 @@ function Calculator() {
             ) : null}
         </div>
         {hasInput && slabBreakdown.length > 0 ? (
-          <div className="mt-4 overflow-hidden rounded-xl border border-white/10">
-            <table className="min-w-full divide-y divide-white/10 text-sm text-slate-200/90">
-              <thead className="bg-white/5 text-xs uppercase tracking-[0.3em] text-slate-400">
-                <tr>
-                  <th className="px-4 py-3 text-left">Slab</th>
-                  <th className="px-4 py-3 text-right">Units</th>
-                  <th className="px-4 py-3 text-right">Rate (₹)</th>
-                  <th className="px-4 py-3 text-right">Amount (₹)</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {slabBreakdown.map((slab) => (
-                  <tr key={slab.label}>
-                    <td className="px-4 py-3">{slab.label}</td>
-                    <td className="px-4 py-3 text-right">{slab.units.toLocaleString()}</td>
-                    <td className="px-4 py-3 text-right">{slab.rate.toFixed(2)}</td>
-                    <td className="px-4 py-3 text-right">₹{formatCurrency(slab.amount)}</td>
-                  </tr>
-                ))}
-                <tr className="bg-white/5">
-                  <td className="px-4 py-3 font-semibold text-white">Energy charges total</td>
-                  <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">₹{formatCurrency(energyCharges)}</td>
-                </tr>
-                {fixedCharge > 0 ? (
+          <div className="mt-4 overflow-x-auto">
+            <div className="inline-block min-w-full overflow-hidden rounded-xl border border-white/10 align-middle">
+              <table className="min-w-full divide-y divide-white/10 text-sm text-slate-200/90">
+                <thead className="bg-white/5 text-xs uppercase tracking-[0.3em] text-slate-400">
                   <tr>
-                    <td className="px-4 py-3 font-semibold text-white">Fixed charges</td>
-                    <td className="px-4 py-3 text-right">—</td>
-                    <td className="px-4 py-3 text-right">—</td>
-                    <td className="px-4 py-3 text-right">₹{formatCurrency(fixedCharge)}</td>
+                    <th className="px-4 py-3 text-left">Slab</th>
+                    <th className="px-4 py-3 text-right">Units</th>
+                    <th className="px-4 py-3 text-right">Rate (₹)</th>
+                    <th className="px-4 py-3 text-right">Amount (₹)</th>
                   </tr>
-                ) : null}
-                {customerCharge > 0 ? (
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {slabBreakdown.map((slab) => (
+                    <tr key={slab.label}>
+                      <td className="px-4 py-3">{slab.label}</td>
+                      <td className="px-4 py-3 text-right">{slab.units.toLocaleString()}</td>
+                      <td className="px-4 py-3 text-right">{slab.rate.toFixed(2)}</td>
+                      <td className="px-4 py-3 text-right">₹{formatCurrency(slab.amount)}</td>
+                    </tr>
+                  ))}
+                  <tr className="bg-white/5">
+                    <td className="px-4 py-3 font-semibold text-white">Energy charges total</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">—</td>
+                    <td className="px-4 py-3 text-right">₹{formatCurrency(energyCharges)}</td>
+                  </tr>
+                  {fixedCharge > 0 ? (
+                    <tr>
+                      <td className="px-4 py-3 font-semibold text-white">Fixed charges</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">₹{formatCurrency(fixedCharge)}</td>
+                    </tr>
+                  ) : null}
+                  {customerCharge > 0 ? (
+                    <tr>
+                      <td className="px-4 py-3 font-semibold text-white">Customer charges</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">₹{formatCurrency(customerCharge)}</td>
+                    </tr>
+                  ) : null}
+                  {electricityDuty > 0 ? (
+                    <tr>
+                      <td className="px-4 py-3 font-semibold text-white">
+                        {dutyRate ? `Electricity duty (${dutyPercentage}%)` : "Electricity duty"}
+                      </td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">₹{formatCurrency(electricityDuty)}</td>
+                    </tr>
+                  ) : null}
                   <tr>
-                    <td className="px-4 py-3 font-semibold text-white">Customer charges</td>
+                    <td className="px-4 py-3 font-semibold text-white">Bill before round-off</td>
                     <td className="px-4 py-3 text-right">—</td>
                     <td className="px-4 py-3 text-right">—</td>
-                    <td className="px-4 py-3 text-right">₹{formatCurrency(customerCharge)}</td>
+                    <td className="px-4 py-3 text-right">₹{formatCurrency(monthlyBillBeforeRound)}</td>
                   </tr>
-                ) : null}
-                {electricityDuty > 0 ? (
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-white">
-                      {dutyRate ? `Electricity duty (${dutyPercentage}%)` : "Electricity duty"}
-                    </td>
+                  {showRoundingAdjustment ? (
+                    <tr>
+                      <td className="px-4 py-3 font-semibold text-white">Round-off adjustment</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">—</td>
+                      <td className="px-4 py-3 text-right">₹{formatCurrency(roundingAdjustment)}</td>
+                    </tr>
+                  ) : null}
+                  <tr className="bg-emerald-500/10 font-semibold text-white">
+                    <td className="px-4 py-3">Net amount payable</td>
                     <td className="px-4 py-3 text-right">—</td>
                     <td className="px-4 py-3 text-right">—</td>
-                    <td className="px-4 py-3 text-right">₹{formatCurrency(electricityDuty)}</td>
+                    <td className="px-4 py-3 text-right">₹{formatCurrency(monthlyBill)}</td>
                   </tr>
-                ) : null}
-                <tr>
-                  <td className="px-4 py-3 font-semibold text-white">Bill before round-off</td>
-                  <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">₹{formatCurrency(monthlyBillBeforeRound)}</td>
-                </tr>
-                {showRoundingAdjustment ? (
-                  <tr>
-                    <td className="px-4 py-3 font-semibold text-white">Round-off adjustment</td>
-                    <td className="px-4 py-3 text-right">—</td>
-                    <td className="px-4 py-3 text-right">—</td>
-                    <td className="px-4 py-3 text-right">₹{formatCurrency(roundingAdjustment)}</td>
-                  </tr>
-                ) : null}
-                <tr className="bg-emerald-500/10 font-semibold text-white">
-                  <td className="px-4 py-3">Net amount payable</td>
-                  <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">—</td>
-                  <td className="px-4 py-3 text-right">₹{formatCurrency(monthlyBill)}</td>
-                </tr>
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
           </div>
         ) : (
           <p className="mt-4 text-sm text-slate-300/80">
